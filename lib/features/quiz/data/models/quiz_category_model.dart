@@ -4,11 +4,14 @@ class QuizCategoryModel extends QuizCategory {
   const QuizCategoryModel({required super.id, required super.name});
 
   factory QuizCategoryModel.fromJson(Map<String, dynamic> json) {
-    // TODO: Finalize parsing when OpenTDB response handling is implemented.
-    return QuizCategoryModel(
-      id: json['id'] as int,
-      name: json['name'] as String,
-    );
+    final id = json['id'];
+    final name = json['name'];
+
+    if (id is! num || name is! String) {
+      throw const FormatException('Invalid quiz category format.');
+    }
+
+    return QuizCategoryModel(id: id.toInt(), name: name);
   }
 
   QuizCategory toEntity() => QuizCategory(id: id, name: name);

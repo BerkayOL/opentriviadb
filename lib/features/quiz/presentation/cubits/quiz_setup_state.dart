@@ -4,6 +4,8 @@ import '../../domain/entities/quiz_category.dart';
 
 enum QuizSetupStatus { initial, loading, ready, failure }
 
+const Object _unset = Object();
+
 class QuizSetupState extends Equatable {
   const QuizSetupState({
     this.status = QuizSetupStatus.initial,
@@ -26,20 +28,26 @@ class QuizSetupState extends Equatable {
   QuizSetupState copyWith({
     QuizSetupStatus? status,
     List<QuizCategory>? categories,
-    QuizCategory? selectedCategory,
-    String? selectedDifficulty,
+    Object? selectedCategory = _unset,
+    Object? selectedDifficulty = _unset,
     int? questionCount,
     String? questionType,
-    String? errorMessage,
+    Object? errorMessage = _unset,
   }) {
     return QuizSetupState(
       status: status ?? this.status,
       categories: categories ?? this.categories,
-      selectedCategory: selectedCategory ?? this.selectedCategory,
-      selectedDifficulty: selectedDifficulty ?? this.selectedDifficulty,
+      selectedCategory: identical(selectedCategory, _unset)
+          ? this.selectedCategory
+          : selectedCategory as QuizCategory?,
+      selectedDifficulty: identical(selectedDifficulty, _unset)
+          ? this.selectedDifficulty
+          : selectedDifficulty as String?,
       questionCount: questionCount ?? this.questionCount,
       questionType: questionType ?? this.questionType,
-      errorMessage: errorMessage ?? this.errorMessage,
+      errorMessage: identical(errorMessage, _unset)
+          ? this.errorMessage
+          : errorMessage as String?,
     );
   }
 

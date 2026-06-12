@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/empty_view.dart';
+import '../../../../core/widgets/error_view.dart';
+import '../../../../core/widgets/loading_view.dart';
+import '../../domain/entities/quiz_category.dart';
+import '../cubits/quiz_setup_cubit.dart';
+import '../cubits/quiz_setup_state.dart';
 import '../widgets/setup_option_card.dart';
 
 class QuizSetupPage extends StatelessWidget {
@@ -42,7 +49,7 @@ class QuizSetupPage extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: AppSpacing.lg),
-            const SetupOptionCard(title: 'Category', value: 'Any category'),
+            const _CategorySelector(),
             const SizedBox(height: AppSpacing.md),
             const SetupOptionCard(title: 'Difficulty', value: 'Any level'),
             const SizedBox(height: AppSpacing.md),
@@ -56,6 +63,47 @@ class QuizSetupPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _CategorySelector extends StatelessWidget {
+  const _CategorySelector();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<QuizSetupCubit, QuizSetupState>(
+      builder: (context, state) {
+        return switch (state.status) {
+          QuizSetupStatus.initial || QuizSetupStatus.loading => const SizedBox(
+            height: 96,
+            child: LoadingView(),
+          ),
+          QuizSetupStatus.failure => ErrorView(
+            message: state.errorMessage ?? 'Categories could not be loaded.',
+            onRetry: context.read<QuizSetupCubit>().loadCategories,
+          ),
+          QuizSetupStatus.ready =>
+            state.categories.isEmpty
+                ? const EmptyView(
+                    title: 'No categories found',
+                    message: 'Try again later or start with any category.',
+                  )
+                : DropdownButtonFormField<QuizCategory>(
+                    initialValue: state.selectedCategory,
+                    decoration: const InputDecoration(labelText: 'Category'),
+                    items: state.categories
+                        .map(
+                          (category) => DropdownMenuItem<QuizCategory>(
+                            value: category,
+                            child: Text(category.name),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: context.read<QuizSetupCubit>().selectCategory,
+                  ),
+        };
+      },
     );
   }
 }
