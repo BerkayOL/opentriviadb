@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/error/failure.dart';
 
 import '../../domain/entities/quiz_request.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
@@ -8,10 +9,10 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit(this._getQuestionsUseCase) : super(const QuizState());
 
   final GetQuestionsUseCase _getQuestionsUseCase;
-
+  QuizRequest? _lastRequest;
   Future<void> startQuiz(QuizRequest request) async {
+    _lastRequest = request;
     emit(const QuizState(status: QuizStatus.loading));
-
     try {
       final questions = await _getQuestionsUseCase(request);
 
@@ -30,14 +31,34 @@ class QuizCubit extends Cubit<QuizState> {
           isAnswerCorrect: null,
         ),
       );
+    } on Failure catch (failure) {
+      emit(
+        QuizState(status: QuizStatus.failure, errorMessage: failure.message),
+      );
     } catch (_) {
       emit(
-        const QuizState(
+        QuizState(
           status: QuizStatus.failure,
           errorMessage: 'Failed to load questions.',
         ),
       );
     }
+  }
+
+  Future<void> retryQuiz() async {
+    final request = _lastRequest;
+
+    if (request == null) {
+      emit(
+        const QuizState(
+          status: QuizStatus.failure,
+          errorMessage: 'Quiz settings are missing.',
+        ),
+      );
+      return;
+    }
+
+    await startQuiz(request);
   }
 
   void selectAnswer(String answer) {
