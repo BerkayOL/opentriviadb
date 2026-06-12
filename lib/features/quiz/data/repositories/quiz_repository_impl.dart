@@ -33,8 +33,14 @@ class QuizRepositoryImpl implements QuizRepository {
 
   @override
   Future<List<QuizQuestion>> getQuestions(QuizRequest request) async {
-    final models = await _remoteDataSource.fetchQuestions(request);
-    return models.map((model) => model.toEntity()).toList();
+    try {
+      final models = await _remoteDataSource.fetchQuestions(request);
+      return models.map((model) => model.toEntity()).toList();
+    } on AppException catch (error) {
+      throw _mapExceptionToFailure(error);
+    } catch (_) {
+      throw const UnknownFailure('An unexpected error occurred.');
+    }
   }
 
   @override

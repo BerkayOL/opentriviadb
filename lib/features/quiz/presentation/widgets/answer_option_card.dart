@@ -7,6 +7,7 @@ class AnswerOptionCard extends StatelessWidget {
     required this.answer,
     required this.onTap,
     super.key,
+    Color? color,
   });
 
   final String answer;

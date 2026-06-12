@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
+import '../../domain/entities/quiz_request.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -12,7 +12,6 @@ import '../../../../core/widgets/loading_view.dart';
 import '../../domain/entities/quiz_category.dart';
 import '../cubits/quiz_setup_cubit.dart';
 import '../cubits/quiz_setup_state.dart';
-import '../widgets/setup_option_card.dart';
 
 class QuizSetupPage extends StatelessWidget {
   const QuizSetupPage({super.key});
@@ -51,15 +50,13 @@ class QuizSetupPage extends StatelessWidget {
             const SizedBox(height: AppSpacing.lg),
             const _CategorySelector(),
             const SizedBox(height: AppSpacing.md),
-            const SetupOptionCard(title: 'Difficulty', value: 'Any level'),
+            const _DifficultySelector(),
             const SizedBox(height: AppSpacing.md),
-            const SetupOptionCard(title: 'Questions', value: '10'),
+            const _QuestionCountSelector(),
+            const SizedBox(height: AppSpacing.md),
+            const _QuestionTypeSelector(),
             const SizedBox(height: AppSpacing.xl),
-            AppButton(
-              label: 'Start Quiz',
-              icon: Icons.play_arrow_rounded,
-              onPressed: () => context.push(AppRoutes.quiz),
-            ),
+            const _StartQuizButton(),
           ],
         ),
       ),
@@ -103,6 +100,117 @@ class _CategorySelector extends StatelessWidget {
                     onChanged: context.read<QuizSetupCubit>().selectCategory,
                   ),
         };
+      },
+    );
+  }
+}
+
+class _StartQuizButton extends StatelessWidget {
+  const _StartQuizButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<QuizSetupCubit, QuizSetupState>(
+      builder: (context, state) {
+        return AppButton(
+          label: 'Start Quiz',
+          icon: Icons.play_arrow_rounded,
+          onPressed: () {
+            if (state.status != QuizSetupStatus.ready) {
+              return;
+            }
+            final request = QuizRequest(
+              amount: state.questionCount,
+              categoryId: state.selectedCategory?.id,
+              difficulty: state.selectedDifficulty,
+              type: state.questionType,
+            );
+            context.push(AppRoutes.quiz, extra: request);
+          },
+        );
+      },
+    );
+  }
+}
+
+class _DifficultySelector extends StatelessWidget {
+  const _DifficultySelector();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<QuizSetupCubit, QuizSetupState>(
+      builder: (context, state) {
+        return DropdownButtonFormField<String?>(
+          initialValue: state.selectedDifficulty,
+          decoration: const InputDecoration(labelText: 'Difficulty'),
+          items: ['Any level', 'Easy', 'Medium', 'Hard']
+              .map(
+                (difficulty) => DropdownMenuItem<String?>(
+                  value: difficulty == 'Any level'
+                      ? null
+                      : difficulty.toLowerCase(),
+                  child: Text(difficulty),
+                ),
+              )
+              .toList(),
+          onChanged: context.read<QuizSetupCubit>().selectDifficulty,
+        );
+      },
+    );
+  }
+}
+
+class _QuestionCountSelector extends StatelessWidget {
+  const _QuestionCountSelector();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<QuizSetupCubit, QuizSetupState>(
+      builder: (context, state) {
+        return DropdownButtonFormField<int>(
+          initialValue: state.questionCount,
+          decoration: const InputDecoration(labelText: 'Number of Questions'),
+          items: [5, 10, 15, 20]
+              .map(
+                (count) => DropdownMenuItem<int>(
+                  value: count,
+                  child: Text(count.toString()),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            if (value == null) return;
+            context.read<QuizSetupCubit>().selectQuestionCount(value);
+          },
+        );
+      },
+    );
+  }
+}
+
+class _QuestionTypeSelector extends StatelessWidget {
+  const _QuestionTypeSelector();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<QuizSetupCubit, QuizSetupState>(
+      builder: (context, state) {
+        return DropdownButtonFormField<String>(
+          initialValue: state.questionType,
+          decoration: const InputDecoration(labelText: 'Question Type'),
+          items: ['Multiple Choice', 'True / False']
+              .map(
+                (type) => DropdownMenuItem<String>(
+                  value: type == 'Multiple Choice' ? 'multiple' : 'boolean',
+                  child: Text(type),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            if (value == null) return;
+            context.read<QuizSetupCubit>().selectType(value);
+          },
+        );
       },
     );
   }

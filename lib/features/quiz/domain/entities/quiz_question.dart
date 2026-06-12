@@ -5,6 +5,7 @@ class QuizQuestion extends Equatable {
     required this.question,
     required this.correctAnswer,
     required this.incorrectAnswers,
+    required this.answers,
     required this.category,
     required this.difficulty,
     required this.type,
@@ -13,6 +14,7 @@ class QuizQuestion extends Equatable {
   final String question;
   final String correctAnswer;
   final List<String> incorrectAnswers;
+  final List<String> answers;
   final String category;
   final String difficulty;
   final String type;
@@ -22,6 +24,7 @@ class QuizQuestion extends Equatable {
     question,
     correctAnswer,
     incorrectAnswers,
+    answers,
     category,
     difficulty,
     type,

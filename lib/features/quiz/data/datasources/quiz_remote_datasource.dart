@@ -61,8 +61,61 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
   }
 
   @override
-  Future<List<QuizQuestionModel>> fetchQuestions(QuizRequest request) {
-    // TODO: Implement Dio request to OpenTDB questions endpoint.
-    throw UnimplementedError();
+  Future<List<QuizQuestionModel>> fetchQuestions(QuizRequest request) async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        ApiConstants.questionsEndpoint,
+        queryParameters: _questionQueryParameters(request),
+      );
+      final data = response.data;
+      final responseCode = data?['response_code'];
+      final resultsJson = data?['results'];
+
+      if (responseCode is! num || resultsJson is! List) {
+        throw const ServerException('Question response format is invalid.');
+      }
+
+      if (responseCode.toInt() == 1 || resultsJson.isEmpty) {
+        throw const EmptyResultException('No questions found.');
+      }
+
+      if (responseCode.toInt() != 0) {
+        throw ServerException(
+          'Question request failed with response code ${responseCode.toInt()}.',
+        );
+      }
+
+      return resultsJson
+          .map(
+            (json) => QuizQuestionModel.fromJson(json as Map<String, dynamic>),
+          )
+          .toList();
+    } on DioException catch (error) {
+      if (error.type == DioExceptionType.connectionTimeout ||
+          error.type == DioExceptionType.receiveTimeout ||
+          error.type == DioExceptionType.connectionError) {
+        throw const NetworkException('Check your internet connection.');
+      }
+
+      throw ServerException(
+        'Question request failed with status ${error.response?.statusCode ?? 'unknown'}.',
+      );
+    } on AppException {
+      rethrow;
+    } on FormatException catch (error) {
+      throw ServerException(error.message);
+    } on TypeError {
+      throw const ServerException('Question response contains invalid data.');
+    }
+  }
+
+  Map<String, dynamic> _questionQueryParameters(QuizRequest request) {
+    return {
+      'amount': request.amount,
+      if (request.categoryId != null) 'category': request.categoryId,
+      if (request.difficulty != null && request.difficulty!.isNotEmpty)
+        'difficulty': request.difficulty,
+      'type': request.type,
+    };
   }
 }

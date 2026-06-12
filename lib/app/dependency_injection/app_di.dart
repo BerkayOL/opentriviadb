@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-
+import '../../features/quiz/domain/usecases/get_questions_usecase.dart';
+import '../../features/quiz/presentation/cubits/quiz_cubit.dart';
 import '../../core/network/dio_client.dart';
 import '../../features/quiz/data/datasources/quiz_local_datasource.dart';
 import '../../features/quiz/data/datasources/quiz_remote_datasource.dart';
@@ -46,6 +47,16 @@ Future<void> setupAppDependencies() async {
   if (!getIt.isRegistered<QuizSetupCubit>()) {
     getIt.registerFactory<QuizSetupCubit>(
       () => QuizSetupCubit(getIt<GetCategoriesUseCase>()),
+    );
+  }
+  if (!getIt.isRegistered<GetQuestionsUseCase>()) {
+    getIt.registerLazySingleton<GetQuestionsUseCase>(
+      () => GetQuestionsUseCase(getIt<QuizRepository>()),
+    );
+  }
+  if (!getIt.isRegistered<QuizCubit>()) {
+    getIt.registerFactory<QuizCubit>(
+      () => QuizCubit(getIt<GetQuestionsUseCase>()),
     );
   }
 }
