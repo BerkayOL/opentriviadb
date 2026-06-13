@@ -8,6 +8,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../widgets/answer_option_card.dart';
 import '../widgets/quiz_progress_header.dart';
+import '../../../../core/widgets/error_view.dart';
+import '../../../../core/widgets/empty_view.dart';
+import '../widgets/quiz_timer_badge.dart';
 
 class QuizPage extends StatelessWidget {
   const QuizPage({super.key});
@@ -23,9 +26,17 @@ class QuizPage extends StatelessWidget {
               case QuizStatus.loading:
                 return const _LoadingView();
               case QuizStatus.failure:
-                return const Center(child: Text('Failed to load questions.'));
+                return ErrorView(
+                  message: state.errorMessage ?? 'An error occurred.',
+                  onRetry: () {
+                    context.read<QuizCubit>().retryQuiz();
+                  },
+                );
               case QuizStatus.empty:
-                return const Center(child: Text('No questions available.'));
+                return const EmptyView(
+                  title: 'No questions found.',
+                  message: 'Please try again later.',
+                );
               case QuizStatus.inProgress:
                 return _QuestionView(state: state);
               case QuizStatus.completed:
@@ -82,6 +93,7 @@ class _QuestionView extends StatelessWidget {
                 currentQuestion: state.currentIndex + 1,
                 totalQuestions: state.totalQuestions,
               ),
+              QuizTimerBadge(secondsLeft: state.secondsLeft),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),

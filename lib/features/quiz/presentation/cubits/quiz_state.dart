@@ -19,6 +19,7 @@ class QuizState extends Equatable {
     this.questions = const [],
     this.currentIndex = 0,
     this.score = 0,
+    this.secondsLeft = 30,
     this.errorMessage,
     this.isAnswerCorrect,
     this.selectedAnswer,
@@ -28,6 +29,7 @@ class QuizState extends Equatable {
   final List<QuizQuestion> questions;
   final int currentIndex;
   final int score;
+  final int secondsLeft;
   final bool? isAnswerCorrect;
   final String? selectedAnswer;
   final String? errorMessage;
@@ -40,12 +42,14 @@ class QuizState extends Equatable {
     Object? errorMessage = _unset,
     Object? isAnswerCorrect = _unset,
     Object? selectedAnswer = _unset,
+    int? secondsLeft,
   }) {
     return QuizState(
       status: status ?? this.status,
       questions: questions ?? this.questions,
       currentIndex: currentIndex ?? this.currentIndex,
       score: score ?? this.score,
+      secondsLeft: secondsLeft ?? this.secondsLeft,
       errorMessage: identical(errorMessage, _unset)
           ? this.errorMessage
           : errorMessage as String?,
@@ -65,6 +69,7 @@ class QuizState extends Equatable {
     currentIndex,
     isAnswerCorrect,
     selectedAnswer,
+    secondsLeft,
     score,
     errorMessage,
   ];

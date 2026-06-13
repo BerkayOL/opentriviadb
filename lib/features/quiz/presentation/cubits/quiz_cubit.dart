@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/error/failure.dart';
-
 import '../../domain/entities/quiz_request.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
 import 'quiz_state.dart';
@@ -9,8 +10,11 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit(this._getQuestionsUseCase) : super(const QuizState());
 
   final GetQuestionsUseCase _getQuestionsUseCase;
+  Timer? _timer;
+  static const int _questionDuration = 30;
   QuizRequest? _lastRequest;
   Future<void> startQuiz(QuizRequest request) async {
+    _stopTimer();
     _lastRequest = request;
     emit(const QuizState(status: QuizStatus.loading));
     try {
@@ -20,7 +24,6 @@ class QuizCubit extends Cubit<QuizState> {
         emit(const QuizState(status: QuizStatus.empty));
         return;
       }
-
       emit(
         QuizState(
           status: QuizStatus.inProgress,
@@ -29,15 +32,17 @@ class QuizCubit extends Cubit<QuizState> {
           score: 0,
           selectedAnswer: null,
           isAnswerCorrect: null,
+          secondsLeft: _questionDuration,
         ),
       );
+      _startTimer();
     } on Failure catch (failure) {
       emit(
         QuizState(status: QuizStatus.failure, errorMessage: failure.message),
       );
     } catch (_) {
       emit(
-        QuizState(
+        const QuizState(
           status: QuizStatus.failure,
           errorMessage: 'Failed to load questions.',
         ),
@@ -70,7 +75,7 @@ class QuizCubit extends Cubit<QuizState> {
     if (currentQuestion == null) {
       return;
     }
-
+    _stopTimer();
     final isCorrect = answer == currentQuestion.correctAnswer;
 
     emit(
@@ -78,6 +83,7 @@ class QuizCubit extends Cubit<QuizState> {
         status: QuizStatus.answerRevealed,
         selectedAnswer: answer,
         isAnswerCorrect: isCorrect,
+
         score: isCorrect ? state.score + 1 : state.score,
       ),
     );
@@ -89,6 +95,7 @@ class QuizCubit extends Cubit<QuizState> {
     }
 
     if (state.isLastQuestion) {
+      _stopTimer();
       emit(state.copyWith(status: QuizStatus.completed));
       return;
     }
@@ -99,7 +106,49 @@ class QuizCubit extends Cubit<QuizState> {
         currentIndex: state.currentIndex + 1,
         selectedAnswer: null,
         isAnswerCorrect: null,
+        secondsLeft: _questionDuration,
       ),
     );
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      final secondsLeft = state.secondsLeft;
+
+      if (secondsLeft <= 1) {
+        emit(state.copyWith(secondsLeft: 0));
+        _handleTimeExpired();
+        return;
+      }
+
+      emit(state.copyWith(secondsLeft: secondsLeft - 1));
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  void _handleTimeExpired() {
+    if (state.status != QuizStatus.inProgress) {
+      return;
+    }
+    _stopTimer();
+    emit(
+      state.copyWith(
+        status: QuizStatus.answerRevealed,
+        selectedAnswer: null,
+        isAnswerCorrect: false,
+      ),
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _stopTimer();
+    return super.close();
   }
 }
