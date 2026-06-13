@@ -116,6 +116,7 @@ class _QuestionView extends StatelessWidget {
             return AnswerOptionCard(
               selected: isSelected,
               answer: answer,
+
               onTap: () {
                 if (state.status == QuizStatus.answerRevealed) {
                   return;
