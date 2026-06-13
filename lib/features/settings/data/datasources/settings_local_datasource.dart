@@ -1,4 +1,6 @@
-import '../../domain/repositories/settings_repository.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+
+import '../../domain/entities/app_theme_mode.dart';
 
 abstract interface class SettingsLocalDataSource {
   Future<AppThemeMode> getThemeMode();
@@ -8,16 +10,29 @@ abstract interface class SettingsLocalDataSource {
 
 class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
   const SettingsLocalDataSourceImpl();
-
+  static const String _boxName = 'settings';
+  static const String _themeModeKey = 'theme_mode';
   @override
-  Future<AppThemeMode> getThemeMode() {
-    // TODO: Load theme mode from Hive.
-    throw UnimplementedError();
+  Future<AppThemeMode> getThemeMode() async {
+    final box = await Hive.openBox<dynamic>(_boxName);
+    final value = box.get(_themeModeKey);
+    if (value == 'light') {
+      return AppThemeMode.light;
+    }
+    if (value == 'dark') {
+      return AppThemeMode.dark;
+    }
+    return AppThemeMode.system;
   }
 
   @override
-  Future<void> saveThemeMode(AppThemeMode mode) {
-    // TODO: Save theme mode to Hive.
-    throw UnimplementedError();
+  Future<void> saveThemeMode(AppThemeMode mode) async {
+    final box = await Hive.openBox(_boxName);
+    final value = switch (mode) {
+      AppThemeMode.light => 'light',
+      AppThemeMode.dark => 'dark',
+      AppThemeMode.system => 'system',
+    };
+    await box.put(_themeModeKey, value);
   }
 }

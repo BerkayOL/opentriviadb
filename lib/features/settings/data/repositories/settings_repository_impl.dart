@@ -1,3 +1,5 @@
+import '../../../../features/settings/domain/entities/app_theme_mode.dart';
+
 import '../../domain/repositories/settings_repository.dart';
 import '../datasources/settings_local_datasource.dart';
 

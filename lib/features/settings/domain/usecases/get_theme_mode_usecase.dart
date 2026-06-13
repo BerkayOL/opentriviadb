@@ -1,3 +1,4 @@
+import '../entities/app_theme_mode.dart';
 import '../repositories/settings_repository.dart';
 
 class GetThemeModeUseCase {
@@ -5,5 +6,7 @@ class GetThemeModeUseCase {
 
   final SettingsRepository _repository;
 
-  Future<AppThemeMode> call() => _repository.getThemeMode();
+  Future<AppThemeMode> call() {
+    return _repository.getThemeMode();
+  }
 }

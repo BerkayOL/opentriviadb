@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../app/dependency_injection/app_di.dart';
+import '../features/settings/presentation/cubits/theme_cubit.dart';
+import '../features/settings/presentation/cubits/theme_state.dart';
 import '../core/theme/app_theme.dart';
 import 'router/app_router.dart';
 
@@ -8,14 +11,20 @@ class TriviaQuizApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Trivia Quiz',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      // TODO: Connect ThemeCubit when settings persistence is implemented.
-      themeMode: ThemeMode.system,
-      routerConfig: AppRouter.router,
+    return BlocProvider<ThemeCubit>(
+      create: (context) => getIt<ThemeCubit>()..loadThemeMode(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            title: 'Trivia Quiz',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: state.themeMode,
+            routerConfig: AppRouter.router,
+          );
+        },
+      ),
     );
   }
 }

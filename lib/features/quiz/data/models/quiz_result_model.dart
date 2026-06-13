@@ -29,7 +29,7 @@ class QuizResultModel extends QuizResult {
     );
   }
 
-  fromMap(Map<String, dynamic> map) {
+  QuizResultModel fromMap(Map<String, dynamic> map) {
     return QuizResultModel(
       score: map['score'],
       totalQuestions: map['totalQuestions'],
