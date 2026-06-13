@@ -7,7 +7,6 @@ import '../../features/quiz/presentation/cubits/quiz_setup_cubit.dart';
 import '../../features/quiz/presentation/cubits/quiz_cubit.dart';
 import '../../features/quiz/domain/entities/quiz_request.dart';
 import '../../features/quiz/presentation/pages/quiz_page.dart';
-import '../../features/quiz/presentation/pages/quiz_result_page.dart';
 import '../../features/quiz/presentation/pages/quiz_setup_page.dart';
 import '../../features/history/presentation/cubits/history_cubit.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -40,11 +39,6 @@ abstract final class AppRouter {
             child: const QuizPage(),
           );
         },
-      ),
-      GoRoute(
-        path: AppRoutes.result,
-        name: AppRoutes.resultName,
-        builder: (context, state) => const QuizResultPage(),
       ),
       GoRoute(
         path: AppRoutes.history,

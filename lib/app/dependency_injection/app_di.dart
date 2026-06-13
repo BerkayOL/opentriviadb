@@ -18,7 +18,6 @@ import '../../features/history/domain/usecases/get_history_usecase.dart';
 import '../../features/history/domain/usecases/save_quiz_history_usecase.dart';
 import '../../features/history/presentation/cubits/history_cubit.dart';
 
-import '../../features/quiz/data/datasources/quiz_local_datasource.dart';
 import '../../features/quiz/data/datasources/quiz_remote_datasource.dart';
 import '../../features/quiz/data/repositories/quiz_repository_impl.dart';
 import '../../features/quiz/domain/repositories/quiz_repository.dart';
@@ -41,19 +40,10 @@ Future<void> setupAppDependencies() async {
     );
   }
 
-  if (!getIt.isRegistered<QuizLocalDataSource>()) {
-    getIt.registerLazySingleton<QuizLocalDataSource>(
-      QuizLocalDataSourceImpl.new,
-    );
-  }
-
   // Quiz repository
   if (!getIt.isRegistered<QuizRepository>()) {
     getIt.registerLazySingleton<QuizRepository>(
-      () => QuizRepositoryImpl(
-        remoteDataSource: getIt<QuizRemoteDataSource>(),
-        localDataSource: getIt<QuizLocalDataSource>(),
-      ),
+      () => QuizRepositoryImpl(remoteDataSource: getIt<QuizRemoteDataSource>()),
     );
   }
 

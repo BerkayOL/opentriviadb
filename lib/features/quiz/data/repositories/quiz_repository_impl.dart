@@ -3,21 +3,14 @@ import '../../../../core/error/failure.dart';
 import '../../domain/entities/quiz_category.dart';
 import '../../domain/entities/quiz_question.dart';
 import '../../domain/entities/quiz_request.dart';
-import '../../domain/entities/quiz_result.dart';
 import '../../domain/repositories/quiz_repository.dart';
-import '../datasources/quiz_local_datasource.dart';
 import '../datasources/quiz_remote_datasource.dart';
-import '../models/quiz_result_model.dart';
 
 class QuizRepositoryImpl implements QuizRepository {
-  const QuizRepositoryImpl({
-    required QuizRemoteDataSource remoteDataSource,
-    required QuizLocalDataSource localDataSource,
-  }) : _remoteDataSource = remoteDataSource,
-       _localDataSource = localDataSource;
+  const QuizRepositoryImpl({required QuizRemoteDataSource remoteDataSource})
+    : _remoteDataSource = remoteDataSource;
 
   final QuizRemoteDataSource _remoteDataSource;
-  final QuizLocalDataSource _localDataSource;
 
   @override
   Future<List<QuizCategory>> getCategories() async {
@@ -41,11 +34,6 @@ class QuizRepositoryImpl implements QuizRepository {
     } catch (_) {
       throw const UnknownFailure('An unexpected error occurred.');
     }
-  }
-
-  @override
-  Future<void> saveQuizResult(QuizResult result) {
-    return _localDataSource.saveQuizResult(QuizResultModel.fromEntity(result));
   }
 
   Failure _mapExceptionToFailure(AppException exception) {
