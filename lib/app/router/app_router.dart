@@ -8,14 +8,20 @@ import '../../features/quiz/presentation/cubits/quiz_cubit.dart';
 import '../../features/quiz/domain/entities/quiz_request.dart';
 import '../../features/quiz/presentation/pages/quiz_page.dart';
 import '../../features/quiz/presentation/pages/quiz_setup_page.dart';
+import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/history/presentation/cubits/history_cubit.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import 'app_routes.dart';
 
 abstract final class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.setup,
+    initialLocation: AppRoutes.splash,
     routes: [
+      GoRoute(
+        path: AppRoutes.splash,
+        name: AppRoutes.splashName,
+        builder: (context, state) => const SplashPage(),
+      ),
       GoRoute(
         path: AppRoutes.setup,
         name: AppRoutes.setupName,
