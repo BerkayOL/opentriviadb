@@ -1,10 +1,12 @@
-import '../../../quiz/domain/entities/quiz_result.dart';
+import '../entities/quiz_history_entry.dart';
 import '../repositories/history_repository.dart';
 
-class GetHistoryUseCase {
-  const GetHistoryUseCase(this._repository);
+class GetQuizHistoryUseCase {
+  const GetQuizHistoryUseCase(this._repository);
 
   final HistoryRepository _repository;
 
-  Future<List<QuizResult>> call() => _repository.getHistory();
+  Future<List<QuizHistoryEntry>> call() {
+    return _repository.getHistory();
+  }
 }

@@ -28,4 +28,14 @@ class QuizResultModel extends QuizResult {
       difficulty: difficulty,
     );
   }
+
+  fromMap(Map<String, dynamic> map) {
+    return QuizResultModel(
+      score: map['score'],
+      totalQuestions: map['totalQuestions'],
+      completedAt: DateTime.parse(map['completedAt']),
+      categoryName: map['categoryName'],
+      difficulty: map['difficulty'],
+    );
+  }
 }

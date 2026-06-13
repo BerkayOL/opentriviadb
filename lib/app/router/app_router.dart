@@ -9,6 +9,7 @@ import '../../features/quiz/domain/entities/quiz_request.dart';
 import '../../features/quiz/presentation/pages/quiz_page.dart';
 import '../../features/quiz/presentation/pages/quiz_result_page.dart';
 import '../../features/quiz/presentation/pages/quiz_setup_page.dart';
+import '../../features/history/presentation/cubits/history_cubit.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import 'app_routes.dart';
 
@@ -48,7 +49,10 @@ abstract final class AppRouter {
       GoRoute(
         path: AppRoutes.history,
         name: AppRoutes.historyName,
-        builder: (context, state) => const HistoryPage(),
+        builder: (context, state) => BlocProvider(
+          create: (_) => getIt<HistoryCubit>()..loadHistory(),
+          child: const HistoryPage(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.settings,

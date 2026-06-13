@@ -1,15 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../history/domain/entities/quiz_history_entry.dart';
+import '../../../history/domain/usecases/save_quiz_history_usecase.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/quiz_request.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
 import 'quiz_state.dart';
 
 class QuizCubit extends Cubit<QuizState> {
-  QuizCubit(this._getQuestionsUseCase) : super(const QuizState());
+  QuizCubit(this._getQuestionsUseCase, this._saveQuizHistoryUseCase)
+    : super(const QuizState());
 
   final GetQuestionsUseCase _getQuestionsUseCase;
+  final SaveQuizHistoryUseCase _saveQuizHistoryUseCase;
   Timer? _timer;
   static const int _questionDuration = 30;
   QuizRequest? _lastRequest;
@@ -89,13 +93,25 @@ class QuizCubit extends Cubit<QuizState> {
     );
   }
 
-  void nextQuestion() {
+  Future<void> nextQuestion() async {
     if (state.status != QuizStatus.answerRevealed) {
       return;
     }
 
     if (state.isLastQuestion) {
       _stopTimer();
+      final entry = QuizHistoryEntry(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
+        score: state.score,
+        totalQuestions: state.totalQuestions,
+        createdAt: DateTime.now(),
+      );
+      try {
+        await _saveQuizHistoryUseCase(entry);
+      } catch (_) {
+        // History kaydı başarısız olsa bile sonuç ekranı gösterilsin.
+      }
+
       emit(state.copyWith(status: QuizStatus.completed));
       return;
     }
