@@ -3,13 +3,14 @@ abstract final class AppStrings {
   static const String brandName = 'Quizora';
   static const String splashSubTitle = 'Test your knowledge.';
   static const String setupSubtitle =
-      'Choose category, difficulty and question count.';
+      'Choose your category, difficulty and question count.';
   static const String comingSoon = 'This section is ready for the next step.';
   static const String history = 'History';
   static const String home = 'Quiz';
   static const String settings = 'Settings';
   static const String category = 'Category';
   static const String difficulty = 'Difficulty';
+  static const String setupReady = 'Ready';
   static const String numberOfQuestions = 'Number of Questions';
   static const String questionType = 'Question Type';
   static const String chooseCategory = 'Choose a category';

@@ -14,33 +14,32 @@ class SetupHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                AppStrings.brandName,
-                style: textTheme.labelLarge?.copyWith(
-                  color: QuizSetupPalette.primaryText(context),
-                  letterSpacing: 0.8,
-                ),
-              ),
-            ),
-          ],
+        Text(
+          AppStrings.brandName,
+          style: textTheme.titleMedium?.copyWith(
+            color: QuizSetupPalette.secondaryText(context),
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.7,
+          ),
         ),
         const SizedBox(height: AppSpacing.xl),
         Text(
           AppStrings.appName,
           style: textTheme.displaySmall?.copyWith(
-            color: QuizSetupPalette.secondaryText(context),
-            fontWeight: FontWeight.w700,
+            color: QuizSetupPalette.primaryText(context),
+            fontWeight: FontWeight.w800,
+            letterSpacing: -1.0,
+            height: 1.05,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
           AppStrings.setupSubtitle,
           style: textTheme.bodyLarge?.copyWith(
-            color: QuizSetupPalette.primaryText(context),
-            height: 1.4,
+            color: QuizSetupPalette.secondaryText(context),
+            height: 1.42,
+            letterSpacing: 0.1,
           ),
         ),
       ],

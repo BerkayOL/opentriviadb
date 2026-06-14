@@ -13,6 +13,22 @@ class QuizSetupPalette {
         : const [Color(0xFFF8FAFC), Color(0xFFEFF6FF), Color(0xFFEDE9FE)];
   }
 
+  static Color pillFill(BuildContext context) {
+    final dark = isDark(context);
+
+    return dark
+        ? Colors.white.withValues(alpha: 0.07)
+        : Colors.white.withValues(alpha: 0.76);
+  }
+
+  static Color pillBorder(BuildContext context) {
+    final dark = isDark(context);
+
+    return dark
+        ? Colors.white.withValues(alpha: 0.08)
+        : const Color(0xFFCBD5E1).withValues(alpha: 0.85);
+  }
+
   static Color primaryText(BuildContext context) {
     return isDark(context) ? Colors.white : const Color(0xFF0F172A);
   }
