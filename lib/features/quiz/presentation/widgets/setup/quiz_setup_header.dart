@@ -22,7 +22,7 @@ class SetupHeader extends StatelessWidget {
               child: Text(
                 AppStrings.brandName,
                 style: textTheme.labelLarge?.copyWith(
-                  color: Colors.white70,
+                  color: QuizSetupPalette.primaryText(context),
                   letterSpacing: 0.8,
                 ),
               ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:opentriviadb/core/constants/app_strings.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../features/splash/presentation/theme/splash_theme.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -22,11 +23,11 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF070A1F), Color(0xFF141044), Color(0xFF24105F)],
+            colors: SplashPalette.backgroundGradient(context),
           ),
         ),
         child: Stack(
@@ -39,12 +40,12 @@ class _SplashPageState extends State<SplashPage> {
                 width: 150,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Colors.blue.withValues(alpha: 0.08),
+                  color: SplashPalette.firstGlowFill(context),
 
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.blue.withValues(alpha: 0.3),
+                      color: SplashPalette.firstGlowColor(context),
                       blurRadius: 60,
                       spreadRadius: 30,
                     ),
@@ -95,33 +96,35 @@ class _SplashPageState extends State<SplashPage> {
                       fit: BoxFit.contain,
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    const Text(
+                    Text(
                       AppStrings.appName,
                       style: TextStyle(
                         fontSize: 42,
-                        color: Colors.white,
+                        color: SplashPalette.primaryText(context),
                         fontWeight: FontWeight.w700,
                         fontFamily: AppTypography.displayFontFamily,
                         letterSpacing: 0.8,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    const Text(
-                      'Test your knowledge',
+                    Text(
+                      AppStrings.splashSubTitle,
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: SplashPalette.secondaryText(context),
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
                         letterSpacing: 0.3,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    const SizedBox(
+                    SizedBox(
                       width: 160,
                       child: LinearProgressIndicator(
                         minHeight: 3,
-                        color: Colors.white,
-                        backgroundColor: Colors.white24,
+                        color: SplashPalette.progressColor(context),
+                        backgroundColor: SplashPalette.progressBackground(
+                          context,
+                        ),
                       ),
                     ),
                   ],
