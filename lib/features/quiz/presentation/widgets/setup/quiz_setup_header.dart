@@ -27,17 +27,6 @@ class SetupHeader extends StatelessWidget {
                 ),
               ),
             ),
-            _HeaderActionButton(
-              tooltip: AppStrings.history,
-              icon: Icons.history_rounded,
-              onPressed: () => context.push(AppRoutes.history),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            _HeaderActionButton(
-              tooltip: AppStrings.settings,
-              icon: Icons.settings_rounded,
-              onPressed: () => context.push(AppRoutes.settings),
-            ),
           ],
         ),
         const SizedBox(height: AppSpacing.xl),

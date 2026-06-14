@@ -6,6 +6,7 @@ abstract final class AppStrings {
       'Choose category, difficulty and question count.';
   static const String comingSoon = 'This section is ready for the next step.';
   static const String history = 'History';
+  static const String home = 'Quiz';
   static const String settings = 'Settings';
   static const String category = 'Category';
   static const String difficulty = 'Difficulty';
