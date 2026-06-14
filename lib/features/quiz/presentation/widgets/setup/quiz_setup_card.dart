@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opentriviadb/features/quiz/presentation/widgets/setup/quiz_setup_palette.dart';
 
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_spacing.dart';
@@ -14,9 +15,12 @@ class SetupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).colorScheme.surface,
+      color: QuizSetupPalette.cardColor(context),
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28),
+        side: BorderSide(color: QuizSetupPalette.cardBorder(context)),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
@@ -67,19 +71,20 @@ class _SetupFieldSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(icon, size: 18, color: colorScheme.primary),
+            Icon(icon, size: 18, color: QuizSetupPalette.accent(context)),
             const SizedBox(width: AppSpacing.sm),
             Text(
               title,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: colorScheme.onSurface.withValues(alpha: 0.82),
+                color: QuizSetupPalette.primaryText(
+                  context,
+                ).withValues(alpha: 0.86),
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],

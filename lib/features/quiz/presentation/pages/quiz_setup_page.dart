@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../widgets/setup/quiz_setup_card.dart';
 import '../widgets/setup/quiz_setup_header.dart';
+import '../widgets/setup/quiz_setup_palette.dart';
 
 class QuizSetupPage extends StatelessWidget {
   const QuizSetupPage({super.key});
@@ -10,11 +11,11 @@ class QuizSetupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF08111F), Color(0xFF111827), Color(0xFF172554)],
+            colors: QuizSetupPalette.backgroundGradient(context),
           ),
         ),
         child: SafeArea(

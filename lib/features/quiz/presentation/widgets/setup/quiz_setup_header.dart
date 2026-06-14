@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../app/router/app_routes.dart';
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import 'quiz_setup_palette.dart';
 
 class SetupHeader extends StatelessWidget {
   const SetupHeader({super.key});
@@ -43,7 +44,7 @@ class SetupHeader extends StatelessWidget {
         Text(
           AppStrings.appName,
           style: textTheme.displaySmall?.copyWith(
-            color: Colors.white,
+            color: QuizSetupPalette.secondaryText(context),
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -51,7 +52,7 @@ class SetupHeader extends StatelessWidget {
         Text(
           AppStrings.setupSubtitle,
           style: textTheme.bodyLarge?.copyWith(
-            color: Colors.white.withValues(alpha: 0.76),
+            color: QuizSetupPalette.primaryText(context),
             height: 1.4,
           ),
         ),
@@ -74,11 +75,14 @@ class _HeaderActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton.filledTonal(
+      color: QuizSetupPalette.primaryText(context),
       tooltip: tooltip,
       onPressed: onPressed,
       style: IconButton.styleFrom(
-        backgroundColor: Colors.white.withValues(alpha: 0.12),
-        foregroundColor: Colors.white,
+        backgroundColor: QuizSetupPalette.isDark(context)
+            ? Colors.white.withValues(alpha: 0.12)
+            : Colors.white.withValues(alpha: 0.75),
+        foregroundColor: QuizSetupPalette.primaryText(context),
         fixedSize: const Size(44, 44),
       ),
       icon: Icon(icon),

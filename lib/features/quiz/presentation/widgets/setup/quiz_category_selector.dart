@@ -8,6 +8,7 @@ import '../../../domain/entities/quiz_category.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
 import 'quiz_setup_dropdown_decoration.dart';
+import 'quiz_setup_palette.dart';
 
 class CategorySelector extends StatelessWidget {
   const CategorySelector({super.key});
@@ -32,6 +33,13 @@ class CategorySelector extends StatelessWidget {
                     message: AppStrings.noCategoriesMessage,
                   )
                 : DropdownButtonFormField<QuizCategory>(
+                    menuMaxHeight: 280,
+                    dropdownColor: QuizSetupPalette.dropdownColor(context),
+                    iconEnabledColor: QuizSetupPalette.secondaryText(context),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: QuizSetupPalette.primaryText(context),
+                      fontWeight: FontWeight.w600,
+                    ),
                     initialValue: state.selectedCategory,
                     decoration: dropDownDecoration(
                       context,
@@ -39,6 +47,7 @@ class CategorySelector extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(16),
                     isExpanded: true,
+                    itemHeight: 56,
                     items: state.categories
                         .map(
                           (category) => DropdownMenuItem<QuizCategory>(

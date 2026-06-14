@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:opentriviadb/core/constants/app_strings.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -95,7 +96,7 @@ class _SplashPageState extends State<SplashPage> {
                     ),
                     const SizedBox(height: AppSpacing.md),
                     const Text(
-                      'Quizora',
+                      AppStrings.appName,
                       style: TextStyle(
                         fontSize: 42,
                         color: Colors.white,

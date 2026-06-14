@@ -6,6 +6,7 @@ import '../../constants/quiz_setup_options.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
 import 'quiz_setup_dropdown_decoration.dart';
+import 'quiz_setup_palette.dart';
 
 class QuestionTypeSelector extends StatelessWidget {
   const QuestionTypeSelector({super.key});
@@ -15,6 +16,13 @@ class QuestionTypeSelector extends StatelessWidget {
     return BlocBuilder<QuizSetupCubit, QuizSetupState>(
       builder: (context, state) {
         return DropdownButtonFormField<String>(
+          menuMaxHeight: 220,
+          dropdownColor: QuizSetupPalette.dropdownColor(context),
+          iconEnabledColor: QuizSetupPalette.secondaryText(context),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: QuizSetupPalette.primaryText(context),
+            fontWeight: FontWeight.w600,
+          ),
           initialValue: state.questionType,
           decoration: dropDownDecoration(
             context,
@@ -22,6 +30,7 @@ class QuestionTypeSelector extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(16),
           isExpanded: true,
+          itemHeight: 56,
           items: QuizSetupOptions.questionTypes
               .map(
                 (option) => DropdownMenuItem<String>(
