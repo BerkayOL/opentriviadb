@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,49 +13,81 @@ class FloatingNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final location = GoRouterState.of(context).uri.path;
-
     return SafeArea(
-      minimum: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppShellPalette.navBarColor(context),
-          borderRadius: BorderRadius.circular(999),
-          border: Border.all(color: AppShellPalette.navBarBorder(context)),
-          boxShadow: [
-            BoxShadow(
-              color: AppShellPalette.navShadow(context),
-              blurRadius: 28,
-              offset: const Offset(0, 14),
+      top: false,
+      minimum: const EdgeInsets.only(bottom: 16),
+      child: FractionallySizedBox(
+        widthFactor: 0.7,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 320),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(36),
+              boxShadow: [
+                BoxShadow(
+                  color: AppShellPalette.dockShadow(context),
+                  blurRadius: 24,
+                  offset: const Offset(0, 8),
+                ),
+                BoxShadow(
+                  color: AppShellPalette.dockAccentShadow(context),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: SizedBox(
-          height: 76,
-          child: Row(
-            children: [
-              FloatingNavItem(
-                icon: Icons.quiz_rounded,
-                label: AppStrings.home,
-                isSelected: location == AppRoutes.setup,
-                onTap: () => context.go(AppRoutes.setup),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(36),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: AppShellPalette.dockGradient(context),
+                    borderRadius: BorderRadius.circular(36),
+                    border: Border.all(
+                      color: AppShellPalette.dockBorder(context),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: const SizedBox(height: 76, child: _FloatingNavItems()),
+                ),
               ),
-              FloatingNavItem(
-                icon: Icons.history_rounded,
-                label: AppStrings.history,
-                isSelected: location == AppRoutes.history,
-                onTap: () => context.go(AppRoutes.history),
-              ),
-              FloatingNavItem(
-                icon: Icons.settings_rounded,
-                label: AppStrings.settings,
-                isSelected: location == AppRoutes.settings,
-                onTap: () => context.go(AppRoutes.settings),
-              ),
-            ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _FloatingNavItems extends StatelessWidget {
+  const _FloatingNavItems();
+
+  @override
+  Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+
+    return Row(
+      children: [
+        FloatingNavItem(
+          icon: Icons.quiz_rounded,
+          label: AppStrings.home,
+          isSelected: location == AppRoutes.setup,
+          onTap: () => context.go(AppRoutes.setup),
+        ),
+        FloatingNavItem(
+          icon: Icons.history_rounded,
+          label: AppStrings.history,
+          isSelected: location == AppRoutes.history,
+          onTap: () => context.go(AppRoutes.history),
+        ),
+        FloatingNavItem(
+          icon: Icons.settings_rounded,
+          label: AppStrings.settings,
+          isSelected: location == AppRoutes.settings,
+          onTap: () => context.go(AppRoutes.settings),
+        ),
+      ],
     );
   }
 }

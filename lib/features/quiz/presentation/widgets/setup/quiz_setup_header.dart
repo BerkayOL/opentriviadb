@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../../app/router/app_routes.dart';
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import 'quiz_setup_palette.dart';
@@ -46,35 +44,6 @@ class SetupHeader extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _HeaderActionButton extends StatelessWidget {
-  const _HeaderActionButton({
-    required this.tooltip,
-    required this.icon,
-    required this.onPressed,
-  });
-
-  final String tooltip;
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton.filledTonal(
-      color: QuizSetupPalette.primaryText(context),
-      tooltip: tooltip,
-      onPressed: onPressed,
-      style: IconButton.styleFrom(
-        backgroundColor: QuizSetupPalette.isDark(context)
-            ? Colors.white.withValues(alpha: 0.12)
-            : Colors.white.withValues(alpha: 0.75),
-        foregroundColor: QuizSetupPalette.primaryText(context),
-        fixedSize: const Size(44, 44),
-      ),
-      icon: Icon(icon),
     );
   }
 }

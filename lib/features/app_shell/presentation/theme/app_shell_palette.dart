@@ -5,34 +5,86 @@ abstract final class AppShellPalette {
     return Theme.of(context).brightness == Brightness.dark;
   }
 
-  static Color navBarColor(BuildContext context) {
+  static Gradient dockGradient(BuildContext context) {
     final dark = isDark(context);
 
-    return dark
-        ? const Color(0xFF0F172A).withValues(alpha: 0.92)
-        : Colors.white.withValues(alpha: 0.88);
+    return RadialGradient(
+      center: Alignment.topLeft,
+      radius: 1.35,
+      colors: dark
+          ? [
+              const Color(0xFF121827).withValues(alpha: 0.88),
+              const Color(0xFF09090B).withValues(alpha: 0.92),
+            ]
+          : [
+              Colors.white.withValues(alpha: 0.92),
+              const Color(0xFFF8FAFC).withValues(alpha: 0.88),
+            ],
+    );
   }
 
-  static Color navBarBorder(BuildContext context) {
+  static Color dockBorder(BuildContext context) {
     final dark = isDark(context);
 
     return dark
         ? Colors.white.withValues(alpha: 0.08)
-        : const Color(0xFFCBD5E1).withValues(alpha: 0.85);
+        : const Color(0xFFCBD5E1).withValues(alpha: 0.72);
   }
 
-  static Color navItemColor(BuildContext context) {
-    final dark = isDark(context);
-
-    return dark ? Colors.white70 : const Color(0xFF475569);
-  }
-
-  static Color navShadow(BuildContext context) {
+  static Color dockShadow(BuildContext context) {
     final dark = isDark(context);
 
     return dark
-        ? Colors.black.withValues(alpha: 0.35)
+        ? Colors.black.withValues(alpha: 0.38)
         : const Color(0xFF64748B).withValues(alpha: 0.18);
+  }
+
+  static Color dockAccentShadow(BuildContext context) {
+    return isDark(context)
+        ? const Color(0xFF5B8CFF).withValues(alpha: 0.07)
+        : const Color(0xFF6366F1).withValues(alpha: 0.08);
+  }
+
+  static Color passiveIcon(BuildContext context, {bool pressed = false}) {
+    final dark = isDark(context);
+
+    if (pressed) {
+      return dark
+          ? const Color(0xFF93C5FD).withValues(alpha: 0.82)
+          : const Color(0xFF2563EB).withValues(alpha: 0.86);
+    }
+
+    return dark
+        ? Colors.white.withValues(alpha: 0.58)
+        : const Color(0xFF475569).withValues(alpha: 0.86);
+  }
+
+  static Color activeIcon(BuildContext context) {
+    return isDark(context) ? Colors.white : const Color(0xFF0F172A);
+  }
+
+  static Color activeBubbleFill(BuildContext context) {
+    return isDark(context)
+        ? const Color(0xFF5B8CFF).withValues(alpha: 0.10)
+        : const Color(0xFF3B82F6).withValues(alpha: 0.10);
+  }
+
+  static Color activeBubbleBorder(BuildContext context) {
+    return isDark(context)
+        ? const Color(0xFF5B8CFF).withValues(alpha: 0.12)
+        : const Color(0xFF6366F1).withValues(alpha: 0.14);
+  }
+
+  static Color activeBubbleGlow(BuildContext context) {
+    return isDark(context)
+        ? const Color(0xFF5B8CFF).withValues(alpha: 0.14)
+        : const Color(0xFF3B82F6).withValues(alpha: 0.12);
+  }
+
+  static Color indicatorGlow(BuildContext context) {
+    return isDark(context)
+        ? const Color(0xFF5B8CFF).withValues(alpha: 0.12)
+        : const Color(0xFF6366F1).withValues(alpha: 0.12);
   }
 
   static const List<Color> selectedGradient = [
