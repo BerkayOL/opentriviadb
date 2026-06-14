@@ -9,7 +9,7 @@ import 'quiz_category_selector.dart';
 import 'quiz_start_button.dart';
 
 class SetupCard extends StatelessWidget {
-  const SetupCard();
+  const SetupCard({super.key});
 
   @override
   Widget build(BuildContext context) {

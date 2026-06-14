@@ -33,7 +33,7 @@ class CategorySelector extends StatelessWidget {
                   )
                 : DropdownButtonFormField<QuizCategory>(
                     initialValue: state.selectedCategory,
-                    decoration: DropdownDecoration(
+                    decoration: dropDownDecoration(
                       context,
                       AppStrings.chooseCategory,
                     ),

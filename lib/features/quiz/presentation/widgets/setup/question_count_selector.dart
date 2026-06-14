@@ -8,7 +8,7 @@ import '../../cubits/quiz_setup_state.dart';
 import 'quiz_setup_dropdown_decoration.dart';
 
 class QuestionCountSelector extends StatelessWidget {
-  const QuestionCountSelector();
+  const QuestionCountSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class QuestionCountSelector extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<int>(
           initialValue: state.questionCount,
-          decoration: DropdownDecoration(
+          decoration: dropDownDecoration(
             context,
             AppStrings.selectQuestionCount,
           ),

@@ -6,7 +6,7 @@ import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_spacing.dart';
 
 class SetupHeader extends StatelessWidget {
-  const SetupHeader();
+  const SetupHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
