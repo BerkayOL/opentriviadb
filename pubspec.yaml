@@ -39,10 +39,9 @@ flutter:
           weight: 600
         - asset: assets/fonts/PlusJakartaSans-Bold.ttf
           weight: 700
-
     - family: Antonio
       fonts:
-        - asset: assets/fonts/Antonio-Regular.ttf
+        - asset: assets/fonts/Anton-Regular.ttf
           weight: 400
 flutter_launcher_icons:
   android: true
