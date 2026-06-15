@@ -10,23 +10,24 @@ class QuizSetupCubit extends Cubit<QuizSetupState> {
 
   final GetCategoriesUseCase _getCategoriesUseCase;
 
-  Future<void> loadCategories() async {
-    emit(
-      state.copyWith(
-        status: QuizSetupStatus.loading,
-        categories: const [],
-        selectedCategory: null,
-        errorMessage: null,
-      ),
-    );
+  Future<void> loadCategories({bool forceRefresh = false}) async {
+    if (!forceRefresh) {
+      if (state.status == QuizSetupStatus.loading) return;
+      if (state.categories.isNotEmpty) return;
+    }
+
+    emit(state.copyWith(status: QuizSetupStatus.loading, errorMessage: null));
 
     try {
       final categories = await _getCategoriesUseCase();
+
       emit(
         state.copyWith(
           status: QuizSetupStatus.ready,
           categories: categories,
-          selectedCategory: categories.isEmpty ? null : categories.first,
+          selectedCategory:
+              state.selectedCategory ??
+              (categories.isEmpty ? null : categories.first),
           errorMessage: null,
         ),
       );

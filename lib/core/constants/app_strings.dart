@@ -17,8 +17,18 @@ abstract final class AppStrings {
   static const String selectQuestionCount = 'Select question count';
   static const String selectQuestionType = 'Select question type';
   static const String anyLevel = 'Any level';
+  static const String settingsSubtitle = 'Manage your Quizora preferences.';
+  static const String appearance = 'Appearance';
+  static const String defaultSystemSubTitle = 'Follow your device appearance.';
+  static const String lightSystemSubTitle = 'Bright and clean interface.';
+  static const String darkSystemSubTitle = 'Deep focus mode.';
+  static const String themeSectionSubtitle =
+      'Choose how Quizora looks on your device.';
   static const String easy = 'Easy';
   static const String medium = 'Medium';
+  static const String systemTheme = 'System theme';
+  static const String lightTheme = 'Light Theme';
+  static const String darkTheme = 'Dark Theme';
   static const String hard = 'Hard';
   static const String multipleChoice = 'Multiple Choice';
   static const String trueFalse = 'True / False';

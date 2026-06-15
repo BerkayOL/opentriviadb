@@ -25,17 +25,15 @@ abstract final class AppRouter {
         builder: (context, state) => const SplashPage(),
       ),
       ShellRoute(
-        builder: (context, state, child) {
-          return AppShellPage(child: child);
-        },
+        builder: (context, state, child) => BlocProvider(
+          create: (_) => getIt<QuizSetupCubit>()..loadCategories(),
+          child: AppShellPage(child: child),
+        ),
         routes: [
           GoRoute(
             path: AppRoutes.setup,
             name: AppRoutes.setupName,
-            builder: (context, state) => BlocProvider(
-              create: (_) => getIt<QuizSetupCubit>()..loadCategories(),
-              child: const QuizSetupPage(),
-            ),
+            builder: (context, state) => const QuizSetupPage(),
           ),
           GoRoute(
             path: AppRoutes.history,

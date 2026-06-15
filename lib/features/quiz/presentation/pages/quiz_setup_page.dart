@@ -13,8 +13,6 @@ class QuizSetupPage extends StatelessWidget {
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
             colors: QuizSetupPalette.backgroundGradient(context),
           ),
         ),

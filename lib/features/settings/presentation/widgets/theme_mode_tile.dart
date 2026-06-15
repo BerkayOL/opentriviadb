@@ -4,10 +4,13 @@ class ThemeModeTile extends StatelessWidget {
   const ThemeModeTile({
     required this.title,
     required this.selected,
+    required this.icon,
+    required this.subtitle,
     required this.onTap,
     super.key,
   });
-
+  final Icon icon;
+  final String subtitle;
   final String title;
   final bool selected;
   final VoidCallback onTap;
