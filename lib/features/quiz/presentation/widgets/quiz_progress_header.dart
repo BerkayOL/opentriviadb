@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:opentriviadb/features/quiz/presentation/theme/quiz_palette.dart';
+import '../theme/quiz_palette.dart';
 
 import '../../../../core/constants/app_strings.dart';
 

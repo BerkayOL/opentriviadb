@@ -9,23 +9,18 @@ class AnswerOptionCard extends StatelessWidget {
     required this.answer,
     required this.onTap,
     required this.status,
+    required this.optionIndex,
     super.key,
   });
-
   final String answer;
   final VoidCallback onTap;
   final AnswerOptionStatus status;
-
+  final int optionIndex;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final borderRadius = BorderRadius.circular(AppSpacing.md);
-
-    final shouldLift =
-        status == AnswerOptionStatus.selected ||
-        status == AnswerOptionStatus.correct ||
-        status == AnswerOptionStatus.wrong;
-
+    final shouldLift = status == AnswerOptionStatus.selected;
     final backgroundColor = switch (status) {
       AnswerOptionStatus.idle => QuizPalette.optionFill(context),
       AnswerOptionStatus.selected => QuizPalette.selectedFill(context),
@@ -39,7 +34,8 @@ class AnswerOptionCard extends StatelessWidget {
       AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
       AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
     };
-
+    final badgeBackgroundColor = borderColor.withValues(alpha: 0.14);
+    final badgeBorderColor = borderColor.withValues(alpha: 0.85);
     final trailingIcon = switch (status) {
       AnswerOptionStatus.correct => Icons.check_circle_rounded,
       AnswerOptionStatus.wrong => Icons.cancel_rounded,
@@ -51,7 +47,8 @@ class AnswerOptionCard extends StatelessWidget {
       AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
       _ => null,
     };
-
+    final labels = ['A', 'B', 'C', 'D'];
+    final optionLabel = optionIndex < labels.length ? labels[optionIndex] : '?';
     return AnimatedScale(
       scale: shouldLift ? 1.02 : 1.0,
       duration: const Duration(milliseconds: 180),
@@ -75,6 +72,29 @@ class AnswerOptionCard extends StatelessWidget {
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Row(
                 children: [
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppSpacing.md),
+                      color: badgeBackgroundColor,
+                      border: Border.all(color: badgeBorderColor),
+                    ),
+
+                    child: SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: Center(
+                        child: Text(
+                          optionLabel,
+                          style: textTheme.labelLarge?.copyWith(
+                            color: badgeBorderColor,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -0.1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Text(
                       answer,

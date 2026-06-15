@@ -13,8 +13,8 @@ class QuizQuestionCard extends StatelessWidget {
         question,
         style: textTheme.titleLarge?.copyWith(
           color: QuizPalette.primaryText(context),
-          fontWeight: FontWeight.w800,
-          height: 1.35,
+          fontWeight: FontWeight.w700,
+          height: 1,
         ),
       ),
     );

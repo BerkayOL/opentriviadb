@@ -11,6 +11,7 @@ import 'answer_option_card.dart';
 import 'answer_option_status_resolver.dart';
 import 'quiz_progress_header.dart';
 import 'quiz_timer_badge.dart';
+import 'quiz_progress_bar.dart';
 
 class QuestionView extends StatelessWidget {
   const QuestionView({required this.state, super.key});
@@ -42,28 +43,82 @@ class QuestionView extends StatelessWidget {
               QuizTimerBadge(secondsLeft: state.secondsLeft),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
-          QuizQuestionCard(question: question.question),
           const SizedBox(height: AppSpacing.md),
-          ...question.answers.map((answer) {
-            final optionStatus = resolveAnswerStatus(
-              state: state,
-              answer: answer,
-              correctAnswer: question.correctAnswer,
-            );
-
-            return AnswerOptionCard(
-              answer: answer,
-              status: optionStatus,
-              onTap: () {
-                if (state.status == QuizStatus.answerRevealed) {
-                  return;
-                }
-
-                context.read<QuizCubit>().selectAnswer(answer);
+          QuizProgressBar(
+            currentQuestion: state.currentIndex + 1,
+            totalQuestions: state.totalQuestions,
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 260),
+            curve: Curves.easeOutCubic,
+            alignment: Alignment.topCenter,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 260),
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInCubic,
+              layoutBuilder: (currentChild, previousChildren) {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    ...previousChildren,
+                    if (currentChild != null) currentChild,
+                  ],
+                );
               },
-            );
-          }),
+              transitionBuilder: (child, animation) {
+                final slideAnimation =
+                    Tween<Offset>(
+                      begin: const Offset(0.03, 0),
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutCubic,
+                      ),
+                    );
+
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: slideAnimation,
+                    child: child,
+                  ),
+                );
+              },
+              child: Column(
+                key: ValueKey(state.currentIndex),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  QuizQuestionCard(question: question.question),
+                  const SizedBox(height: AppSpacing.md),
+                  ...question.answers.asMap().entries.map((entry) {
+                    final optionIndex = entry.key;
+                    final answer = entry.value;
+
+                    final optionStatus = resolveAnswerStatus(
+                      state: state,
+                      answer: answer,
+                      correctAnswer: question.correctAnswer,
+                    );
+
+                    return AnswerOptionCard(
+                      answer: answer,
+                      optionIndex: optionIndex,
+                      status: optionStatus,
+                      onTap: () {
+                        if (state.status == QuizStatus.answerRevealed) {
+                          return;
+                        }
+
+                        context.read<QuizCubit>().selectAnswer(answer);
+                      },
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
           const Spacer(),
           if (state.status == QuizStatus.answerRevealed)
             AppButton(
