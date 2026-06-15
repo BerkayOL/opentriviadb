@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import '../theme/settings_palette.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../quiz/presentation/widgets/setup/quiz_setup_palette.dart';
 
 class SettingsHeader extends StatelessWidget {
   const SettingsHeader({super.key});
@@ -17,7 +17,7 @@ class SettingsHeader extends StatelessWidget {
         Text(
           AppStrings.brandName,
           style: textTheme.titleMedium?.copyWith(
-            color: QuizSetupPalette.secondaryText(context),
+            color: SettingsPalette.secondaryText(context),
             fontWeight: FontWeight.w800,
             letterSpacing: 0.8,
           ),
@@ -26,7 +26,7 @@ class SettingsHeader extends StatelessWidget {
         Text(
           AppStrings.settings,
           style: textTheme.displaySmall?.copyWith(
-            color: QuizSetupPalette.primaryText(context),
+            color: SettingsPalette.primaryText(context),
             fontWeight: FontWeight.w800,
             letterSpacing: -1.0,
             height: 1.05,
@@ -36,7 +36,7 @@ class SettingsHeader extends StatelessWidget {
         Text(
           AppStrings.settingsSubtitle,
           style: textTheme.bodyLarge?.copyWith(
-            color: QuizSetupPalette.secondaryText(context),
+            color: SettingsPalette.secondaryText(context),
             height: 1.42,
             letterSpacing: 0.1,
           ),

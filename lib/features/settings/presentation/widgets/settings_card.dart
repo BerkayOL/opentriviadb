@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
-import '../../../quiz/presentation/widgets/setup/quiz_setup_palette.dart';
 import '../cubits/theme_cubit.dart';
 import '../cubits/theme_state.dart';
+import '../theme/settings_palette.dart';
 import 'theme_mode_tile.dart';
 
 class SettingsCard extends StatelessWidget {
@@ -19,46 +19,59 @@ class SettingsCard extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return AppCard(
+          color: SettingsPalette.cardColor(context),
+          borderColor: SettingsPalette.cardBorder(context),
+          borderRadius: 30,
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 28,
+              color: SettingsPalette.softShadow(context),
+              offset: const Offset(0, 18),
+            ),
+          ],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 AppStrings.appearance,
                 style: textTheme.titleLarge?.copyWith(
-                  color: QuizSetupPalette.primaryText(context),
+                  color: SettingsPalette.primaryText(context),
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.2,
                 ),
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 AppStrings.themeSectionSubtitle,
                 style: textTheme.bodyMedium?.copyWith(
-                  color: QuizSetupPalette.secondaryText(context),
+                  color: SettingsPalette.secondaryText(context),
                   height: 1.35,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
               ThemeModeTile(
                 subtitle: AppStrings.defaultSystemSubTitle,
-                icon: Icon(Icons.brightness_medium_rounded),
+                icon: Icons.brightness_medium_rounded,
                 title: AppStrings.systemTheme,
                 selected: state.themeMode == ThemeMode.system,
                 onTap: () {
                   context.read<ThemeCubit>().changeThemeMode(ThemeMode.system);
                 },
               ),
+              const SizedBox(height: AppSpacing.sm),
               ThemeModeTile(
                 subtitle: AppStrings.lightSystemSubTitle,
-                icon: Icon(Icons.light_mode_rounded),
+                icon: Icons.light_mode_rounded,
                 title: AppStrings.lightTheme,
                 selected: state.themeMode == ThemeMode.light,
                 onTap: () {
                   context.read<ThemeCubit>().changeThemeMode(ThemeMode.light);
                 },
               ),
+              const SizedBox(height: AppSpacing.sm),
               ThemeModeTile(
-                icon: Icon(Icons.dark_mode_rounded),
+                icon: Icons.dark_mode_rounded,
                 subtitle: AppStrings.darkSystemSubTitle,
                 title: AppStrings.darkTheme,
                 selected: state.themeMode == ThemeMode.dark,
