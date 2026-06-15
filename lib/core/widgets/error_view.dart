@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_strings.dart';
 import '../theme/app_spacing.dart';
 import 'app_button.dart';
 
@@ -26,7 +27,7 @@ class ErrorView extends StatelessWidget {
             Text(message, textAlign: TextAlign.center),
             if (onRetry != null) ...[
               const SizedBox(height: AppSpacing.md),
-              AppButton(label: 'Try again', onPressed: onRetry),
+              AppButton(label: AppStrings.tryAgain, onPressed: onRetry),
             ],
           ],
         ),

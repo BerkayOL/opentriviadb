@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opentriviadb/features/quiz/presentation/theme/quiz_palette.dart';
 
 import '../../../../core/constants/app_strings.dart';
 
@@ -16,7 +17,13 @@ class QuizProgressHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       AppStrings.questionProgress(currentQuestion, totalQuestions),
-      style: Theme.of(context).textTheme.titleMedium,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+        color: QuizPalette.primaryText(context),
+        fontWeight: FontWeight.w800,
+        letterSpacing: -0.2,
+      ),
     );
   }
 }

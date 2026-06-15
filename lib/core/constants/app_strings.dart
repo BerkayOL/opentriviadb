@@ -25,10 +25,14 @@ abstract final class AppStrings {
     return 'Question $current of $total';
   }
 
+  static String secondsLeft(int seconds) {
+    return '${seconds}s';
+  }
+
   static const String noQuestionsTitle = 'No questions available.';
   static const String noQuestionsMessage =
       'Try a different setup or check back later.';
-
+  static const String tryAgain = 'Try Again';
   static const String noQuestionAvailable = 'Question is not available.';
 
   static const String seeResults = 'See Results';

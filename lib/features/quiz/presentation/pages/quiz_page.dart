@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../../../core/widgets/loading_view.dart';
 import '../cubits/quiz_cubit.dart';
 import '../cubits/quiz_state.dart';
 import '../theme/quiz_palette.dart';
 import '../widgets/quiz_completed_view.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/empty_view.dart';
+import '../widgets/quiz_loading_view.dart';
 import '../widgets/quiz_question_view.dart';
 
 class QuizPage extends StatelessWidget {
@@ -30,7 +30,7 @@ class QuizPage extends StatelessWidget {
                 switch (state.status) {
                   case QuizStatus.initial:
                   case QuizStatus.loading:
-                    return const LoadingView();
+                    return const QuizLoadingView();
                   case QuizStatus.failure:
                     return ErrorView(
                       message: state.errorMessage ?? AppStrings.genericError,
@@ -46,7 +46,7 @@ class QuizPage extends StatelessWidget {
                   case QuizStatus.inProgress:
                     return QuestionView(state: state);
                   case QuizStatus.completed:
-                    return CompletedView(state: state);
+                    return QuizCompletedView(state: state);
                   case QuizStatus.answerRevealed:
                     return QuestionView(state: state);
                 }

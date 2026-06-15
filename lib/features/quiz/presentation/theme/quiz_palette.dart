@@ -11,6 +11,14 @@ abstract final class QuizPalette {
         : const [Color(0xFFF8FAFC), Color(0xFFEFF6FF), Color(0xFFEDE9FE)];
   }
 
+  static Color selectedFill(BuildContext context) {
+    return accent(context).withValues(alpha: isDark(context) ? 0.14 : 0.08);
+  }
+
+  static Color selectedBorder(BuildContext context) {
+    return accent(context).withValues(alpha: isDark(context) ? 0.45 : 0.34);
+  }
+
   static Color primaryText(BuildContext context) {
     return isDark(context) ? const Color(0xFFF8FAFC) : const Color(0xFF0F172A);
   }
