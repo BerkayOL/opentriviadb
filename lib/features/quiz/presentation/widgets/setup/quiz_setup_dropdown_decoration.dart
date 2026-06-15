@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/app_spacing.dart';
-import 'quiz_setup_palette.dart';
+import '../../theme/quiz_setup_palette.dart';
 
 InputDecoration dropDownDecoration(BuildContext context, String hintText) {
   final radius = BorderRadius.circular(18);

@@ -20,6 +20,27 @@ abstract final class AppStrings {
   static const highestScore = 'Highest Score';
   static const clearHistory = 'Clear History';
   static const noHistoryTitle = 'No quiz history yet.';
+  static const String loadingQuestions = 'Preparing your questions...';
+  static String questionProgress(int current, int total) {
+    return 'Question $current of $total';
+  }
+
+  static const String noQuestionsTitle = 'No questions available.';
+  static const String noQuestionsMessage =
+      'Try a different setup or check back later.';
+
+  static const String noQuestionAvailable = 'Question is not available.';
+
+  static const String seeResults = 'See Results';
+  static const String nextQuestion = 'Next Question';
+
+  static const String quizCompleted = 'Quiz completed';
+  static const String restartQuiz = 'Restart Quiz';
+
+  static String quizScoreResult(int score, int totalQuestions) {
+    return 'You answered $score of $totalQuestions correctly.';
+  }
+
   static const noHistoryMessage = 'Complete a quiz to see your results here.';
   static const genericError = 'Something went wrong.';
   static const correct = 'correct';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_spacing.dart';
-import 'quiz_setup_palette.dart';
+import '../../theme/quiz_setup_palette.dart';
 
 class SetupHeader extends StatelessWidget {
   const SetupHeader({super.key});

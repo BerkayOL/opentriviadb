@@ -6,7 +6,7 @@ import '../../constants/quiz_setup_options.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
 import 'quiz_setup_dropdown_decoration.dart';
-import 'quiz_setup_palette.dart';
+import '../../theme/quiz_setup_palette.dart';
 
 class QuestionTypeSelector extends StatelessWidget {
   const QuestionTypeSelector({super.key});

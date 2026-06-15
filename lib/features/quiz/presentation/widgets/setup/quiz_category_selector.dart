@@ -8,7 +8,7 @@ import '../../../domain/entities/quiz_category.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
 import 'quiz_setup_dropdown_decoration.dart';
-import 'quiz_setup_palette.dart';
+import '../../theme/quiz_setup_palette.dart';
 
 class CategorySelector extends StatelessWidget {
   const CategorySelector({super.key});

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_strings.dart';
+
 class QuizProgressHeader extends StatelessWidget {
   const QuizProgressHeader({
     required this.currentQuestion,
@@ -13,7 +15,7 @@ class QuizProgressHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Question $currentQuestion of $totalQuestions',
+      AppStrings.questionProgress(currentQuestion, totalQuestions),
       style: Theme.of(context).textTheme.titleMedium,
     );
   }

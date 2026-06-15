@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:opentriviadb/features/settings/presentation/theme/settings_palette.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../quiz/presentation/widgets/setup/quiz_setup_palette.dart';
 import '../widgets/settings_card.dart';
 import '../widgets/settings_header.dart';
 
@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomRight,
-              colors: QuizSetupPalette.backgroundGradient(context),
+              colors: SettingsPalette.backgroundGradient(context),
             ),
           ),
           child: SafeArea(
