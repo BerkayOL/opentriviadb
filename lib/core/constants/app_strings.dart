@@ -2,9 +2,8 @@ abstract final class AppStrings {
   static const String appName = 'Trivia Quiz';
   static const String brandName = 'Quizora';
   static const String splashSubTitle = 'Test your knowledge.';
-  static const String setupSubtitle =
-      'Choose your category, difficulty and question count.';
-  static const String comingSoon = 'This section is ready for the next step.';
+  static const String setupSubtitle = 'Set up your quiz and start when ready.';
+  static const String comingSoon = 'Coming soon.';
   static const String history = 'History';
   static const String home = 'Quiz';
   static const String settings = 'Settings';
@@ -17,18 +16,31 @@ abstract final class AppStrings {
   static const String selectQuestionCount = 'Select question count';
   static const String selectQuestionType = 'Select question type';
   static const String anyLevel = 'Any level';
-  static const String settingsSubtitle = 'Manage your Quizora preferences.';
+  static const historySubtitle = 'Track your completed quizzes and best score.';
+  static const highestScore = 'Highest Score';
+  static const clearHistory = 'Clear History';
+  static const noHistoryTitle = 'No quiz history yet.';
+  static const noHistoryMessage = 'Complete a quiz to see your results here.';
+  static const genericError = 'Something went wrong.';
+  static const correct = 'correct';
+  static const clearHistoryConfirmMessage =
+      'This will delete your saved quiz results.';
+  static const cancel = 'Cancel';
+  static const clear = 'Clear';
+  static const completedAt = 'Completed at';
+  static const recentQuizzes = 'Recent Quizzes';
+  static const String settingsSubtitle = 'Adjust how Quizora works for you.';
   static const String appearance = 'Appearance';
   static const String defaultSystemSubTitle = 'Follow your device appearance.';
   static const String lightSystemSubTitle = 'Bright and clean interface.';
   static const String darkSystemSubTitle = 'Deep focus mode.';
   static const String themeSectionSubtitle =
-      'Choose how Quizora looks on your device.';
+      'Choose your preferred appearance.';
   static const String easy = 'Easy';
   static const String medium = 'Medium';
   static const String systemTheme = 'System theme';
-  static const String lightTheme = 'Light Theme';
-  static const String darkTheme = 'Dark Theme';
+  static const String lightTheme = 'Light theme';
+  static const String darkTheme = 'Dark theme';
   static const String hard = 'Hard';
   static const String multipleChoice = 'Multiple Choice';
   static const String trueFalse = 'True / False';
@@ -36,5 +48,9 @@ abstract final class AppStrings {
   static const String categoriesLoadError = 'Categories could not be loaded.';
   static const String noCategoriesFound = 'No categories found';
   static const String noCategoriesMessage =
-      'Try again later or start with any category.';
+      'Try again or start without choosing a category.';
+  static const String correctAnswersLabel = 'correct answers';
+  static String correctAnswerCount(int count) {
+    return count == 1 ? '$count correct answer' : '$count correct answers';
+  }
 }

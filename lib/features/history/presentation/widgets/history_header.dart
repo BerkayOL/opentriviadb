@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../theme/history_palette.dart';
+
+class HistoryHeader extends StatelessWidget {
+  const HistoryHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppStrings.brandName,
+          style: textTheme.titleMedium?.copyWith(
+            color: HistoryPalette.secondaryText(context),
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.8,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        Text(
+          AppStrings.history,
+          style: textTheme.displaySmall?.copyWith(
+            color: HistoryPalette.primaryText(context),
+            fontWeight: FontWeight.w800,
+            letterSpacing: -1.0,
+            height: 1.05,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          AppStrings.historySubtitle,
+          style: textTheme.bodyLarge?.copyWith(
+            color: HistoryPalette.secondaryText(context),
+            height: 1.42,
+            letterSpacing: 0.1,
+          ),
+        ),
+      ],
+    );
+  }
+}
