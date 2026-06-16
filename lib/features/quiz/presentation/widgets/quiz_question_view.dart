@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../features/quiz/presentation/widgets/quiz_question_card.dart';
-
+import 'quiz_action_button.dart';
+import 'quiz_question_card.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/app_button.dart';
 import '../cubits/quiz_cubit.dart';
 import '../cubits/quiz_state.dart';
 import 'answer_option_card.dart';
@@ -60,10 +59,7 @@ class QuestionView extends StatelessWidget {
               layoutBuilder: (currentChild, previousChildren) {
                 return Stack(
                   alignment: Alignment.topCenter,
-                  children: [
-                    ...previousChildren,
-                    if (currentChild != null) currentChild,
-                  ],
+                  children: [...previousChildren, ?currentChild],
                 );
               },
               transitionBuilder: (child, animation) {
@@ -121,7 +117,7 @@ class QuestionView extends StatelessWidget {
           ),
           const Spacer(),
           if (state.status == QuizStatus.answerRevealed)
-            AppButton(
+            QuizActionButton(
               label: state.isLastQuestion
                   ? AppStrings.seeResults
                   : AppStrings.nextQuestion,

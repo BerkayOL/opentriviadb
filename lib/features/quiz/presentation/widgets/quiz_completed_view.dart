@@ -72,7 +72,7 @@ class QuizCompletedView extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 AppButton(
-                  label: AppStrings.restartQuiz,
+                  label: AppStrings.playAgain,
                   icon: Icons.restart_alt_rounded,
                   onPressed: () => context.go(AppRoutes.setup),
                 ),

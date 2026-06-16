@@ -5,6 +5,15 @@ abstract final class HtmlTextDecoder {
     '&amp;': '&',
     '&lt;': '<',
     '&gt;': '>',
+    '&shy;': '',
+    '&rsquo;': "'",
+    '&lsquo;': "'",
+    '&ldquo;': '"',
+    '&rdquo;': '"',
+    '&ndash;': '–',
+    '&mdash;': '—',
+    '&eacute;': 'é',
+    '&uuml;': 'ü',
   };
 
   static String decode(String value) {
@@ -12,6 +21,6 @@ abstract final class HtmlTextDecoder {
     for (final entry in _entities.entries) {
       decoded = decoded.replaceAll(entry.key, entry.value);
     }
-    return decoded;
+    return decoded.replaceAll('\u00AD', '').trim();
   }
 }

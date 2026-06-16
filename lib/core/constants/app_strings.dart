@@ -29,6 +29,7 @@ abstract final class AppStrings {
     return '${seconds}s';
   }
 
+  static const String playAgain = 'Play Again';
   static const String noQuestionsTitle = 'No questions available.';
   static const String noQuestionsMessage =
       'Try a different setup or check back later.';

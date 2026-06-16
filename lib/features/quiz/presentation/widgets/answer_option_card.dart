@@ -34,8 +34,28 @@ class AnswerOptionCard extends StatelessWidget {
       AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
       AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
     };
-    final badgeBackgroundColor = borderColor.withValues(alpha: 0.14);
-    final badgeBorderColor = borderColor.withValues(alpha: 0.85);
+    final badgeBackgroundColor = switch (status) {
+      AnswerOptionStatus.idle => QuizPalette.secondaryText(
+        context,
+      ).withValues(alpha: 0.22),
+      AnswerOptionStatus.selected => QuizPalette.selectedFill(context),
+      AnswerOptionStatus.correct => QuizPalette.correctFill(context),
+      AnswerOptionStatus.wrong => QuizPalette.wrongFill(context),
+    };
+    final answerTextColor = switch (status) {
+      AnswerOptionStatus.idle => QuizPalette.primaryText(context),
+      AnswerOptionStatus.selected => QuizPalette.primaryText(context),
+      AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
+      AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
+    };
+    final badgeBorderColor = switch (status) {
+      AnswerOptionStatus.idle => QuizPalette.secondaryText(
+        context,
+      ).withValues(alpha: 0.80),
+      AnswerOptionStatus.selected => QuizPalette.selectedBorder(context),
+      AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
+      AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
+    };
     final trailingIcon = switch (status) {
       AnswerOptionStatus.correct => Icons.check_circle_rounded,
       AnswerOptionStatus.wrong => Icons.cancel_rounded,
@@ -101,7 +121,7 @@ class AnswerOptionCard extends StatelessWidget {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.bodyLarge?.copyWith(
-                        color: QuizPalette.primaryText(context),
+                        color: answerTextColor,
                         fontWeight: FontWeight.w700,
                         height: 1.3,
                       ),

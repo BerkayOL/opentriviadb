@@ -24,7 +24,7 @@ abstract final class QuizPalette {
   }
 
   static Color secondaryText(BuildContext context) {
-    return isDark(context) ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    return isDark(context) ? const Color(0xFF94A3B8) : const Color(0xFF475569);
   }
 
   static Color cardColor(BuildContext context) {
@@ -58,24 +58,24 @@ abstract final class QuizPalette {
   static Color correctFill(BuildContext context) {
     return const Color(
       0xFF22C55E,
-    ).withValues(alpha: isDark(context) ? 0.18 : 0.12);
+    ).withValues(alpha: isDark(context) ? 0.18 : 0.24);
   }
 
   static Color correctBorder(BuildContext context) {
     return const Color(
       0xFF22C55E,
-    ).withValues(alpha: isDark(context) ? 0.48 : 0.38);
+    ).withValues(alpha: isDark(context) ? 0.65 : 1);
   }
 
   static Color wrongFill(BuildContext context) {
     return const Color(
       0xFFEF4444,
-    ).withValues(alpha: isDark(context) ? 0.18 : 0.12);
+    ).withValues(alpha: isDark(context) ? 0.18 : 0.24);
   }
 
   static Color wrongBorder(BuildContext context) {
     return const Color(
       0xFFEF4444,
-    ).withValues(alpha: isDark(context) ? 0.48 : 0.38);
+    ).withValues(alpha: isDark(context) ? 0.65 : 1);
   }
 }
