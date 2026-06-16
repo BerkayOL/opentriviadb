@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../theme/quiz_palette.dart';
 import 'quiz_action_button.dart';
 import 'quiz_question_card.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -11,6 +12,7 @@ import 'answer_option_status_resolver.dart';
 import 'quiz_progress_header.dart';
 import 'quiz_timer_badge.dart';
 import 'quiz_progress_bar.dart';
+import 'show_exit_quiz_dialog.dart';
 
 class QuestionView extends StatelessWidget {
   const QuestionView({required this.state, super.key});
@@ -32,6 +34,36 @@ class QuestionView extends StatelessWidget {
         children: [
           Row(
             children: [
+              SizedBox(
+                width: 44,
+                height: 44,
+                child: Material(
+                  color: QuizPalette.primaryText(
+                    context,
+                  ).withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(16),
+                  child: InkWell(
+                    onTap: () => showExitQuizDialog(context),
+                    borderRadius: BorderRadius.circular(16),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: QuizPalette.primaryText(
+                            context,
+                          ).withValues(alpha: 0.14),
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_rounded,
+                        color: QuizPalette.primaryText(context),
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: QuizProgressHeader(
                   currentQuestion: state.currentIndex + 1,

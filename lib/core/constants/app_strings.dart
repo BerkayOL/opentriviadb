@@ -12,6 +12,10 @@ abstract final class AppStrings {
   static const String setupReady = 'Ready';
   static const String numberOfQuestions = 'Number of Questions';
   static const String questionType = 'Question Type';
+  static const String exitQuiz = 'Exit Quiz';
+  static const String exitQuizMessage =
+      'Your current quiz progress will be lost. Do you want to exit?';
+  static const String exit = 'Exit';
   static const String chooseCategory = 'Choose a category';
   static const String selectQuestionCount = 'Select question count';
   static const String selectQuestionType = 'Select question type';
