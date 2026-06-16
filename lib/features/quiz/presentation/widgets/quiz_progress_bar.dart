@@ -20,7 +20,7 @@ class QuizProgressBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(999),
       child: SizedBox(
-        height: 6,
+        height: 8,
         child: Stack(
           children: [
             DecoratedBox(

@@ -46,6 +46,13 @@ abstract final class AppStrings {
 
   static const String seeResults = 'See Results';
   static const String nextQuestion = 'Next Question';
+  static const String answerCorrectTitle = 'Correct';
+  static const String answerCorrectMessage = 'Your choice was right.';
+  static const String answerWrongTitle = 'Incorrect';
+  static const String answerWrongMessage = 'Green shows the correct answer.';
+  static const String answerTimeoutTitle = 'Time is up';
+  static const String answerTimeoutMessage =
+      'No answer was selected. The correct option is highlighted.';
 
   static const String quizCompleted = 'Quiz completed';
   static const String restartQuiz = 'Restart Quiz';
