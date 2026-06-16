@@ -15,6 +15,7 @@ abstract final class AppStrings {
   static const String exitQuiz = 'Exit Quiz';
   static const String exitQuizMessage =
       'Your current quiz progress will be lost. Do you want to exit?';
+  static const String loading = 'Loading...';
   static const String exit = 'Exit';
   static const String chooseCategory = 'Choose a category';
   static const String selectQuestionCount = 'Select question count';

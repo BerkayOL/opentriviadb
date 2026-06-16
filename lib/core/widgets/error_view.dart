@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_strings.dart';
 import '../theme/app_spacing.dart';
 import 'app_button.dart';
+import 'app_card.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({required this.message, super.key, this.onRetry});
@@ -12,24 +13,58 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Theme.of(context).colorScheme.error,
-              size: 40,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 360),
+          child: AppCard(
+            borderRadius: 28,
+            borderColor: colorScheme.error.withValues(alpha: 0.24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: colorScheme.error.withValues(alpha: 0.10),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Icon(
+                      Icons.error_outline_rounded,
+                      color: colorScheme.error,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                Text(
+                  AppStrings.genericError,
+                  textAlign: TextAlign.center,
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    height: 1.35,
+                  ),
+                ),
+                if (onRetry != null) ...[
+                  const SizedBox(height: AppSpacing.lg),
+                  AppButton(label: AppStrings.tryAgain, onPressed: onRetry),
+                ],
+              ],
             ),
-            const SizedBox(height: AppSpacing.md),
-            Text(message, textAlign: TextAlign.center),
-            if (onRetry != null) ...[
-              const SizedBox(height: AppSpacing.md),
-              AppButton(label: AppStrings.tryAgain, onPressed: onRetry),
-            ],
-          ],
+          ),
         ),
       ),
     );
