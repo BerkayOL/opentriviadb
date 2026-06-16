@@ -29,6 +29,9 @@ abstract final class AppStrings {
     return '${seconds}s';
   }
 
+  static const String keepPracticing = 'Keep practicing';
+  static const String goodEffort = 'Good Effort';
+  static const String greatJob = 'Great Job';
   static const String playAgain = 'Play Again';
   static const String noQuestionsTitle = 'No questions available.';
   static const String noQuestionsMessage =
