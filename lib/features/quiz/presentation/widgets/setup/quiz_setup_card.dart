@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opentriviadb/features/quiz/presentation/theme/quiz_setup_palette.dart';
 
 import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import 'difficulty_selector.dart';
 import 'question_count_selector.dart';
@@ -18,7 +19,7 @@ class SetupCard extends StatelessWidget {
       color: QuizSetupPalette.cardColor(context),
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(AppRadius.xl),
         side: BorderSide(color: QuizSetupPalette.cardBorder(context)),
       ),
       child: Padding(

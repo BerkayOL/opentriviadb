@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/widgets/app_card.dart';
+import '../../../../../core/widgets/app_card.dart';
 
 class SetupOptionCard extends StatelessWidget {
   const SetupOptionCard({required this.title, required this.value, super.key});

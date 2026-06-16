@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/constants/quiz_api_values.dart';
+import '../../domain/constants/quiz_config.dart';
 import '../../domain/entities/quiz_category.dart';
 
 enum QuizSetupStatus { initial, loading, ready, failure }
@@ -12,8 +14,8 @@ class QuizSetupState extends Equatable {
     this.categories = const [],
     this.selectedCategory,
     this.selectedDifficulty,
-    this.questionCount = 10,
-    this.questionType = 'multiple',
+    this.questionCount = QuizConfig.defaultQuestionAmount,
+    this.questionType = QuizApiValues.multiple,
     this.errorMessage,
   });
 

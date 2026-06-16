@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/constants/api_constants.dart';
+import '../constants/quiz_api_values.dart';
+import '../constants/quiz_config.dart';
 
 class QuizRequest extends Equatable {
   const QuizRequest({
-    this.amount = ApiConstants.defaultQuestionAmount,
+    this.amount = QuizConfig.defaultQuestionAmount,
     this.categoryId,
     this.difficulty,
-    this.type = ApiConstants.defaultQuestionType,
+    this.type = QuizApiValues.multiple,
   });
 
   final int amount;

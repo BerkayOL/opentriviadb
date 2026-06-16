@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../history/domain/entities/quiz_history_entry.dart';
 import '../../../history/domain/usecases/save_quiz_history_usecase.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failure.dart';
+import '../../domain/constants/quiz_config.dart';
 import '../../domain/entities/quiz_request.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
 import 'quiz_state.dart';
@@ -15,7 +17,6 @@ class QuizCubit extends Cubit<QuizState> {
   final GetQuestionsUseCase _getQuestionsUseCase;
   final SaveQuizHistoryUseCase _saveQuizHistoryUseCase;
   Timer? _timer;
-  static const int _questionDuration = 30;
   QuizRequest? _lastRequest;
   Future<void> startQuiz(QuizRequest request) async {
     _stopTimer();
@@ -36,7 +37,7 @@ class QuizCubit extends Cubit<QuizState> {
           score: 0,
           selectedAnswer: null,
           isAnswerCorrect: null,
-          secondsLeft: _questionDuration,
+          secondsLeft: QuizConfig.questionDurationSeconds,
         ),
       );
       _startTimer();
@@ -48,7 +49,7 @@ class QuizCubit extends Cubit<QuizState> {
       emit(
         const QuizState(
           status: QuizStatus.failure,
-          errorMessage: 'Failed to load questions.',
+          errorMessage: AppStrings.questionsLoadError,
         ),
       );
     }
@@ -61,7 +62,7 @@ class QuizCubit extends Cubit<QuizState> {
       emit(
         const QuizState(
           status: QuizStatus.failure,
-          errorMessage: 'Quiz settings are missing.',
+          errorMessage: AppStrings.quizSettingsMissing,
         ),
       );
       return;
@@ -122,7 +123,7 @@ class QuizCubit extends Cubit<QuizState> {
         currentIndex: state.currentIndex + 1,
         selectedAnswer: null,
         isAnswerCorrect: null,
-        secondsLeft: _questionDuration,
+        secondsLeft: QuizConfig.questionDurationSeconds,
       ),
     );
     _startTimer();

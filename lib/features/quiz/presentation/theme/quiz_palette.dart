@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 abstract final class QuizPalette {
+  static const Color transparent = Colors.transparent;
+  static const Color onAccent = Colors.white;
+
   static bool isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
   }
@@ -40,19 +43,39 @@ abstract final class QuizPalette {
   }
 
   static Color optionFill(BuildContext context) {
-    return isDark(context)
-        ? Colors.white.withValues(alpha: 0.045)
-        : const Color(0xFFF8FAFC).withValues(alpha: 0.92);
+    return isDark(context) ? const Color(0xFF182235) : const Color(0xFFF8FAFC);
   }
 
   static Color optionBorder(BuildContext context) {
     return isDark(context)
-        ? Colors.white.withValues(alpha: 0.055)
+        ? Colors.white.withValues(alpha: 0.12)
         : const Color(0xFFE2E8F0);
   }
 
   static Color accent(BuildContext context) {
     return isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
+  }
+
+  static Color dialogBarrier() {
+    return Colors.black.withValues(alpha: 0.60);
+  }
+
+  static Color dialogBackground(BuildContext context) {
+    return isDark(context) ? const Color(0xFF111827) : Colors.white;
+  }
+
+  static Color dialogBorder(BuildContext context) {
+    return isDark(context)
+        ? Colors.white.withValues(alpha: 0.10)
+        : const Color(0xFFE2E8F0);
+  }
+
+  static Color booleanSwitchShadow(BuildContext context) {
+    return Colors.black.withValues(alpha: isDark(context) ? 0.22 : 0.07);
+  }
+
+  static Color booleanOptionShadow(BuildContext context) {
+    return Colors.black.withValues(alpha: isDark(context) ? 0.18 : 0.06);
   }
 
   static Color correctFill(BuildContext context) {

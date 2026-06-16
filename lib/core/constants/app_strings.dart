@@ -43,6 +43,9 @@ abstract final class AppStrings {
       'Try a different setup or check back later.';
   static const String tryAgain = 'Try Again';
   static const String noQuestionAvailable = 'Question is not available.';
+  static const String invalidQuizRequest = 'Invalid quiz request.';
+  static const String questionsLoadError = 'Failed to load questions.';
+  static const String quizSettingsMissing = 'Quiz settings are missing.';
 
   static const String seeResults = 'See Results';
   static const String nextQuestion = 'Next Question';
@@ -56,6 +59,14 @@ abstract final class AppStrings {
 
   static const String quizCompleted = 'Quiz completed';
   static const String restartQuiz = 'Restart Quiz';
+  static const String trueFalseAnswerChoices = 'True or false answer choices';
+  static const String falseAnswer = 'False';
+  static const String falseAnswerOption = 'False answer option';
+  static const String trueAnswer = 'True';
+  static const String trueAnswerOption = 'True answer option';
+  static const String tapToChoose = 'Tap to choose';
+  static const String yourChoice = 'Your choice';
+  static const String correctAnswer = 'Correct answer';
 
   static String quizScoreResult(int score, int totalQuestions) {
     return 'You answered $score of $totalQuestions correctly.';
@@ -87,6 +98,11 @@ abstract final class AppStrings {
   static const String trueFalse = 'True / False';
   static const String startQuiz = 'Start Quiz';
   static const String categoriesLoadError = 'Categories could not be loaded.';
+  static const String historyLoadError = 'History could not be loaded.';
+  static const String historyClearError = 'History could not be cleared.';
+  static const String themeLoadError = 'Theme could not be loaded.';
+  static const String themeSaveError = 'Theme could not be saved.';
+  static const String unexpectedError = 'An unexpected error occurred.';
   static const String noCategoriesFound = 'No categories found';
   static const String noCategoriesMessage =
       'Try again or start without choosing a category.';

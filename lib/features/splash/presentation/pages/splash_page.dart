@@ -4,7 +4,7 @@ import '../../../../core/constants/app_strings.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../features/splash/presentation/theme/splash_theme.dart';
+import '../theme/splash_palette.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -61,11 +61,11 @@ class _SplashPageState extends State<SplashPage> {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.blue.withValues(alpha: 0.08),
+                  color: SplashPalette.lowerGlowFill(context),
 
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.purple.withValues(alpha: 0.6),
+                      color: SplashPalette.lowerGlowColor(context),
                       blurRadius: 40,
                       spreadRadius: 10,
                     ),

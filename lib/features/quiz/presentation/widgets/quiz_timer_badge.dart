@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_strings.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../domain/constants/quiz_config.dart';
 import '../theme/quiz_palette.dart';
 
 class QuizTimerBadge extends StatelessWidget {
@@ -11,7 +13,7 @@ class QuizTimerBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCritical = secondsLeft <= 5;
+    final isCritical = secondsLeft <= QuizConfig.timerCriticalThresholdSeconds;
     final foregroundColor = isCritical
         ? QuizPalette.wrongBorder(context)
         : QuizPalette.accent(context);
@@ -26,7 +28,7 @@ class QuizTimerBadge extends StatelessWidget {
       curve: Curves.easeOutCubic,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(color: borderColor),
       ),
       child: Padding(

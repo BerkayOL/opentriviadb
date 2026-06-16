@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opentriviadb/features/app_shell/presentation/cubits/nav_item_press_cubit.dart';
 
+import '../../../../../core/theme/app_radius.dart';
 import '../theme/app_shell_palette.dart';
 
 class FloatingNavItem extends StatelessWidget {
@@ -61,7 +62,7 @@ class _FloatingNavItemBody extends StatelessWidget {
             message: label,
             child: Material(
               color: Colors.transparent,
-              borderRadius: BorderRadius.circular(999),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
               child: InkWell(
                 onTap: onTap,
                 onTapDown: (_) =>
@@ -70,7 +71,7 @@ class _FloatingNavItemBody extends StatelessWidget {
                     context.read<NavItemPressCubit>().setPressed(false),
                 onTapUp: (_) =>
                     context.read<NavItemPressCubit>().setPressed(false),
-                borderRadius: BorderRadius.circular(999),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
                 splashColor: AppShellPalette.selectedGradient.first.withValues(
                   alpha: 0.10,
                 ),
@@ -164,7 +165,7 @@ class _FloatingNavItemBody extends StatelessWidget {
                                     colors: AppShellPalette.selectedGradient,
                                   )
                                 : null,
-                            borderRadius: BorderRadius.circular(999),
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
                             boxShadow: isSelected
                                 ? [
                                     BoxShadow(

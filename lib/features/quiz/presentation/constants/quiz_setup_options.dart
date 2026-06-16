@@ -1,5 +1,6 @@
 import '../../../../core/constants/app_strings.dart';
 import '../../domain/constants/quiz_api_values.dart';
+import '../../domain/constants/quiz_config.dart';
 
 class QuizSetupOption<T> {
   const QuizSetupOption({required this.label, required this.value});
@@ -9,7 +10,7 @@ class QuizSetupOption<T> {
 }
 
 abstract final class QuizSetupOptions {
-  static const List<int> questionCounts = [5, 10, 15, 20];
+  static const List<int> questionCounts = QuizConfig.questionCountOptions;
 
   static const List<QuizSetupOption<String?>> difficulties = [
     QuizSetupOption(label: AppStrings.anyLevel, value: null),

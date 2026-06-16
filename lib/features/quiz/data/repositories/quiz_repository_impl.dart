@@ -1,3 +1,4 @@
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/app_exception.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/quiz_category.dart';
@@ -20,7 +21,7 @@ class QuizRepositoryImpl implements QuizRepository {
     } on AppException catch (error) {
       throw _mapExceptionToFailure(error);
     } catch (_) {
-      throw const UnknownFailure('An unexpected error occurred.');
+      throw const UnknownFailure(AppStrings.unexpectedError);
     }
   }
 
@@ -32,7 +33,7 @@ class QuizRepositoryImpl implements QuizRepository {
     } on AppException catch (error) {
       throw _mapExceptionToFailure(error);
     } catch (_) {
-      throw const UnknownFailure('An unexpected error occurred.');
+      throw const UnknownFailure(AppStrings.unexpectedError);
     }
   }
 

@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 
-import '../constants/api_constants.dart';
+import '../constants/network_constants.dart';
 
 class DioClient {
   DioClient();
 
-  Dio create() {
+  Dio create({required String baseUrl}) {
     return Dio(
       BaseOptions(
-        baseUrl: ApiConstants.baseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        baseUrl: baseUrl,
+        connectTimeout: NetworkConstants.requestTimeout,
+        receiveTimeout: NetworkConstants.requestTimeout,
       ),
     );
   }

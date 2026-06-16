@@ -5,15 +5,18 @@ import 'boolean_answer_switch.dart';
 import 'quiz_action_button.dart';
 import 'quiz_question_card.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../domain/constants/quiz_api_values.dart';
+import '../constants/quiz_dimensions.dart';
 import '../cubits/quiz_cubit.dart';
 import '../cubits/quiz_state.dart';
 import 'answer_option_card.dart';
-import 'answer_option_status_resolver.dart';
+import '../resolvers/answer_option_status_resolver.dart';
 import 'quiz_progress_header.dart';
 import 'quiz_timer_badge.dart';
 import 'quiz_progress_bar.dart';
-import 'show_exit_quiz_dialog.dart';
+import '../dialogs/show_exit_quiz_dialog.dart';
 
 class QuestionView extends StatelessWidget {
   const QuestionView({required this.state, super.key});
@@ -27,7 +30,7 @@ class QuestionView extends StatelessWidget {
     if (question == null) {
       return const Center(child: Text(AppStrings.noQuestionAvailable));
     }
-    final isBooleanQuestion = question.type == 'boolean';
+    final isBooleanQuestion = question.type == QuizApiValues.boolean;
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -37,19 +40,19 @@ class QuestionView extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 44,
-                height: 44,
+                width: QuizDimensions.backButtonSize,
+                height: QuizDimensions.backButtonSize,
                 child: Material(
                   color: QuizPalette.primaryText(
                     context,
                   ).withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
                   child: InkWell(
                     onTap: () => showExitQuizDialog(context),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(AppRadius.md),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(AppRadius.md),
                         border: Border.all(
                           color: QuizPalette.primaryText(
                             context,
@@ -128,12 +131,12 @@ class QuestionView extends StatelessWidget {
                         BooleanAnswerSwitch(
                           falseStatus: resolveAnswerStatus(
                             state: state,
-                            answer: 'False',
+                            answer: AppStrings.falseAnswer,
                             correctAnswer: question.correctAnswer,
                           ),
                           trueStatus: resolveAnswerStatus(
                             state: state,
-                            answer: 'True',
+                            answer: AppStrings.trueAnswer,
                             correctAnswer: question.correctAnswer,
                           ),
                           onFalseTap: () {
@@ -141,14 +144,18 @@ class QuestionView extends StatelessWidget {
                               return;
                             }
 
-                            context.read<QuizCubit>().selectAnswer('False');
+                            context.read<QuizCubit>().selectAnswer(
+                              AppStrings.falseAnswer,
+                            );
                           },
                           onTrueTap: () {
                             if (state.status == QuizStatus.answerRevealed) {
                               return;
                             }
 
-                            context.read<QuizCubit>().selectAnswer('True');
+                            context.read<QuizCubit>().selectAnswer(
+                              AppStrings.trueAnswer,
+                            );
                           },
                         ),
                         _BooleanAnswerFeedback(state: state),
@@ -241,7 +248,7 @@ class _BooleanAnswerFeedback extends StatelessWidget {
                 color: color.withValues(
                   alpha: QuizPalette.isDark(context) ? 0.15 : 0.10,
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(AppRadius.lg),
                 border: Border.all(color: color.withValues(alpha: 0.42)),
               ),
               child: Row(

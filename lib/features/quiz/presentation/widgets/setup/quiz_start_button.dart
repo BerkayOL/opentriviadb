@@ -4,9 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../app/router/app_routes.dart';
 import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../domain/entities/quiz_request.dart';
+import '../../constants/quiz_dimensions.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
+import '../../theme/quiz_setup_palette.dart';
 
 class StartQuizButton extends StatelessWidget {
   const StartQuizButton({super.key});
@@ -23,18 +26,14 @@ class StartQuizButton extends StatelessWidget {
               gradient: const LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [
-                  Color(0xFF3B82F6),
-                  Color(0xFF6366F1),
-                  Color(0xFF8B5CF6),
-                ],
+                colors: QuizSetupPalette.startButtonGradient,
               ),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(AppRadius.lg),
               boxShadow: [
                 BoxShadow(
                   blurRadius: 20,
                   offset: const Offset(0, 10),
-                  color: const Color(0xFF6366F1).withValues(alpha: 0.24),
+                  color: QuizSetupPalette.startButtonShadow(),
                 ),
               ],
             ),
@@ -53,14 +52,16 @@ class StartQuizButton extends StatelessWidget {
               icon: const Icon(Icons.play_arrow_rounded),
               label: const Text(AppStrings.startQuiz),
               style: FilledButton.styleFrom(
-                minimumSize: const Size.fromHeight(58),
-                backgroundColor: Colors.transparent,
-                disabledBackgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                foregroundColor: Colors.white,
-                disabledForegroundColor: Colors.white,
+                minimumSize: const Size.fromHeight(
+                  QuizDimensions.quizStartButtonHeight,
+                ),
+                backgroundColor: QuizSetupPalette.transparent,
+                disabledBackgroundColor: QuizSetupPalette.transparent,
+                shadowColor: QuizSetupPalette.transparent,
+                foregroundColor: QuizSetupPalette.startButtonForeground,
+                disabledForegroundColor: QuizSetupPalette.startButtonForeground,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(AppRadius.lg),
                 ),
                 textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w700,

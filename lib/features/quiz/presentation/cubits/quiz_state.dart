@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/constants/quiz_config.dart';
 import '../../domain/entities/quiz_question.dart';
 
 enum QuizStatus {
@@ -19,7 +20,7 @@ class QuizState extends Equatable {
     this.questions = const [],
     this.currentIndex = 0,
     this.score = 0,
-    this.secondsLeft = 30,
+    this.secondsLeft = QuizConfig.questionDurationSeconds,
     this.errorMessage,
     this.isAnswerCorrect,
     this.selectedAnswer,

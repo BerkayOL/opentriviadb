@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/quiz_dimensions.dart';
+import '../models/answer_option_status.dart';
 import '../theme/quiz_palette.dart';
-import 'answer_option_status.dart';
 
 class AnswerOptionCard extends StatelessWidget {
   const AnswerOptionCard({
@@ -19,7 +21,7 @@ class AnswerOptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final borderRadius = BorderRadius.circular(AppSpacing.md);
+    final borderRadius = BorderRadius.circular(AppRadius.md);
     final shouldLift = status == AnswerOptionStatus.selected;
     final backgroundColor = switch (status) {
       AnswerOptionStatus.idle => QuizPalette.optionFill(context),
@@ -83,7 +85,7 @@ class AnswerOptionCard extends StatelessWidget {
           border: Border.all(color: borderColor),
         ),
         child: Material(
-          color: Colors.transparent,
+          color: QuizPalette.transparent,
           borderRadius: borderRadius,
           child: InkWell(
             onTap: onTap,
@@ -94,14 +96,14 @@ class AnswerOptionCard extends StatelessWidget {
                 children: [
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppSpacing.md),
+                      borderRadius: BorderRadius.circular(AppRadius.md),
                       color: badgeBackgroundColor,
                       border: Border.all(color: badgeBorderColor),
                     ),
 
                     child: SizedBox(
-                      width: 32,
-                      height: 32,
+                      width: QuizDimensions.optionBadgeSize,
+                      height: QuizDimensions.optionBadgeSize,
                       child: Center(
                         child: Text(
                           optionLabel,

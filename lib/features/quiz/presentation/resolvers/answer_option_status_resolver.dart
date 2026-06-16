@@ -1,5 +1,5 @@
 import '../cubits/quiz_state.dart';
-import 'answer_option_status.dart';
+import '../models/answer_option_status.dart';
 
 AnswerOptionStatus resolveAnswerStatus({
   required QuizState state,

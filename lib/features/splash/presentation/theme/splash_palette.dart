@@ -52,4 +52,12 @@ abstract final class SplashPalette {
         ? Colors.purple.withValues(alpha: 0.08)
         : const Color(0xFF8B5CF6).withValues(alpha: 0.08);
   }
+
+  static Color lowerGlowFill(BuildContext context) {
+    return Colors.blue.withValues(alpha: 0.08);
+  }
+
+  static Color lowerGlowColor(BuildContext context) {
+    return Colors.purple.withValues(alpha: 0.6);
+  }
 }

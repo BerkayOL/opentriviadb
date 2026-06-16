@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 
 class AppCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class AppCard extends StatelessWidget {
     this.color,
     this.borderColor,
     this.boxShadow,
-    this.borderRadius = 28,
+    this.borderRadius = AppRadius.xl,
   });
 
   final Widget child;

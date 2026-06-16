@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 
-import '../../../../core/constants/api_constants.dart';
 import '../../../../core/error/app_exception.dart';
 import '../../domain/entities/quiz_request.dart';
+import '../constants/open_trivia_api_constants.dart';
+import '../constants/quiz_data_error_messages.dart';
 import '../models/quiz_category_model.dart';
 import '../models/quiz_question_model.dart';
 
@@ -21,13 +22,16 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
   Future<List<QuizCategoryModel>> fetchCategories() async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
-        ApiConstants.categoriesEndpoint,
+        OpenTriviaApiConstants.categoriesEndpoint,
       );
       final data = response.data;
-      final categoriesJson = data?['trivia_categories'];
+      final categoriesJson =
+          data?[OpenTriviaApiConstants.responseTriviaCategories];
 
       if (categoriesJson is! List) {
-        throw const ServerException('Category response format is invalid.');
+        throw const ServerException(
+          QuizDataErrorMessages.categoryResponseFormatInvalid,
+        );
       }
 
       final categories = categoriesJson
@@ -37,7 +41,9 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
           .toList();
 
       if (categories.isEmpty) {
-        throw const EmptyResultException('No categories found.');
+        throw const EmptyResultException(
+          QuizDataErrorMessages.noCategoriesFound,
+        );
       }
 
       return categories;
@@ -45,18 +51,24 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
       if (error.type == DioExceptionType.connectionTimeout ||
           error.type == DioExceptionType.receiveTimeout ||
           error.type == DioExceptionType.connectionError) {
-        throw const NetworkException('Check your internet connection.');
+        throw const NetworkException(
+          QuizDataErrorMessages.checkInternetConnection,
+        );
       }
 
       throw ServerException(
-        'Category request failed with status ${error.response?.statusCode ?? 'unknown'}.',
+        QuizDataErrorMessages.categoryRequestFailedWithStatus(
+          error.response?.statusCode ?? QuizDataErrorMessages.unknownStatusCode,
+        ),
       );
     } on AppException {
       rethrow;
     } on FormatException catch (error) {
       throw ServerException(error.message);
     } on TypeError {
-      throw const ServerException('Category response contains invalid data.');
+      throw const ServerException(
+        QuizDataErrorMessages.categoryResponseContainsInvalidData,
+      );
     }
   }
 
@@ -64,24 +76,32 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
   Future<List<QuizQuestionModel>> fetchQuestions(QuizRequest request) async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
-        ApiConstants.questionsEndpoint,
+        OpenTriviaApiConstants.questionsEndpoint,
         queryParameters: _questionQueryParameters(request),
       );
       final data = response.data;
-      final responseCode = data?['response_code'];
-      final resultsJson = data?['results'];
+      final responseCode = data?[OpenTriviaApiConstants.responseCode];
+      final resultsJson = data?[OpenTriviaApiConstants.responseResults];
 
       if (responseCode is! num || resultsJson is! List) {
-        throw const ServerException('Question response format is invalid.');
+        throw const ServerException(
+          QuizDataErrorMessages.questionResponseFormatInvalid,
+        );
       }
 
-      if (responseCode.toInt() == 1 || resultsJson.isEmpty) {
-        throw const EmptyResultException('No questions found.');
+      if (responseCode.toInt() ==
+              OpenTriviaApiConstants.noResultsResponseCode ||
+          resultsJson.isEmpty) {
+        throw const EmptyResultException(
+          QuizDataErrorMessages.noQuestionsFound,
+        );
       }
 
-      if (responseCode.toInt() != 0) {
+      if (responseCode.toInt() != OpenTriviaApiConstants.successResponseCode) {
         throw ServerException(
-          'Question request failed with response code ${responseCode.toInt()}.',
+          QuizDataErrorMessages.questionRequestFailedWithResponseCode(
+            responseCode.toInt(),
+          ),
         );
       }
 
@@ -94,28 +114,35 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
       if (error.type == DioExceptionType.connectionTimeout ||
           error.type == DioExceptionType.receiveTimeout ||
           error.type == DioExceptionType.connectionError) {
-        throw const NetworkException('Check your internet connection.');
+        throw const NetworkException(
+          QuizDataErrorMessages.checkInternetConnection,
+        );
       }
 
       throw ServerException(
-        'Question request failed with status ${error.response?.statusCode ?? 'unknown'}.',
+        QuizDataErrorMessages.questionRequestFailedWithStatus(
+          error.response?.statusCode ?? QuizDataErrorMessages.unknownStatusCode,
+        ),
       );
     } on AppException {
       rethrow;
     } on FormatException catch (error) {
       throw ServerException(error.message);
     } on TypeError {
-      throw const ServerException('Question response contains invalid data.');
+      throw const ServerException(
+        QuizDataErrorMessages.questionResponseContainsInvalidData,
+      );
     }
   }
 
   Map<String, dynamic> _questionQueryParameters(QuizRequest request) {
     return {
-      'amount': request.amount,
-      if (request.categoryId != null) 'category': request.categoryId,
+      OpenTriviaApiConstants.queryAmount: request.amount,
+      if (request.categoryId != null)
+        OpenTriviaApiConstants.queryCategory: request.categoryId,
       if (request.difficulty != null && request.difficulty!.isNotEmpty)
-        'difficulty': request.difficulty,
-      'type': request.type,
+        OpenTriviaApiConstants.queryDifficulty: request.difficulty,
+      OpenTriviaApiConstants.queryType: request.type,
     };
   }
 }

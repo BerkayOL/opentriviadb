@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opentriviadb/features/history/domain/usecases/get_history_usecase.dart';
 
+import '../../../../core/constants/app_strings.dart';
 import '../../domain/usecases/clear_history_usecase.dart';
 import '../../domain/usecases/get_highest_score_usecase.dart';
 import 'history_state.dart';
@@ -38,7 +39,7 @@ class HistoryCubit extends Cubit<HistoryState> {
       emit(
         state.copyWith(
           status: HistoryStatus.failure,
-          errorMessage: 'History could not be loaded.',
+          errorMessage: AppStrings.historyLoadError,
         ),
       );
     }
@@ -59,7 +60,7 @@ class HistoryCubit extends Cubit<HistoryState> {
       emit(
         state.copyWith(
           status: HistoryStatus.failure,
-          errorMessage: 'History could not be cleared.',
+          errorMessage: AppStrings.historyClearError,
         ),
       );
     }

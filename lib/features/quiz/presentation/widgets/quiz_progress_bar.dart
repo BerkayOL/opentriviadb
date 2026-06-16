@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_radius.dart';
+import '../constants/quiz_dimensions.dart';
 import '../theme/quiz_palette.dart';
 
 class QuizProgressBar extends StatelessWidget {
@@ -18,9 +20,9 @@ class QuizProgressBar extends StatelessWidget {
         : (currentQuestion / totalQuestions).clamp(0.0, 1.0);
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
       child: SizedBox(
-        height: 8,
+        height: QuizDimensions.progressBarHeight,
         child: Stack(
           children: [
             DecoratedBox(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/quiz_dimensions.dart';
+import '../models/answer_option_status.dart';
 import '../theme/quiz_palette.dart';
-import 'answer_option_status.dart';
 
 class BooleanAnswerSwitch extends StatelessWidget {
   const BooleanAnswerSwitch({
@@ -24,9 +26,9 @@ class BooleanAnswerSwitch extends StatelessWidget {
     final borderRadius = BorderRadius.circular(AppRadius.xxl);
 
     return Semantics(
-      label: 'True or false answer choices',
+      label: AppStrings.trueFalseAnswerChoices,
       child: AnimatedContainer(
-        height: 136,
+        height: QuizDimensions.booleanSwitchHeight,
         duration: const Duration(milliseconds: 240),
         curve: Curves.easeOutCubic,
         padding: const EdgeInsets.all(AppSpacing.sm),
@@ -36,9 +38,7 @@ class BooleanAnswerSwitch extends StatelessWidget {
           border: Border.all(color: QuizPalette.cardBorder(context)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(
-                alpha: QuizPalette.isDark(context) ? 0.22 : 0.07,
-              ),
+              color: QuizPalette.booleanSwitchShadow(context),
               blurRadius: 26,
               offset: const Offset(0, 14),
             ),
@@ -50,20 +50,20 @@ class BooleanAnswerSwitch extends StatelessWidget {
             children: [
               Expanded(
                 child: _BooleanDecisionOption(
-                  label: 'False',
+                  label: AppStrings.falseAnswer,
                   icon: Icons.close_rounded,
                   status: falseStatus,
-                  semanticLabel: 'False answer option',
+                  semanticLabel: AppStrings.falseAnswerOption,
                   onTap: onFalseTap,
                 ),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: _BooleanDecisionOption(
-                  label: 'True',
+                  label: AppStrings.trueAnswer,
                   icon: Icons.check_rounded,
                   status: trueStatus,
-                  semanticLabel: 'True answer option',
+                  semanticLabel: AppStrings.trueAnswerOption,
                   onTap: onTrueTap,
                 ),
               ),
@@ -103,7 +103,8 @@ class _BooleanDecisionOption extends StatelessWidget {
         context,
       ).withValues(alpha: QuizPalette.isDark(context) ? 0.13 : 0.16),
     };
-
+    final isIdle = status == AnswerOptionStatus.idle;
+    final isActive = !isIdle;
     final accentColor = switch (status) {
       AnswerOptionStatus.idle => neutralColor,
       AnswerOptionStatus.selected => QuizPalette.accent(context),
@@ -138,10 +139,10 @@ class _BooleanDecisionOption extends StatelessWidget {
       _ => null,
     };
     final helperText = switch (status) {
-      AnswerOptionStatus.idle => 'Tap to choose',
-      AnswerOptionStatus.selected => 'Your choice',
-      AnswerOptionStatus.correct => 'Correct answer',
-      AnswerOptionStatus.wrong => 'Your choice',
+      AnswerOptionStatus.idle => AppStrings.tapToChoose,
+      AnswerOptionStatus.selected => AppStrings.yourChoice,
+      AnswerOptionStatus.correct => AppStrings.correctAnswer,
+      AnswerOptionStatus.wrong => AppStrings.yourChoice,
     };
     final shouldLift =
         status == AnswerOptionStatus.selected ||
@@ -163,12 +164,21 @@ class _BooleanDecisionOption extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(AppRadius.xl),
             border: Border.all(
-              color: borderColor,
-              width: status == AnswerOptionStatus.idle ? 1 : 1.4,
+              color: isIdle
+                  ? QuizPalette.optionBorder(context).withValues(alpha: 0.85)
+                  : borderColor,
+              width: isIdle ? 0.5 : 0.9,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: QuizPalette.booleanOptionShadow(context),
+                blurRadius: isActive ? 18 : 2,
+                offset: const Offset(0, 8),
+              ),
+            ],
           ),
           child: Material(
-            color: Colors.transparent,
+            color: QuizPalette.transparent,
             borderRadius: BorderRadius.circular(AppRadius.xl),
             child: InkWell(
               onTap: onTap,
@@ -183,8 +193,8 @@ class _BooleanDecisionOption extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AnimatedContainer(
-                      width: 42,
-                      height: 42,
+                      width: QuizDimensions.booleanIconBadgeSize,
+                      height: QuizDimensions.booleanIconBadgeSize,
                       duration: const Duration(milliseconds: 240),
                       curve: Curves.easeOutCubic,
                       decoration: BoxDecoration(

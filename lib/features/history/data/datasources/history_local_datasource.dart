@@ -1,6 +1,7 @@
 import 'package:hive_ce/hive.dart';
 
 import '../../domain/entities/quiz_history_entry.dart';
+import '../constants/history_storage_keys.dart';
 import '../models/quiz_history_model.dart';
 
 abstract interface class HistoryLocalDataSource {
@@ -14,11 +15,9 @@ abstract interface class HistoryLocalDataSource {
 class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   const HistoryLocalDataSourceImpl();
 
-  static const String _boxName = 'quiz_history';
-
   @override
   Future<void> saveResult(QuizHistoryEntry entry) async {
-    final box = await Hive.openBox<dynamic>(_boxName);
+    final box = await Hive.openBox<dynamic>(HistoryStorageKeys.boxName);
 
     final model = QuizHistoryModel.fromEntity(entry);
 
@@ -27,7 +26,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
   @override
   Future<List<QuizHistoryEntry>> getHistory() async {
-    final box = await Hive.openBox<dynamic>(_boxName);
+    final box = await Hive.openBox<dynamic>(HistoryStorageKeys.boxName);
 
     final entries = <QuizHistoryEntry>[];
 
@@ -53,7 +52,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
   @override
   Future<void> clearHistory() async {
-    final box = await Hive.openBox<dynamic>(_boxName);
+    final box = await Hive.openBox<dynamic>(HistoryStorageKeys.boxName);
     await box.clear();
   }
 }

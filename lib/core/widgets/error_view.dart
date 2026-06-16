@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/app_strings.dart';
+import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import 'app_button.dart';
 import 'app_card.dart';
@@ -22,7 +23,7 @@ class ErrorView extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 360),
           child: AppCard(
-            borderRadius: 28,
+            borderRadius: AppRadius.xl,
             borderColor: colorScheme.error.withValues(alpha: 0.24),
             child: Column(
               mainAxisSize: MainAxisSize.min,

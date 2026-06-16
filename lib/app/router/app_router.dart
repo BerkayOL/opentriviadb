@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opentriviadb/features/app_shell/presentation/pages/app_shell_page.dart';
 import '../../app/dependency_injection/app_di.dart';
+import '../../core/constants/app_strings.dart';
 import '../../features/history/presentation/pages/history_page.dart';
 import '../../features/quiz/presentation/cubits/quiz_setup_cubit.dart';
 import '../../features/quiz/presentation/cubits/quiz_cubit.dart';
@@ -57,7 +58,7 @@ abstract final class AppRouter {
           final quizRequest = state.extra;
           if (quizRequest is! QuizRequest) {
             return const Scaffold(
-              body: Center(child: Text('Invalid quiz request.')),
+              body: Center(child: Text(AppStrings.invalidQuizRequest)),
             );
           }
           return BlocProvider(

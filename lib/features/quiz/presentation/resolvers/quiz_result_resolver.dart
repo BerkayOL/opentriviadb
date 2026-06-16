@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../domain/constants/quiz_config.dart';
 
 abstract final class QuizResultResolver {
   static double scoreRatio({required int score, required int totalQuestions}) {
@@ -12,11 +13,11 @@ abstract final class QuizResultResolver {
   }
 
   static String title(double ratio) {
-    if (ratio >= 0.8) {
+    if (ratio >= QuizConfig.highScoreRatio) {
       return AppStrings.greatJob;
     }
 
-    if (ratio >= 0.4) {
+    if (ratio >= QuizConfig.mediumScoreRatio) {
       return AppStrings.goodEffort;
     }
 
@@ -24,11 +25,11 @@ abstract final class QuizResultResolver {
   }
 
   static IconData icon(double ratio) {
-    if (ratio >= 0.8) {
+    if (ratio >= QuizConfig.highScoreRatio) {
       return Icons.emoji_events_rounded;
     }
 
-    if (ratio >= 0.4) {
+    if (ratio >= QuizConfig.mediumScoreRatio) {
       return Icons.track_changes_rounded;
     }
 

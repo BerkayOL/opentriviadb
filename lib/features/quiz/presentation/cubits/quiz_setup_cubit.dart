@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/quiz_category.dart';
 import '../../domain/usecases/get_categories_usecase.dart';
@@ -51,7 +52,7 @@ class QuizSetupCubit extends Cubit<QuizSetupState> {
       emit(
         state.copyWith(
           status: QuizSetupStatus.failure,
-          errorMessage: 'Categories could not be loaded.',
+          errorMessage: AppStrings.categoriesLoadError,
         ),
       );
     }

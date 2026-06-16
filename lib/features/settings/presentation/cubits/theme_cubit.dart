@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../domain/entities/app_theme_mode.dart';
 import '../../domain/usecases/get_theme_mode_usecase.dart';
 import '../../domain/usecases/save_theme_mode_usecase.dart';
@@ -27,7 +28,7 @@ class ThemeCubit extends Cubit<ThemeState> {
         state.copyWith(
           status: ThemeStatus.failure,
           themeMode: ThemeMode.system,
-          errorMessage: 'Theme could not be loaded.',
+          errorMessage: AppStrings.themeLoadError,
         ),
       );
     }
@@ -43,7 +44,7 @@ class ThemeCubit extends Cubit<ThemeState> {
       emit(
         state.copyWith(
           status: ThemeStatus.failure,
-          errorMessage: 'Theme could not be saved.',
+          errorMessage: AppStrings.themeSaveError,
         ),
       );
     }

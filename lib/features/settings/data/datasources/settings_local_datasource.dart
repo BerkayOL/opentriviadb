@@ -1,6 +1,7 @@
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 import '../../domain/entities/app_theme_mode.dart';
+import '../constants/settings_storage_keys.dart';
 
 abstract interface class SettingsLocalDataSource {
   Future<AppThemeMode> getThemeMode();
@@ -10,16 +11,14 @@ abstract interface class SettingsLocalDataSource {
 
 class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
   const SettingsLocalDataSourceImpl();
-  static const String _boxName = 'settings';
-  static const String _themeModeKey = 'theme_mode';
   @override
   Future<AppThemeMode> getThemeMode() async {
-    final box = await Hive.openBox<dynamic>(_boxName);
-    final value = box.get(_themeModeKey);
-    if (value == 'light') {
+    final box = await Hive.openBox<dynamic>(SettingsStorageKeys.boxName);
+    final value = box.get(SettingsStorageKeys.themeMode);
+    if (value == SettingsStorageKeys.lightThemeMode) {
       return AppThemeMode.light;
     }
-    if (value == 'dark') {
+    if (value == SettingsStorageKeys.darkThemeMode) {
       return AppThemeMode.dark;
     }
     return AppThemeMode.system;
@@ -27,12 +26,12 @@ class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
 
   @override
   Future<void> saveThemeMode(AppThemeMode mode) async {
-    final box = await Hive.openBox(_boxName);
+    final box = await Hive.openBox(SettingsStorageKeys.boxName);
     final value = switch (mode) {
-      AppThemeMode.light => 'light',
-      AppThemeMode.dark => 'dark',
-      AppThemeMode.system => 'system',
+      AppThemeMode.light => SettingsStorageKeys.lightThemeMode,
+      AppThemeMode.dark => SettingsStorageKeys.darkThemeMode,
+      AppThemeMode.system => SettingsStorageKeys.systemThemeMode,
     };
-    await box.put(_themeModeKey, value);
+    await box.put(SettingsStorageKeys.themeMode, value);
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/widgets/empty_view.dart';
 import '../../../../../core/widgets/error_view.dart';
 import '../../../../../core/widgets/loading_view.dart';
 import '../../../domain/entities/quiz_category.dart';
+import '../../constants/quiz_dimensions.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
 import 'quiz_setup_dropdown_decoration.dart';
@@ -33,7 +35,7 @@ class CategorySelector extends StatelessWidget {
                     message: AppStrings.noCategoriesMessage,
                   )
                 : DropdownButtonFormField<QuizCategory>(
-                    menuMaxHeight: 280,
+                    menuMaxHeight: QuizDimensions.categoryDropdownMenuMaxHeight,
                     dropdownColor: QuizSetupPalette.dropdownColor(context),
                     iconEnabledColor: QuizSetupPalette.secondaryText(context),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -45,9 +47,9 @@ class CategorySelector extends StatelessWidget {
                       context,
                       AppStrings.chooseCategory,
                     ),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(AppRadius.md),
                     isExpanded: true,
-                    itemHeight: 56,
+                    itemHeight: QuizDimensions.dropdownItemHeight,
                     items: state.categories
                         .map(
                           (category) => DropdownMenuItem<QuizCategory>(

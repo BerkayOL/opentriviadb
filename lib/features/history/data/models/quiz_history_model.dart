@@ -1,4 +1,5 @@
 import '../../domain/entities/quiz_history_entry.dart';
+import '../constants/history_storage_keys.dart';
 
 class QuizHistoryModel {
   const QuizHistoryModel({
@@ -24,19 +25,19 @@ class QuizHistoryModel {
 
   factory QuizHistoryModel.fromMap(Map<String, dynamic> map) {
     return QuizHistoryModel(
-      id: map['id'] as String,
-      score: map['score'] as int,
-      totalQuestions: map['totalQuestions'] as int,
-      createdAt: DateTime.parse(map['createdAt'] as String),
+      id: map[HistoryStorageKeys.id] as String,
+      score: map[HistoryStorageKeys.score] as int,
+      totalQuestions: map[HistoryStorageKeys.totalQuestions] as int,
+      createdAt: DateTime.parse(map[HistoryStorageKeys.createdAt] as String),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'score': score,
-      'totalQuestions': totalQuestions,
-      'createdAt': createdAt.toIso8601String(),
+      HistoryStorageKeys.id: id,
+      HistoryStorageKeys.score: score,
+      HistoryStorageKeys.totalQuestions: totalQuestions,
+      HistoryStorageKeys.createdAt: createdAt.toIso8601String(),
     };
   }
 

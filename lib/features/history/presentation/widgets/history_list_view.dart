@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../dialogs/clear_dialog_history.dart';
+import '../dialogs/clear_history_dialog.dart';
 
+import '../../../../core/constants/app_date_formats.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/entities/quiz_history_entry.dart';
@@ -22,7 +23,7 @@ class HistoryListView extends StatelessWidget {
   final int highestScore;
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd MMM • HH:mm');
+    final dateFormat = DateFormat(AppDateFormats.historyEntry);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/theme/app_radius.dart';
+import '../../constants/quiz_dimensions.dart';
 import '../../constants/quiz_setup_options.dart';
 import '../../cubits/quiz_setup_cubit.dart';
 import '../../cubits/quiz_setup_state.dart';
@@ -16,7 +18,7 @@ class QuestionCountSelector extends StatelessWidget {
     return BlocBuilder<QuizSetupCubit, QuizSetupState>(
       builder: (context, state) {
         return DropdownButtonFormField<int>(
-          menuMaxHeight: 220,
+          menuMaxHeight: QuizDimensions.dropdownMenuMaxHeight,
           dropdownColor: QuizSetupPalette.dropdownColor(context),
           iconEnabledColor: QuizSetupPalette.secondaryText(context),
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -28,8 +30,8 @@ class QuestionCountSelector extends StatelessWidget {
             context,
             AppStrings.selectQuestionCount,
           ),
-          itemHeight: 56,
-          borderRadius: BorderRadius.circular(16),
+          itemHeight: QuizDimensions.dropdownItemHeight,
+          borderRadius: BorderRadius.circular(AppRadius.md),
           isExpanded: true,
           items: QuizSetupOptions.questionCounts
               .map(

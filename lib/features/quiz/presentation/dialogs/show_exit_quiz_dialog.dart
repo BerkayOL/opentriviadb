@@ -3,30 +3,26 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../theme/quiz_palette.dart';
 
 Future<void> showExitQuizDialog(BuildContext context) async {
   final shouldExit = await showDialog<bool>(
     context: context,
-    barrierColor: Colors.black.withValues(alpha: 0.60),
+    barrierColor: QuizPalette.dialogBarrier(),
     builder: (dialogContext) {
       final textTheme = Theme.of(dialogContext).textTheme;
-      final isDark = Theme.of(dialogContext).brightness == Brightness.dark;
       return AlertDialog(
-        backgroundColor: isDark ? const Color(0xFF111827) : Colors.white,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: QuizPalette.dialogBackground(dialogContext),
+        surfaceTintColor: QuizPalette.transparent,
         insetPadding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.lg,
           vertical: AppSpacing.xl,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-          side: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.10)
-                : const Color(0xFFE2E8F0),
-          ),
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+          side: BorderSide(color: QuizPalette.dialogBorder(dialogContext)),
         ),
         titlePadding: const EdgeInsets.fromLTRB(
           AppSpacing.xl,
@@ -53,7 +49,7 @@ Future<void> showExitQuizDialog(BuildContext context) async {
                 color: QuizPalette.accent(
                   dialogContext,
                 ).withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(AppRadius.md),
                 border: Border.all(
                   color: QuizPalette.accent(
                     dialogContext,
@@ -104,9 +100,9 @@ Future<void> showExitQuizDialog(BuildContext context) async {
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: QuizPalette.accent(dialogContext),
-              foregroundColor: Colors.white,
+              foregroundColor: QuizPalette.onAccent,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(AppRadius.md),
               ),
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.lg,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/app_strings.dart';
+import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import 'app_card.dart';
 
@@ -19,7 +20,7 @@ class LoadingView extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 320),
           child: AppCard(
-            borderRadius: 28,
+            borderRadius: AppRadius.xl,
             borderColor: colorScheme.outlineVariant.withValues(alpha: 0.7),
             child: Column(
               mainAxisSize: MainAxisSize.min,

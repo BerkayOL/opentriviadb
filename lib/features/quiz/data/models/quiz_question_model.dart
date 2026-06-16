@@ -1,6 +1,7 @@
-import '../../../../core/utils/answer_shuffle.dart';
+import '../../domain/utils/answer_shuffle.dart';
 import '../../../../core/utils/html_text_decoder.dart';
 import '../../domain/entities/quiz_question.dart';
+import '../constants/quiz_data_error_messages.dart';
 
 class QuizQuestionModel extends QuizQuestion {
   const QuizQuestionModel({
@@ -27,14 +28,18 @@ class QuizQuestionModel extends QuizQuestion {
         category is! String ||
         difficulty is! String ||
         type is! String) {
-      throw const FormatException('Invalid quiz question format.');
+      throw const FormatException(
+        QuizDataErrorMessages.invalidQuizQuestionFormat,
+      );
     }
 
     final decodedCorrectAnswer = HtmlTextDecoder.decode(correctAnswer);
     final decodedIncorrectAnswers = incorrectAnswers
         .map((answer) {
           if (answer is! String) {
-            throw const FormatException('Invalid answer format.');
+            throw const FormatException(
+              QuizDataErrorMessages.invalidAnswerFormat,
+            );
           }
           return HtmlTextDecoder.decode(answer);
         })
