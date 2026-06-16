@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:opentriviadb/app/bootstrap/app_bootstrap.dart';
+import '../app/bootstrap/app_bootstrap.dart';
 
 import 'app/app.dart';
 
