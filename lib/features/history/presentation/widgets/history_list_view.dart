@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../dialogs/clear_history_dialog.dart';
 
 import '../../../../core/constants/app_date_formats.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/entities/quiz_history_entry.dart';
 import '../cubits/history_cubit.dart';
+import '../dialogs/show_clear_history_dialog.dart';
 import '../theme/history_palette.dart';
 import 'history_entry_tile.dart';
 import 'history_summary_card.dart';
