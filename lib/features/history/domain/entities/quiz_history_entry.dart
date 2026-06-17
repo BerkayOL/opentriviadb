@@ -20,13 +20,4 @@ class QuizHistoryEntry extends Equatable {
 
   @override
   List<Object?> get props => [id, score, totalQuestions, createdAt];
-
-  Object? toEntity() {
-    return {
-      'id': id,
-      'score': score,
-      'totalQuestions': totalQuestions,
-      'createdAt': createdAt.toIso8601String(),
-    };
-  }
 }

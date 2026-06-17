@@ -35,7 +35,6 @@ abstract final class AppShellDimensions {
   static const double indicatorHeight = 3;
   static const double indicatorGlowBlur = 4;
 
-  static const Offset pageSlideBegin = Offset(0.025, 0);
   static const double pageScaleBegin = 0.992;
   static const double pageScaleEnd = 1;
 }

@@ -3,13 +3,11 @@ abstract final class AppStrings {
   static const String brandName = 'Quizora';
   static const String splashSubTitle = 'Test your knowledge.';
   static const String setupSubtitle = 'Set up your quiz and start when ready.';
-  static const String comingSoon = 'Coming soon.';
   static const String history = 'History';
   static const String home = 'Quiz';
   static const String settings = 'Settings';
   static const String category = 'Category';
   static const String difficulty = 'Difficulty';
-  static const String setupReady = 'Ready';
   static const String numberOfQuestions = 'Number of Questions';
   static const String questionType = 'Question Type';
   static const String exitQuiz = 'Exit Quiz';
@@ -57,8 +55,6 @@ abstract final class AppStrings {
   static const String answerTimeoutMessage =
       'No answer was selected. The correct option is highlighted.';
 
-  static const String quizCompleted = 'Quiz completed';
-  static const String restartQuiz = 'Restart Quiz';
   static const String trueFalseAnswerChoices = 'True or false answer choices';
   static const String falseAnswer = 'False';
   static const String falseAnswerOption = 'False answer option';
@@ -106,7 +102,6 @@ abstract final class AppStrings {
   static const String noCategoriesFound = 'No categories found';
   static const String noCategoriesMessage =
       'Try again or start without choosing a category.';
-  static const String correctAnswersLabel = 'correct answers';
   static String correctAnswerCount(int count) {
     return count == 1 ? '$count correct answer' : '$count correct answers';
   }

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/app_shell/presentation/pages/app_shell_page.dart';
+
 import '../../app/dependency_injection/app_di.dart';
 import '../../core/constants/app_strings.dart';
+import '../../features/app_shell/presentation/pages/app_shell_page.dart';
+import '../../features/history/presentation/cubits/history_cubit.dart';
 import '../../features/history/presentation/pages/history_page.dart';
+import '../../features/quiz/domain/entities/quiz_request.dart';
 import '../../features/quiz/presentation/cubits/quiz_setup_cubit.dart';
 import '../../features/quiz/presentation/cubits/quiz_cubit.dart';
-import '../../features/quiz/domain/entities/quiz_request.dart';
 import '../../features/quiz/presentation/pages/quiz_page.dart';
 import '../../features/quiz/presentation/pages/quiz_setup_page.dart';
-import '../../features/splash/presentation/pages/splash_page.dart';
-import '../../features/history/presentation/cubits/history_cubit.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
+import '../../features/splash/presentation/pages/splash_page.dart';
+import 'app_route_page_factory.dart';
 import 'app_routes.dart';
 
 abstract final class AppRouter {
@@ -34,20 +36,29 @@ abstract final class AppRouter {
           GoRoute(
             path: AppRoutes.setup,
             name: AppRoutes.setupName,
-            builder: (context, state) => const QuizSetupPage(),
+            pageBuilder: (context, state) => AppRoutePageFactory.buildShellPage(
+              state: state,
+              child: const QuizSetupPage(),
+            ),
           ),
           GoRoute(
             path: AppRoutes.history,
             name: AppRoutes.historyName,
-            builder: (context, state) => BlocProvider(
-              create: (_) => getIt<HistoryCubit>()..loadHistory(),
-              child: const HistoryPage(),
+            pageBuilder: (context, state) => AppRoutePageFactory.buildShellPage(
+              state: state,
+              child: BlocProvider(
+                create: (_) => getIt<HistoryCubit>()..loadHistory(),
+                child: const HistoryPage(),
+              ),
             ),
           ),
           GoRoute(
             path: AppRoutes.settings,
             name: AppRoutes.settingsName,
-            builder: (context, state) => const SettingsPage(),
+            pageBuilder: (context, state) => AppRoutePageFactory.buildShellPage(
+              state: state,
+              child: const SettingsPage(),
+            ),
           ),
         ],
       ),
