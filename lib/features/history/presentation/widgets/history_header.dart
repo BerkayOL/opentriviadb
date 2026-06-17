@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/history_dimensions.dart';
 import '../theme/history_palette.dart';
 
 class HistoryHeader extends StatelessWidget {
@@ -19,7 +20,7 @@ class HistoryHeader extends StatelessWidget {
           style: textTheme.titleMedium?.copyWith(
             color: HistoryPalette.secondaryText(context),
             fontWeight: FontWeight.w800,
-            letterSpacing: 0.8,
+            letterSpacing: HistoryDimensions.headerBrandLetterSpacing,
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
@@ -28,8 +29,8 @@ class HistoryHeader extends StatelessWidget {
           style: textTheme.displaySmall?.copyWith(
             color: HistoryPalette.primaryText(context),
             fontWeight: FontWeight.w800,
-            letterSpacing: -1.0,
-            height: 1.05,
+            letterSpacing: HistoryDimensions.headerTitleLetterSpacing,
+            height: HistoryDimensions.headerTitleHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -37,8 +38,8 @@ class HistoryHeader extends StatelessWidget {
           AppStrings.historySubtitle,
           style: textTheme.bodyLarge?.copyWith(
             color: HistoryPalette.secondaryText(context),
-            height: 1.42,
-            letterSpacing: 0.1,
+            height: HistoryDimensions.headerSubtitleHeight,
+            letterSpacing: HistoryDimensions.headerSubtitleLetterSpacing,
           ),
         ),
       ],

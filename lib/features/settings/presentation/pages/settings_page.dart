@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opentriviadb/features/settings/presentation/theme/settings_palette.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/settings_dimensions.dart';
 import '../widgets/settings_card.dart';
 import '../widgets/settings_header.dart';
 
@@ -26,7 +27,7 @@ class SettingsPage extends StatelessWidget {
                 AppSpacing.lg,
                 AppSpacing.md,
                 AppSpacing.lg,
-                128,
+                SettingsDimensions.pageBottomPadding,
               ),
               children: const [
                 SettingsHeader(),

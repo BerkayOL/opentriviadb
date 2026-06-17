@@ -21,7 +21,7 @@ class CategorySelector extends StatelessWidget {
       builder: (context, state) {
         return switch (state.status) {
           QuizSetupStatus.initial || QuizSetupStatus.loading => const SizedBox(
-            height: 96,
+            height: QuizDimensions.categoryLoadingHeight,
             child: LoadingView(),
           ),
           QuizSetupStatus.failure => ErrorView(

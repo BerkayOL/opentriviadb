@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../constants/quiz_dimensions.dart';
 import '../theme/quiz_palette.dart';
@@ -32,7 +33,7 @@ class QuizProgressBar extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: progress,
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 320),
+                duration: AppMotion.slow,
                 curve: Curves.easeOutCubic,
                 decoration: BoxDecoration(color: QuizPalette.accent(context)),
               ),

@@ -12,6 +12,15 @@ abstract final class OpenTriviaApiConstants {
   static const String responseCode = 'response_code';
   static const String responseResults = 'results';
 
+  static const String fieldId = 'id';
+  static const String fieldName = 'name';
+  static const String fieldQuestion = 'question';
+  static const String fieldCorrectAnswer = 'correct_answer';
+  static const String fieldIncorrectAnswers = 'incorrect_answers';
+  static const String fieldCategory = 'category';
+  static const String fieldDifficulty = 'difficulty';
+  static const String fieldType = 'type';
+
   static const int successResponseCode = 0;
   static const int noResultsResponseCode = 1;
 }

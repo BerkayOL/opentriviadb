@@ -4,6 +4,7 @@ import 'package:opentriviadb/features/quiz/presentation/theme/quiz_setup_palette
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
 import 'difficulty_selector.dart';
 import 'question_count_selector.dart';
 import 'question_type_selector.dart';
@@ -77,14 +78,18 @@ class _SetupFieldSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: 18, color: QuizSetupPalette.accent(context)),
+            Icon(
+              icon,
+              size: QuizDimensions.setupSectionIconSize,
+              color: QuizSetupPalette.accent(context),
+            ),
             const SizedBox(width: AppSpacing.sm),
             Text(
               title,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: QuizSetupPalette.primaryText(
                   context,
-                ).withValues(alpha: 0.86),
+                ).withValues(alpha: QuizDimensions.setupSectionTitleAlpha),
                 fontWeight: FontWeight.w600,
               ),
             ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../constants/splash_dimensions.dart';
 import '../theme/splash_palette.dart';
 
 class SplashPage extends StatefulWidget {
@@ -34,11 +36,11 @@ class _SplashPageState extends State<SplashPage> {
           alignment: Alignment.center,
           children: [
             Positioned(
-              left: -60,
-              top: -40,
+              left: SplashDimensions.firstGlowLeft,
+              top: SplashDimensions.firstGlowTop,
               child: Container(
-                width: 150,
-                height: 150,
+                width: SplashDimensions.firstGlowSize,
+                height: SplashDimensions.firstGlowSize,
                 decoration: BoxDecoration(
                   color: SplashPalette.firstGlowFill(context),
 
@@ -46,19 +48,19 @@ class _SplashPageState extends State<SplashPage> {
                   boxShadow: [
                     BoxShadow(
                       color: SplashPalette.firstGlowColor(context),
-                      blurRadius: 60,
-                      spreadRadius: 30,
+                      blurRadius: SplashDimensions.firstGlowBlur,
+                      spreadRadius: SplashDimensions.firstGlowSpread,
                     ),
                   ],
                 ),
               ),
             ),
             Positioned(
-              right: -80,
-              bottom: -60,
+              right: SplashDimensions.lowerGlowRight,
+              bottom: SplashDimensions.lowerGlowBottom,
               child: Container(
-                width: 100,
-                height: 100,
+                width: SplashDimensions.lowerGlowSize,
+                height: SplashDimensions.lowerGlowSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: SplashPalette.lowerGlowFill(context),
@@ -66,8 +68,8 @@ class _SplashPageState extends State<SplashPage> {
                   boxShadow: [
                     BoxShadow(
                       color: SplashPalette.lowerGlowColor(context),
-                      blurRadius: 40,
-                      spreadRadius: 10,
+                      blurRadius: SplashDimensions.lowerGlowBlur,
+                      spreadRadius: SplashDimensions.lowerGlowSpread,
                     ),
                   ],
                 ),
@@ -75,14 +77,19 @@ class _SplashPageState extends State<SplashPage> {
             ),
             Center(
               child: TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: 1),
-                duration: const Duration(milliseconds: 700),
+                tween: Tween<double>(
+                  begin: SplashDimensions.fadeBegin,
+                  end: SplashDimensions.fadeEnd,
+                ),
+                duration: SplashDimensions.introDuration,
                 curve: Curves.easeOutCubic,
                 builder: (context, value, child) {
                   return Opacity(
                     opacity: value,
                     child: Transform.scale(
-                      scale: 0.94 + (value * 0.06),
+                      scale:
+                          SplashDimensions.initialScale +
+                          (value * SplashDimensions.scaleDelta),
                       child: child,
                     ),
                   );
@@ -91,19 +98,19 @@ class _SplashPageState extends State<SplashPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/logo/quizora_foreground.png',
-                      width: 160,
+                      AppAssets.logoForeground,
+                      width: SplashDimensions.logoWidth,
                       fit: BoxFit.contain,
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
                       AppStrings.appName,
                       style: TextStyle(
-                        fontSize: 42,
+                        fontSize: SplashDimensions.titleFontSize,
                         color: SplashPalette.primaryText(context),
                         fontWeight: FontWeight.w700,
                         fontFamily: AppTypography.displayFontFamily,
-                        letterSpacing: 0.8,
+                        letterSpacing: SplashDimensions.titleLetterSpacing,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -111,16 +118,16 @@ class _SplashPageState extends State<SplashPage> {
                       AppStrings.splashSubTitle,
                       style: TextStyle(
                         color: SplashPalette.secondaryText(context),
-                        fontSize: 15,
+                        fontSize: SplashDimensions.subtitleFontSize,
                         fontWeight: FontWeight.w400,
-                        letterSpacing: 0.3,
+                        letterSpacing: SplashDimensions.subtitleLetterSpacing,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
                     SizedBox(
-                      width: 160,
+                      width: SplashDimensions.progressWidth,
                       child: LinearProgressIndicator(
-                        minHeight: 3,
+                        minHeight: SplashDimensions.progressMinHeight,
                         color: SplashPalette.progressColor(context),
                         backgroundColor: SplashPalette.progressBackground(
                           context,
@@ -138,7 +145,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _goToSetupAfterDelay() async {
-    await Future.delayed(const Duration(milliseconds: 2200));
+    await Future.delayed(SplashDimensions.navigationDelay);
     if (!mounted) return;
     context.go(AppRoutes.setup);
   }

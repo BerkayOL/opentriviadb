@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/history_dimensions.dart';
 import '../cubits/history_cubit.dart';
 import '../cubits/history_state.dart';
 import '../theme/history_palette.dart';
@@ -30,7 +31,7 @@ class HistoryPage extends StatelessWidget {
                     AppSpacing.lg,
                     AppSpacing.md,
                     AppSpacing.lg,
-                    128,
+                    HistoryDimensions.pageBottomPadding,
                   ),
                   children: [
                     const HistoryHeader(),

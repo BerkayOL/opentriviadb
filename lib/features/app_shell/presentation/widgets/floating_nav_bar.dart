@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../app/router/app_routes.dart';
 import '../../../../../core/constants/app_strings.dart';
+import '../constants/app_shell_dimensions.dart';
 import '../theme/app_shell_palette.dart';
 import 'floating_nav_item.dart';
 
@@ -15,41 +16,51 @@ class FloatingNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      minimum: const EdgeInsets.only(bottom: 16),
+      minimum: const EdgeInsets.only(bottom: AppShellDimensions.navBottomInset),
       child: FractionallySizedBox(
-        widthFactor: 0.7,
+        widthFactor: AppShellDimensions.navWidthFactor,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 320),
+          constraints: const BoxConstraints(
+            maxWidth: AppShellDimensions.navMaxWidth,
+          ),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(36),
+              borderRadius: BorderRadius.circular(AppShellDimensions.navRadius),
               boxShadow: [
                 BoxShadow(
                   color: AppShellPalette.dockShadow(context),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
+                  blurRadius: AppShellDimensions.navPrimaryShadowBlur,
+                  offset: AppShellDimensions.navPrimaryShadowOffset,
                 ),
                 BoxShadow(
                   color: AppShellPalette.dockAccentShadow(context),
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
+                  blurRadius: AppShellDimensions.navAccentShadowBlur,
+                  offset: AppShellDimensions.navAccentShadowOffset,
                 ),
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(36),
+              borderRadius: BorderRadius.circular(AppShellDimensions.navRadius),
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                filter: ImageFilter.blur(
+                  sigmaX: AppShellDimensions.navBlurSigma,
+                  sigmaY: AppShellDimensions.navBlurSigma,
+                ),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: AppShellPalette.dockGradient(context),
-                    borderRadius: BorderRadius.circular(36),
+                    borderRadius: BorderRadius.circular(
+                      AppShellDimensions.navRadius,
+                    ),
                     border: Border.all(
                       color: AppShellPalette.dockBorder(context),
-                      width: 0.5,
+                      width: AppShellDimensions.navBorderWidth,
                     ),
                   ),
-                  child: const SizedBox(height: 76, child: _FloatingNavItems()),
+                  child: const SizedBox(
+                    height: AppShellDimensions.navHeight,
+                    child: _FloatingNavItems(),
+                  ),
                 ),
               ),
             ),

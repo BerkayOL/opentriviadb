@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/history_dimensions.dart';
 import '../theme/history_palette.dart';
 
 Future<bool> showClearHistoryDialog(BuildContext context) async {
@@ -11,7 +12,7 @@ Future<bool> showClearHistoryDialog(BuildContext context) async {
       return AlertDialog(
         backgroundColor: HistoryPalette.cardColor(context),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(HistoryDimensions.dialogRadius),
           side: BorderSide(color: HistoryPalette.cardBorder(context)),
         ),
         title: Text(
@@ -19,14 +20,14 @@ Future<bool> showClearHistoryDialog(BuildContext context) async {
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: HistoryPalette.primaryText(context),
             fontWeight: FontWeight.w900,
-            letterSpacing: -0.4,
+            letterSpacing: HistoryDimensions.dialogTitleLetterSpacing,
           ),
         ),
         content: Text(
           AppStrings.clearHistoryConfirmMessage,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: HistoryPalette.secondaryText(context),
-            height: 1.4,
+            height: HistoryDimensions.dialogContentHeight,
           ),
         ),
         actionsPadding: const EdgeInsets.fromLTRB(

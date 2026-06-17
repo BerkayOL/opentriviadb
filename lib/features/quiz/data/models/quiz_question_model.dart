@@ -1,5 +1,6 @@
 import '../../../../core/utils/html_text_decoder.dart';
 import '../../domain/entities/quiz_question.dart';
+import '../constants/open_trivia_api_constants.dart';
 import '../constants/quiz_data_error_messages.dart';
 
 class QuizQuestionModel extends QuizQuestion {
@@ -14,12 +15,12 @@ class QuizQuestionModel extends QuizQuestion {
   });
 
   factory QuizQuestionModel.fromJson(Map<String, dynamic> json) {
-    final question = json['question'];
-    final correctAnswer = json['correct_answer'];
-    final incorrectAnswers = json['incorrect_answers'];
-    final category = json['category'];
-    final difficulty = json['difficulty'];
-    final type = json['type'];
+    final question = json[OpenTriviaApiConstants.fieldQuestion];
+    final correctAnswer = json[OpenTriviaApiConstants.fieldCorrectAnswer];
+    final incorrectAnswers = json[OpenTriviaApiConstants.fieldIncorrectAnswers];
+    final category = json[OpenTriviaApiConstants.fieldCategory];
+    final difficulty = json[OpenTriviaApiConstants.fieldDifficulty];
+    final type = json[OpenTriviaApiConstants.fieldType];
 
     if (question is! String ||
         correctAnswer is! String ||

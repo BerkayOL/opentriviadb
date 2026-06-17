@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../theme/quiz_palette.dart';
+import 'boolean_answer_feedback.dart';
 import 'boolean_answer_switch.dart';
 import 'quiz_action_button.dart';
 import 'quiz_question_card.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/constants/quiz_api_values.dart';
@@ -45,7 +47,7 @@ class QuestionView extends StatelessWidget {
                 child: Material(
                   color: QuizPalette.primaryText(
                     context,
-                  ).withValues(alpha: 0.06),
+                  ).withValues(alpha: QuizDimensions.backButtonFillAlpha),
                   borderRadius: BorderRadius.circular(AppRadius.md),
                   child: InkWell(
                     onTap: () => showExitQuizDialog(context),
@@ -54,15 +56,15 @@ class QuestionView extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppRadius.md),
                         border: Border.all(
-                          color: QuizPalette.primaryText(
-                            context,
-                          ).withValues(alpha: 0.14),
+                          color: QuizPalette.primaryText(context).withValues(
+                            alpha: QuizDimensions.backButtonBorderAlpha,
+                          ),
                         ),
                       ),
                       child: Icon(
                         Icons.arrow_back_rounded,
                         color: QuizPalette.primaryText(context),
-                        size: 24,
+                        size: QuizDimensions.backButtonIconSize,
                       ),
                     ),
                   ),
@@ -86,11 +88,11 @@ class QuestionView extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.lg),
           AnimatedSize(
-            duration: const Duration(milliseconds: 260),
+            duration: AppMotion.medium,
             curve: Curves.easeOutCubic,
             alignment: Alignment.topCenter,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 260),
+              duration: AppMotion.medium,
               switchInCurve: Curves.easeOutCubic,
               switchOutCurve: Curves.easeInCubic,
               layoutBuilder: (currentChild, previousChildren) {
@@ -102,7 +104,10 @@ class QuestionView extends StatelessWidget {
               transitionBuilder: (child, animation) {
                 final slideAnimation =
                     Tween<Offset>(
-                      begin: const Offset(0.03, 0),
+                      begin: const Offset(
+                        QuizDimensions.progressAnimationSlideX,
+                        0,
+                      ),
                       end: Offset.zero,
                     ).animate(
                       CurvedAnimation(
@@ -158,7 +163,7 @@ class QuestionView extends StatelessWidget {
                             );
                           },
                         ),
-                        _BooleanAnswerFeedback(state: state),
+                        BooleanAnswerFeedback(state: state),
                       ],
                     )
                   else
@@ -202,91 +207,6 @@ class QuestionView extends StatelessWidget {
             ),
         ],
       ),
-    );
-  }
-}
-
-class _BooleanAnswerFeedback extends StatelessWidget {
-  const _BooleanAnswerFeedback({required this.state});
-
-  final QuizState state;
-
-  @override
-  Widget build(BuildContext context) {
-    final isRevealed = state.status == QuizStatus.answerRevealed;
-    final isTimeout = isRevealed && state.selectedAnswer == null;
-    final isCorrect = state.isAnswerCorrect == true;
-    final color = isCorrect
-        ? QuizPalette.correctBorder(context)
-        : QuizPalette.wrongBorder(context);
-    final title = isTimeout
-        ? AppStrings.answerTimeoutTitle
-        : isCorrect
-        ? AppStrings.answerCorrectTitle
-        : AppStrings.answerWrongTitle;
-    final message = isTimeout
-        ? AppStrings.answerTimeoutMessage
-        : isCorrect
-        ? AppStrings.answerCorrectMessage
-        : AppStrings.answerWrongMessage;
-    final icon = isCorrect
-        ? Icons.check_circle_rounded
-        : isTimeout
-        ? Icons.timer_off_rounded
-        : Icons.cancel_rounded;
-
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 220),
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
-      child: isRevealed
-          ? Container(
-              key: ValueKey(title),
-              margin: const EdgeInsets.only(top: AppSpacing.sm),
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: BoxDecoration(
-                color: color.withValues(
-                  alpha: QuizPalette.isDark(context) ? 0.15 : 0.10,
-                ),
-                borderRadius: BorderRadius.circular(AppRadius.lg),
-                border: Border.all(color: color.withValues(alpha: 0.42)),
-              ),
-              child: Row(
-                children: [
-                  Icon(icon, color: color, size: 24),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
-                                color: color,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 0,
-                              ),
-                        ),
-                        const SizedBox(height: AppSpacing.xs),
-                        Text(
-                          message,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                color: QuizPalette.primaryText(
-                                  context,
-                                ).withValues(alpha: 0.82),
-                                fontWeight: FontWeight.w700,
-                                height: 1.3,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : const SizedBox.shrink(),
     );
   }
 }

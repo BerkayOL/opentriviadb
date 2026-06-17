@@ -5,6 +5,7 @@ import '../../../../app/router/app_routes.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/quiz_dimensions.dart';
 import '../theme/quiz_palette.dart';
 
 Future<void> showExitQuizDialog(BuildContext context) async {
@@ -48,12 +49,12 @@ Future<void> showExitQuizDialog(BuildContext context) async {
               decoration: BoxDecoration(
                 color: QuizPalette.accent(
                   dialogContext,
-                ).withValues(alpha: 0.14),
+                ).withValues(alpha: QuizDimensions.dialogIconFillAlpha),
                 borderRadius: BorderRadius.circular(AppRadius.md),
                 border: Border.all(
                   color: QuizPalette.accent(
                     dialogContext,
-                  ).withValues(alpha: 0.28),
+                  ).withValues(alpha: QuizDimensions.dialogIconBorderAlpha),
                 ),
               ),
               child: Padding(
@@ -61,7 +62,7 @@ Future<void> showExitQuizDialog(BuildContext context) async {
                 child: Icon(
                   Icons.logout_rounded,
                   color: QuizPalette.accent(dialogContext),
-                  size: 22,
+                  size: QuizDimensions.dialogIconSize,
                 ),
               ),
             ),
@@ -72,7 +73,7 @@ Future<void> showExitQuizDialog(BuildContext context) async {
                 style: textTheme.titleLarge?.copyWith(
                   color: QuizPalette.primaryText(dialogContext),
                   fontWeight: FontWeight.w900,
-                  letterSpacing: -0.4,
+                  letterSpacing: QuizDimensions.dialogTitleLetterSpacing,
                 ),
               ),
             ),
@@ -83,7 +84,7 @@ Future<void> showExitQuizDialog(BuildContext context) async {
           style: textTheme.bodyMedium?.copyWith(
             color: QuizPalette.secondaryText(dialogContext),
             fontWeight: FontWeight.w600,
-            height: 1.4,
+            height: QuizDimensions.dialogContentHeight,
           ),
         ),
         actions: [

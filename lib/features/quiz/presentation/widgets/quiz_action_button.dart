@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/quiz_dimensions.dart';
@@ -23,19 +24,27 @@ class QuizActionButton extends StatelessWidget {
     final accent = QuizPalette.accent(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final backgroundAlpha = isDark ? 0.22 : 0.40;
-    final borderAlpha = isDark ? 0.48 : 0.64;
+    final backgroundAlpha = isDark
+        ? QuizDimensions.quizActionDarkBackgroundAlpha
+        : QuizDimensions.quizActionLightBackgroundAlpha;
+    final borderAlpha = isDark
+        ? QuizDimensions.quizActionDarkBorderAlpha
+        : QuizDimensions.quizActionLightBorderAlpha;
     return AnimatedOpacity(
-      opacity: isEnabled ? 1 : 0.55,
-      duration: const Duration(milliseconds: 180),
+      opacity: isEnabled ? 1 : QuizDimensions.quizActionDisabledOpacity,
+      duration: AppMotion.fast,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadius.lg),
           boxShadow: [
             BoxShadow(
-              color: accent.withValues(alpha: isDark ? 0.10 : 0.12),
-              blurRadius: 16,
-              offset: const Offset(0, 8),
+              color: accent.withValues(
+                alpha: isDark
+                    ? QuizDimensions.quizActionDarkShadowAlpha
+                    : QuizDimensions.quizActionLightShadowAlpha,
+              ),
+              blurRadius: QuizDimensions.quizActionShadowBlur,
+              offset: const Offset(0, QuizDimensions.quizActionShadowOffsetY),
             ),
           ],
         ),
@@ -64,11 +73,15 @@ class QuizActionButton extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: QuizPalette.onAccent,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: -0.2,
+                        letterSpacing: QuizDimensions.actionLabelLetterSpacing,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
-                    Icon(icon, color: QuizPalette.onAccent, size: 20),
+                    Icon(
+                      icon,
+                      color: QuizPalette.onAccent,
+                      size: QuizDimensions.quizActionIconSize,
+                    ),
                   ],
                 ),
               ),

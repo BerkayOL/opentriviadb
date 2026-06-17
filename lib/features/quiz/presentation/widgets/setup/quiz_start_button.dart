@@ -20,7 +20,7 @@ class StartQuizButton extends StatelessWidget {
       builder: (context, state) {
         final isReady = state.status == QuizSetupStatus.ready;
         return Opacity(
-          opacity: isReady ? 1 : 0.55,
+          opacity: isReady ? 1 : QuizDimensions.quizStartDisabledOpacity,
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -31,8 +31,11 @@ class StartQuizButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.lg),
               boxShadow: [
                 BoxShadow(
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
+                  blurRadius: QuizDimensions.quizStartShadowBlur,
+                  offset: const Offset(
+                    0,
+                    QuizDimensions.quizStartShadowOffsetY,
+                  ),
                   color: QuizSetupPalette.startButtonShadow(),
                 ),
               ],
@@ -65,7 +68,7 @@ class StartQuizButton extends StatelessWidget {
                 ),
                 textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w700,
-                  letterSpacing: 0.2,
+                  letterSpacing: QuizDimensions.setupStartButtonLetterSpacing,
                 ),
               ),
             ),

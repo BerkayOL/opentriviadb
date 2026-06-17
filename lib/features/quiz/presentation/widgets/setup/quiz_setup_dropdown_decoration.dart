@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
 import '../../theme/quiz_setup_palette.dart';
 
 InputDecoration dropDownDecoration(BuildContext context, String hintText) {
-  final radius = BorderRadius.circular(18);
+  final radius = BorderRadius.circular(QuizDimensions.dropdownRadius);
 
   return InputDecoration(
     hintText: hintText,
     hintStyle: TextStyle(
-      color: QuizSetupPalette.secondaryText(context).withValues(alpha: 0.72),
+      color: QuizSetupPalette.secondaryText(
+        context,
+      ).withValues(alpha: QuizDimensions.dropdownHintAlpha),
       fontWeight: FontWeight.w500,
     ),
     filled: true,
@@ -30,7 +33,7 @@ InputDecoration dropDownDecoration(BuildContext context, String hintText) {
       borderRadius: radius,
       borderSide: BorderSide(
         color: QuizSetupPalette.accent(context),
-        width: 1.4,
+        width: QuizDimensions.dropdownFocusedBorderWidth,
       ),
     ),
     errorBorder: OutlineInputBorder(
@@ -41,7 +44,7 @@ InputDecoration dropDownDecoration(BuildContext context, String hintText) {
       borderRadius: radius,
       borderSide: BorderSide(
         color: Theme.of(context).colorScheme.error,
-        width: 1.4,
+        width: QuizDimensions.dropdownFocusedBorderWidth,
       ),
     ),
   );

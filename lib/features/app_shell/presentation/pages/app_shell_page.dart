@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/theme/app_motion.dart';
+import '../constants/app_shell_dimensions.dart';
 import '../widgets/floating_nav_bar.dart';
 
 class AppShellPage extends StatelessWidget {
@@ -17,8 +19,8 @@ class AppShellPage extends StatelessWidget {
         children: [
           Positioned.fill(
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 240),
-              reverseDuration: const Duration(milliseconds: 180),
+              duration: AppMotion.normal,
+              reverseDuration: AppMotion.fast,
               switchInCurve: Curves.easeOutCubic,
               switchOutCurve: Curves.easeInCubic,
               layoutBuilder: (currentChild, previousChildren) {
@@ -27,7 +29,7 @@ class AppShellPage extends StatelessWidget {
               transitionBuilder: (child, animation) {
                 final slideAnimation =
                     Tween<Offset>(
-                      begin: const Offset(0.025, 0),
+                      begin: AppShellDimensions.pageSlideBegin,
                       end: Offset.zero,
                     ).animate(
                       CurvedAnimation(
@@ -36,8 +38,11 @@ class AppShellPage extends StatelessWidget {
                       ),
                     );
 
-                final scaleAnimation = Tween<double>(begin: 0.992, end: 1)
-                    .animate(
+                final scaleAnimation =
+                    Tween<double>(
+                      begin: AppShellDimensions.pageScaleBegin,
+                      end: AppShellDimensions.pageScaleEnd,
+                    ).animate(
                       CurvedAnimation(
                         parent: animation,
                         curve: Curves.easeOutCubic,

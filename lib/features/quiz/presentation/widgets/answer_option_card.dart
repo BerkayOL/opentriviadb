@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/quiz_dimensions.dart';
@@ -39,7 +40,7 @@ class AnswerOptionCard extends StatelessWidget {
     final badgeBackgroundColor = switch (status) {
       AnswerOptionStatus.idle => QuizPalette.secondaryText(
         context,
-      ).withValues(alpha: 0.22),
+      ).withValues(alpha: QuizDimensions.optionBadgeIdleFillAlpha),
       AnswerOptionStatus.selected => QuizPalette.selectedFill(context),
       AnswerOptionStatus.correct => QuizPalette.correctFill(context),
       AnswerOptionStatus.wrong => QuizPalette.wrongFill(context),
@@ -53,7 +54,7 @@ class AnswerOptionCard extends StatelessWidget {
     final badgeBorderColor = switch (status) {
       AnswerOptionStatus.idle => QuizPalette.secondaryText(
         context,
-      ).withValues(alpha: 0.80),
+      ).withValues(alpha: QuizDimensions.optionBadgeIdleBorderAlpha),
       AnswerOptionStatus.selected => QuizPalette.selectedBorder(context),
       AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
       AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
@@ -72,12 +73,14 @@ class AnswerOptionCard extends StatelessWidget {
     final labels = ['A', 'B', 'C', 'D'];
     final optionLabel = optionIndex < labels.length ? labels[optionIndex] : '?';
     return AnimatedScale(
-      scale: shouldLift ? 1.02 : 1.0,
-      duration: const Duration(milliseconds: 180),
+      scale: shouldLift
+          ? QuizDimensions.optionSelectedScale
+          : QuizDimensions.optionIdleScale,
+      duration: AppMotion.fast,
       curve: Curves.easeOutCubic,
       child: AnimatedContainer(
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-        duration: const Duration(milliseconds: 250),
+        duration: AppMotion.medium,
         curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -110,7 +113,8 @@ class AnswerOptionCard extends StatelessWidget {
                           style: textTheme.labelLarge?.copyWith(
                             color: badgeBorderColor,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: -0.1,
+                            letterSpacing:
+                                QuizDimensions.answerLabelLetterSpacing,
                           ),
                         ),
                       ),
@@ -125,13 +129,17 @@ class AnswerOptionCard extends StatelessWidget {
                       style: textTheme.bodyLarge?.copyWith(
                         color: answerTextColor,
                         fontWeight: FontWeight.w700,
-                        height: 1.3,
+                        height: QuizDimensions.answerTextHeight,
                       ),
                     ),
                   ),
                   if (trailingIcon != null) ...[
                     const SizedBox(width: AppSpacing.sm),
-                    Icon(trailingIcon, color: trailingIconColor, size: 22),
+                    Icon(
+                      trailingIcon,
+                      color: trailingIconColor,
+                      size: QuizDimensions.answerTrailingIconSize,
+                    ),
                   ],
                 ],
               ),

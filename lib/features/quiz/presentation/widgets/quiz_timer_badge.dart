@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_strings.dart';
 
+import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/constants/quiz_config.dart';
+import '../constants/quiz_dimensions.dart';
 import '../theme/quiz_palette.dart';
 
 class QuizTimerBadge extends StatelessWidget {
@@ -19,12 +21,16 @@ class QuizTimerBadge extends StatelessWidget {
         : QuizPalette.accent(context);
     final backgroundColor = isCritical
         ? QuizPalette.wrongFill(context)
-        : QuizPalette.accent(context).withValues(alpha: 0.12);
+        : QuizPalette.accent(
+            context,
+          ).withValues(alpha: QuizDimensions.timerNormalBackgroundAlpha);
     final borderColor = isCritical
         ? QuizPalette.wrongBorder(context)
-        : QuizPalette.accent(context).withValues(alpha: 0.28);
+        : QuizPalette.accent(
+            context,
+          ).withValues(alpha: QuizDimensions.timerNormalBorderAlpha);
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
+      duration: AppMotion.quick,
       curve: Curves.easeOutCubic,
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -39,14 +45,18 @@ class QuizTimerBadge extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.timer_outlined, size: 18, color: foregroundColor),
+            Icon(
+              Icons.timer_outlined,
+              size: QuizDimensions.timerIconSize,
+              color: foregroundColor,
+            ),
             const SizedBox(width: AppSpacing.xs),
             Text(
               AppStrings.secondsLeft(secondsLeft),
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: foregroundColor,
                 fontWeight: FontWeight.w800,
-                letterSpacing: -0.1,
+                letterSpacing: QuizDimensions.timerLetterSpacing,
               ),
             ),
           ],

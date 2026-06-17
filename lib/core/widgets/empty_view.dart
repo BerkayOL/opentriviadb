@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_radius.dart';
+import '../theme/app_feedback_dimensions.dart';
 import '../theme/app_spacing.dart';
 import 'app_card.dart';
 
@@ -19,24 +19,32 @@ class EmptyView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 360),
+          constraints: const BoxConstraints(
+            maxWidth: AppFeedbackDimensions.messageMaxWidth,
+          ),
           child: AppCard(
-            borderRadius: AppRadius.xl,
-            borderColor: colorScheme.outlineVariant.withValues(alpha: 0.7),
+            borderRadius: AppFeedbackDimensions.cardRadius,
+            borderColor: colorScheme.outlineVariant.withValues(
+              alpha: AppFeedbackDimensions.outlineBorderAlpha,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
-                    color: colorScheme.primary.withValues(alpha: 0.10),
-                    borderRadius: BorderRadius.circular(18),
+                    color: colorScheme.primary.withValues(
+                      alpha: AppFeedbackDimensions.iconFillAlpha,
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      AppFeedbackDimensions.iconContainerRadius,
+                    ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: Icon(
                       Icons.inbox_outlined,
                       color: colorScheme.primary,
-                      size: 30,
+                      size: AppFeedbackDimensions.iconSize,
                     ),
                   ),
                 ),
@@ -55,7 +63,7 @@ class EmptyView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
-                      height: 1.35,
+                      height: AppFeedbackDimensions.messageTextHeight,
                     ),
                   ),
                 ],

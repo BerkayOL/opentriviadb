@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/app_strings.dart';
-import '../theme/app_radius.dart';
+import '../theme/app_feedback_dimensions.dart';
 import '../theme/app_spacing.dart';
 import 'app_card.dart';
 
@@ -18,18 +18,23 @@ class LoadingView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 320),
+          constraints: const BoxConstraints(
+            maxWidth: AppFeedbackDimensions.loadingMaxWidth,
+          ),
           child: AppCard(
-            borderRadius: AppRadius.xl,
-            borderColor: colorScheme.outlineVariant.withValues(alpha: 0.7),
+            borderRadius: AppFeedbackDimensions.cardRadius,
+            borderColor: colorScheme.outlineVariant.withValues(
+              alpha: AppFeedbackDimensions.outlineBorderAlpha,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  width: 32,
-                  height: 32,
+                  width: AppFeedbackDimensions.loadingIndicatorSize,
+                  height: AppFeedbackDimensions.loadingIndicatorSize,
                   child: CircularProgressIndicator(
-                    strokeWidth: 3,
+                    strokeWidth:
+                        AppFeedbackDimensions.loadingIndicatorStrokeWidth,
                     color: colorScheme.primary,
                   ),
                 ),

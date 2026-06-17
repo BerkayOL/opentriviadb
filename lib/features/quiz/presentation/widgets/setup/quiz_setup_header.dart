@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
 import '../../theme/quiz_setup_palette.dart';
 
 class SetupHeader extends StatelessWidget {
@@ -18,9 +19,9 @@ class SetupHeader extends StatelessWidget {
           AppStrings.brandName,
           style: textTheme.titleMedium?.copyWith(
             color: QuizSetupPalette.secondaryText(context),
-            fontSize: 18,
+            fontSize: QuizDimensions.setupBrandFontSize,
             fontWeight: FontWeight.w700,
-            letterSpacing: 0.7,
+            letterSpacing: QuizDimensions.setupBrandLetterSpacing,
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
@@ -29,8 +30,8 @@ class SetupHeader extends StatelessWidget {
           style: textTheme.displaySmall?.copyWith(
             color: QuizSetupPalette.primaryText(context),
             fontWeight: FontWeight.w800,
-            letterSpacing: -1.0,
-            height: 1.05,
+            letterSpacing: QuizDimensions.setupTitleLetterSpacing,
+            height: QuizDimensions.setupTitleHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -38,8 +39,8 @@ class SetupHeader extends StatelessWidget {
           AppStrings.setupSubtitle,
           style: textTheme.bodyLarge?.copyWith(
             color: QuizSetupPalette.secondaryText(context),
-            height: 1.42,
-            letterSpacing: 0.1,
+            height: QuizDimensions.setupSubtitleHeight,
+            letterSpacing: QuizDimensions.setupSubtitleLetterSpacing,
           ),
         ),
       ],

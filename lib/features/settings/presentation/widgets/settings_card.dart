@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
+import '../constants/settings_dimensions.dart';
 import '../cubits/theme_cubit.dart';
 import '../cubits/theme_state.dart';
 import '../theme/settings_palette.dart';
@@ -21,13 +22,13 @@ class SettingsCard extends StatelessWidget {
         return AppCard(
           color: SettingsPalette.cardColor(context),
           borderColor: SettingsPalette.cardBorder(context),
-          borderRadius: 30,
+          borderRadius: SettingsDimensions.cardRadius,
           padding: const EdgeInsets.all(AppSpacing.lg),
           boxShadow: [
             BoxShadow(
-              blurRadius: 28,
+              blurRadius: SettingsDimensions.cardShadowBlur,
               color: SettingsPalette.softShadow(context),
-              offset: const Offset(0, 18),
+              offset: SettingsDimensions.cardShadowOffset,
             ),
           ],
           child: Column(
@@ -38,7 +39,7 @@ class SettingsCard extends StatelessWidget {
                 style: textTheme.titleLarge?.copyWith(
                   color: SettingsPalette.primaryText(context),
                   fontWeight: FontWeight.w800,
-                  letterSpacing: -0.2,
+                  letterSpacing: SettingsDimensions.cardTitleLetterSpacing,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
@@ -46,7 +47,7 @@ class SettingsCard extends StatelessWidget {
                 AppStrings.themeSectionSubtitle,
                 style: textTheme.bodyMedium?.copyWith(
                   color: SettingsPalette.secondaryText(context),
-                  height: 1.35,
+                  height: SettingsDimensions.cardSubtitleHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),

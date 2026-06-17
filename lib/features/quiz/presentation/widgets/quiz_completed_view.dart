@@ -6,6 +6,7 @@ import '../../../../app/router/app_routes.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
+import '../constants/quiz_dimensions.dart';
 import '../cubits/quiz_state.dart';
 import '../theme/quiz_palette.dart';
 
@@ -27,23 +28,29 @@ class QuizCompletedView extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(
+            maxWidth: QuizDimensions.completedCardMaxWidth,
+          ),
           child: AppCard(
             color: QuizPalette.cardColor(context),
             borderColor: QuizPalette.cardBorder(context),
-            borderRadius: 32,
+            borderRadius: QuizDimensions.completedCardRadius,
             padding: const EdgeInsets.all(AppSpacing.xl),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
-                    color: QuizPalette.accent(context).withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(24),
+                    color: QuizPalette.accent(
+                      context,
+                    ).withValues(alpha: QuizDimensions.completedIconFillAlpha),
+                    borderRadius: BorderRadius.circular(
+                      QuizDimensions.completedIconRadius,
+                    ),
                     border: Border.all(
-                      color: QuizPalette.accent(
-                        context,
-                      ).withValues(alpha: 0.24),
+                      color: QuizPalette.accent(context).withValues(
+                        alpha: QuizDimensions.completedIconBorderAlpha,
+                      ),
                     ),
                   ),
                   child: Padding(
@@ -51,7 +58,7 @@ class QuizCompletedView extends StatelessWidget {
                     child: Icon(
                       resultIcon,
                       color: QuizPalette.accent(context),
-                      size: 34,
+                      size: QuizDimensions.completedIconSize,
                     ),
                   ),
                 ),
@@ -62,7 +69,7 @@ class QuizCompletedView extends StatelessWidget {
                   style: textTheme.headlineSmall?.copyWith(
                     color: QuizPalette.primaryText(context),
                     fontWeight: FontWeight.w900,
-                    letterSpacing: -0.6,
+                    letterSpacing: QuizDimensions.completedTitleLetterSpacing,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -72,7 +79,7 @@ class QuizCompletedView extends StatelessWidget {
                   style: textTheme.bodyLarge?.copyWith(
                     color: QuizPalette.secondaryText(context),
                     fontWeight: FontWeight.w600,
-                    height: 1.35,
+                    height: QuizDimensions.completedScoreHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),

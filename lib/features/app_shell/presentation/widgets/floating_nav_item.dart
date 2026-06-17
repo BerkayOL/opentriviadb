@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opentriviadb/features/app_shell/presentation/cubits/nav_item_press_cubit.dart';
 
+import '../../../../../core/theme/app_motion.dart';
 import '../../../../../core/theme/app_radius.dart';
+import '../constants/app_shell_dimensions.dart';
 import '../theme/app_shell_palette.dart';
 
 class FloatingNavItem extends StatelessWidget {
@@ -73,41 +75,50 @@ class _FloatingNavItemBody extends StatelessWidget {
                     context.read<NavItemPressCubit>().setPressed(false),
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 splashColor: AppShellPalette.selectedGradient.first.withValues(
-                  alpha: 0.10,
+                  alpha: AppShellDimensions.itemSplashAlpha,
                 ),
                 highlightColor: AppShellPalette.selectedGradient.last
-                    .withValues(alpha: 0.08),
+                    .withValues(alpha: AppShellDimensions.itemHighlightAlpha),
                 child: AnimatedScale(
-                  scale: pressed ? 0.96 : 1.0,
-                  duration: const Duration(milliseconds: 280),
+                  scale: pressed ? AppShellDimensions.pressedScale : 1.0,
+                  duration: AppMotion.medium,
                   curve: Curves.easeOutCubic,
                   child: SizedBox(
-                    height: 76,
+                    height: AppShellDimensions.navHeight,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         AnimatedSlide(
                           offset: isSelected
-                              ? const Offset(0, -0.06)
+                              ? const Offset(
+                                  0,
+                                  AppShellDimensions.selectedSlideY,
+                                )
                               : Offset.zero,
-                          duration: const Duration(milliseconds: 320),
+                          duration: AppMotion.slow,
                           curve: Curves.easeOutCubic,
                           child: AnimatedScale(
-                            scale: isSelected ? 1.04 : 1,
-                            duration: const Duration(milliseconds: 320),
+                            scale: isSelected
+                                ? AppShellDimensions.selectedScale
+                                : AppShellDimensions.inactiveScale,
+                            duration: AppMotion.slow,
                             curve: Curves.easeOutCubic,
                             child: SizedBox(
-                              width: 44,
-                              height: 44,
+                              width: AppShellDimensions.iconShellSize,
+                              height: AppShellDimensions.iconShellSize,
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   AnimatedContainer(
-                                    duration: const Duration(milliseconds: 320),
+                                    duration: AppMotion.slow,
                                     curve: Curves.easeOutCubic,
-                                    width: isSelected ? 44 : 36,
-                                    height: isSelected ? 44 : 36,
+                                    width: isSelected
+                                        ? AppShellDimensions.selectedBubbleSize
+                                        : AppShellDimensions.inactiveBubbleSize,
+                                    height: isSelected
+                                        ? AppShellDimensions.selectedBubbleSize
+                                        : AppShellDimensions.inactiveBubbleSize,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: isSelected
@@ -121,7 +132,8 @@ class _FloatingNavItemBody extends StatelessWidget {
                                                 context,
                                               )
                                             : Colors.transparent,
-                                        width: 0.8,
+                                        width: AppShellDimensions
+                                            .bubbleBorderWidth,
                                       ),
                                       boxShadow: isSelected
                                           ? [
@@ -130,19 +142,25 @@ class _FloatingNavItemBody extends StatelessWidget {
                                                     AppShellPalette.activeBubbleGlow(
                                                       context,
                                                     ),
-                                                blurRadius: 6,
+                                                blurRadius: AppShellDimensions
+                                                    .bubbleGlowBlur,
                                               ),
                                             ]
                                           : null,
                                     ),
                                   ),
                                   AnimatedOpacity(
-                                    opacity: isSelected ? 1 : 0.92,
-                                    duration: const Duration(milliseconds: 240),
+                                    opacity: isSelected
+                                        ? 1
+                                        : AppShellDimensions
+                                              .inactiveIconOpacity,
+                                    duration: AppMotion.normal,
                                     curve: Curves.easeOutCubic,
                                     child: Icon(
                                       icon,
-                                      size: isSelected ? 31 : 29,
+                                      size: isSelected
+                                          ? AppShellDimensions.selectedIconSize
+                                          : AppShellDimensions.inactiveIconSize,
                                       color: itemColor,
                                     ),
                                   ),
@@ -151,12 +169,16 @@ class _FloatingNavItemBody extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(
+                          height: AppShellDimensions.iconIndicatorGap,
+                        ),
                         AnimatedContainer(
-                          duration: const Duration(milliseconds: 320),
+                          duration: AppMotion.slow,
                           curve: Curves.easeOutCubic,
-                          width: isSelected ? 22 : 0,
-                          height: 3,
+                          width: isSelected
+                              ? AppShellDimensions.selectedIndicatorWidth
+                              : AppShellDimensions.hiddenIndicatorWidth,
+                          height: AppShellDimensions.indicatorHeight,
                           decoration: BoxDecoration(
                             gradient: isSelected
                                 ? const LinearGradient(
@@ -172,7 +194,8 @@ class _FloatingNavItemBody extends StatelessWidget {
                                       color: AppShellPalette.indicatorGlow(
                                         context,
                                       ),
-                                      blurRadius: 4,
+                                      blurRadius:
+                                          AppShellDimensions.indicatorGlowBlur,
                                     ),
                                   ]
                                 : null,

@@ -3,6 +3,7 @@ import '../theme/settings_palette.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../constants/settings_dimensions.dart';
 
 class SettingsHeader extends StatelessWidget {
   const SettingsHeader({super.key});
@@ -19,7 +20,7 @@ class SettingsHeader extends StatelessWidget {
           style: textTheme.titleMedium?.copyWith(
             color: SettingsPalette.secondaryText(context),
             fontWeight: FontWeight.w800,
-            letterSpacing: 0.8,
+            letterSpacing: SettingsDimensions.headerBrandLetterSpacing,
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
@@ -28,8 +29,8 @@ class SettingsHeader extends StatelessWidget {
           style: textTheme.displaySmall?.copyWith(
             color: SettingsPalette.primaryText(context),
             fontWeight: FontWeight.w800,
-            letterSpacing: -1.0,
-            height: 1.05,
+            letterSpacing: SettingsDimensions.headerTitleLetterSpacing,
+            height: SettingsDimensions.headerTitleHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -37,8 +38,8 @@ class SettingsHeader extends StatelessWidget {
           AppStrings.settingsSubtitle,
           style: textTheme.bodyLarge?.copyWith(
             color: SettingsPalette.secondaryText(context),
-            height: 1.42,
-            letterSpacing: 0.1,
+            height: SettingsDimensions.headerSubtitleHeight,
+            letterSpacing: SettingsDimensions.headerSubtitleLetterSpacing,
           ),
         ),
       ],
