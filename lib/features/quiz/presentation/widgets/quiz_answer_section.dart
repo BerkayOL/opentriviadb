@@ -8,8 +8,8 @@ import '../cubits/quiz_cubit.dart';
 import '../cubits/quiz_state.dart';
 import '../resolvers/answer_option_status_resolver.dart';
 import 'answer_option_card.dart';
-import 'boolean_answer_feedback.dart';
-import 'boolean_answer_switch.dart';
+import 'boolean/boolean_answer_feedback.dart';
+import 'boolean/boolean_answer_switch.dart';
 
 class QuizAnswerSection extends StatelessWidget {
   const QuizAnswerSection({

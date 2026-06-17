@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/splash_dimensions.dart';
 import '../theme/splash_palette.dart';
+import 'splash_glow.dart';
 
 class SplashBackgroundGlows extends StatelessWidget {
   const SplashBackgroundGlows({super.key});
@@ -13,7 +14,7 @@ class SplashBackgroundGlows extends StatelessWidget {
         Positioned(
           left: SplashDimensions.firstGlowLeft,
           top: SplashDimensions.firstGlowTop,
-          child: _SplashGlow(
+          child: SplashGlow(
             size: SplashDimensions.firstGlowSize,
             fillColor: SplashPalette.firstGlowFill(context),
             shadowColor: SplashPalette.firstGlowColor(context),
@@ -24,7 +25,7 @@ class SplashBackgroundGlows extends StatelessWidget {
         Positioned(
           right: SplashDimensions.lowerGlowRight,
           bottom: SplashDimensions.lowerGlowBottom,
-          child: _SplashGlow(
+          child: SplashGlow(
             size: SplashDimensions.lowerGlowSize,
             fillColor: SplashPalette.lowerGlowFill(context),
             shadowColor: SplashPalette.lowerGlowColor(context),
@@ -33,41 +34,6 @@ class SplashBackgroundGlows extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SplashGlow extends StatelessWidget {
-  const _SplashGlow({
-    required this.size,
-    required this.fillColor,
-    required this.shadowColor,
-    required this.blurRadius,
-    required this.spreadRadius,
-  });
-
-  final double size;
-  final Color fillColor;
-  final Color shadowColor;
-  final double blurRadius;
-  final double spreadRadius;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: fillColor,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor,
-            blurRadius: blurRadius,
-            spreadRadius: spreadRadius,
-          ),
-        ],
-      ),
     );
   }
 }

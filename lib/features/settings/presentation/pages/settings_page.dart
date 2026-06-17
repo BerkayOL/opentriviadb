@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:opentriviadb/features/settings/presentation/theme/settings_palette.dart';
+import '../theme/settings_palette.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/settings_dimensions.dart';

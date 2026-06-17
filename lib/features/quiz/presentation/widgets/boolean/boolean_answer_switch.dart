@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_strings.dart';
-import '../../../../core/theme/app_motion.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../constants/quiz_dimensions.dart';
-import '../models/answer_option_status.dart';
-import '../theme/quiz_palette.dart';
+import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/theme/app_motion.dart';
+import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
+import '../../models/answer_option_status.dart';
+import '../../theme/quiz_palette.dart';
 import 'boolean_decision_option.dart';
 
 class BooleanAnswerSwitch extends StatelessWidget {

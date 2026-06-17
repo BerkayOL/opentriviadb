@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_motion.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../constants/quiz_dimensions.dart';
+import '../../../../../core/theme/app_motion.dart';
+import '../../../../../core/theme/app_radius.dart';
+import '../../constants/quiz_dimensions.dart';
 
 class BooleanDecisionOptionIconBadge extends StatelessWidget {
   const BooleanDecisionOptionIconBadge({

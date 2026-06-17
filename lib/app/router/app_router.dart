@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:opentriviadb/features/app_shell/presentation/pages/app_shell_page.dart';
+import '../../features/app_shell/presentation/pages/app_shell_page.dart';
 import '../../app/dependency_injection/app_di.dart';
 import '../../core/constants/app_strings.dart';
 import '../../features/history/presentation/pages/history_page.dart';

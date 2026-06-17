@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_spacing.dart';
-import '../constants/quiz_dimensions.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
 
 class BooleanDecisionOptionHelper extends StatelessWidget {
   const BooleanDecisionOptionHelper({

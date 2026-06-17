@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_strings.dart';
-import '../../../../core/theme/app_motion.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../constants/quiz_dimensions.dart';
-import '../cubits/quiz_state.dart';
-import '../theme/quiz_palette.dart';
+import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/theme/app_motion.dart';
+import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
+import '../../cubits/quiz_state.dart';
+import '../../theme/quiz_palette.dart';
 
 class BooleanAnswerFeedback extends StatelessWidget {
   const BooleanAnswerFeedback({super.key, required this.state});
