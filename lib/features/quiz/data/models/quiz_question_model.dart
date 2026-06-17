@@ -1,4 +1,3 @@
-import '../../domain/utils/answer_shuffle.dart';
 import '../../../../core/utils/html_text_decoder.dart';
 import '../../domain/entities/quiz_question.dart';
 import '../constants/quiz_data_error_messages.dart';
@@ -49,10 +48,7 @@ class QuizQuestionModel extends QuizQuestion {
       question: HtmlTextDecoder.decode(question),
       correctAnswer: decodedCorrectAnswer,
       incorrectAnswers: decodedIncorrectAnswers,
-      answers: shuffleAnswers(
-        correctAnswer: decodedCorrectAnswer,
-        incorrectAnswers: decodedIncorrectAnswers,
-      ),
+      answers: [decodedCorrectAnswer, ...decodedIncorrectAnswers],
       category: HtmlTextDecoder.decode(category),
       difficulty: difficulty,
       type: type,
