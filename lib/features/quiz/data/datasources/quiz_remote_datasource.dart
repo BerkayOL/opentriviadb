@@ -24,43 +24,9 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
       final response = await _dio.get<Map<String, dynamic>>(
         OpenTriviaApiConstants.categoriesEndpoint,
       );
-      final data = response.data;
-      final categoriesJson =
-          data?[OpenTriviaApiConstants.responseTriviaCategories];
-
-      if (categoriesJson is! List) {
-        throw const ServerException(
-          QuizDataErrorMessages.categoryResponseFormatInvalid,
-        );
-      }
-
-      final categories = categoriesJson
-          .map(
-            (json) => QuizCategoryModel.fromJson(json as Map<String, dynamic>),
-          )
-          .toList();
-
-      if (categories.isEmpty) {
-        throw const EmptyResultException(
-          QuizDataErrorMessages.noCategoriesFound,
-        );
-      }
-
-      return categories;
+      return _parseCategories(response.data);
     } on DioException catch (error) {
-      if (error.type == DioExceptionType.connectionTimeout ||
-          error.type == DioExceptionType.receiveTimeout ||
-          error.type == DioExceptionType.connectionError) {
-        throw const NetworkException(
-          QuizDataErrorMessages.checkInternetConnection,
-        );
-      }
-
-      throw ServerException(
-        QuizDataErrorMessages.categoryRequestFailedWithStatus(
-          error.response?.statusCode ?? QuizDataErrorMessages.unknownStatusCode,
-        ),
-      );
+      _throwMappedDioException(error, _QuizRequestContext.category);
     } on AppException {
       rethrow;
     } on FormatException catch (error) {
@@ -79,51 +45,9 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
         OpenTriviaApiConstants.questionsEndpoint,
         queryParameters: _questionQueryParameters(request),
       );
-      final data = response.data;
-      final responseCode = data?[OpenTriviaApiConstants.responseCode];
-      final resultsJson = data?[OpenTriviaApiConstants.responseResults];
-
-      if (responseCode is! num || resultsJson is! List) {
-        throw const ServerException(
-          QuizDataErrorMessages.questionResponseFormatInvalid,
-        );
-      }
-
-      if (responseCode.toInt() ==
-              OpenTriviaApiConstants.noResultsResponseCode ||
-          resultsJson.isEmpty) {
-        throw const EmptyResultException(
-          QuizDataErrorMessages.noQuestionsFound,
-        );
-      }
-
-      if (responseCode.toInt() != OpenTriviaApiConstants.successResponseCode) {
-        throw ServerException(
-          QuizDataErrorMessages.questionRequestFailedWithResponseCode(
-            responseCode.toInt(),
-          ),
-        );
-      }
-
-      return resultsJson
-          .map(
-            (json) => QuizQuestionModel.fromJson(json as Map<String, dynamic>),
-          )
-          .toList();
+      return _parseQuestions(response.data);
     } on DioException catch (error) {
-      if (error.type == DioExceptionType.connectionTimeout ||
-          error.type == DioExceptionType.receiveTimeout ||
-          error.type == DioExceptionType.connectionError) {
-        throw const NetworkException(
-          QuizDataErrorMessages.checkInternetConnection,
-        );
-      }
-
-      throw ServerException(
-        QuizDataErrorMessages.questionRequestFailedWithStatus(
-          error.response?.statusCode ?? QuizDataErrorMessages.unknownStatusCode,
-        ),
-      );
+      _throwMappedDioException(error, _QuizRequestContext.question);
     } on AppException {
       rethrow;
     } on FormatException catch (error) {
@@ -133,6 +57,77 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
         QuizDataErrorMessages.questionResponseContainsInvalidData,
       );
     }
+  }
+
+  List<QuizCategoryModel> _parseCategories(Map<String, dynamic>? data) {
+    final categoriesJson =
+        data?[OpenTriviaApiConstants.responseTriviaCategories];
+
+    if (categoriesJson is! List) {
+      throw const ServerException(
+        QuizDataErrorMessages.categoryResponseFormatInvalid,
+      );
+    }
+
+    final categories = categoriesJson
+        .map((json) => QuizCategoryModel.fromJson(json as Map<String, dynamic>))
+        .toList();
+
+    if (categories.isEmpty) {
+      throw const EmptyResultException(QuizDataErrorMessages.noCategoriesFound);
+    }
+
+    return categories;
+  }
+
+  List<QuizQuestionModel> _parseQuestions(Map<String, dynamic>? data) {
+    final responseCode = data?[OpenTriviaApiConstants.responseCode];
+    final resultsJson = data?[OpenTriviaApiConstants.responseResults];
+
+    if (responseCode is! num || resultsJson is! List) {
+      throw const ServerException(
+        QuizDataErrorMessages.questionResponseFormatInvalid,
+      );
+    }
+
+    final code = responseCode.toInt();
+    if (code == OpenTriviaApiConstants.noResultsResponseCode ||
+        resultsJson.isEmpty) {
+      throw const EmptyResultException(QuizDataErrorMessages.noQuestionsFound);
+    }
+
+    if (code != OpenTriviaApiConstants.successResponseCode) {
+      throw ServerException(
+        QuizDataErrorMessages.questionRequestFailedWithResponseCode(code),
+      );
+    }
+
+    return resultsJson
+        .map((json) => QuizQuestionModel.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  Never _throwMappedDioException(
+    DioException error,
+    _QuizRequestContext context,
+  ) {
+    if (error.type == DioExceptionType.connectionTimeout ||
+        error.type == DioExceptionType.receiveTimeout ||
+        error.type == DioExceptionType.connectionError) {
+      throw const NetworkException(
+        QuizDataErrorMessages.checkInternetConnection,
+      );
+    }
+
+    final statusCode =
+        error.response?.statusCode ?? QuizDataErrorMessages.unknownStatusCode;
+
+    throw ServerException(switch (context) {
+      _QuizRequestContext.category =>
+        QuizDataErrorMessages.categoryRequestFailedWithStatus(statusCode),
+      _QuizRequestContext.question =>
+        QuizDataErrorMessages.questionRequestFailedWithStatus(statusCode),
+    });
   }
 
   Map<String, dynamic> _questionQueryParameters(QuizRequest request) {
@@ -146,3 +141,5 @@ class QuizRemoteDataSourceImpl implements QuizRemoteDataSource {
     };
   }
 }
+
+enum _QuizRequestContext { category, question }

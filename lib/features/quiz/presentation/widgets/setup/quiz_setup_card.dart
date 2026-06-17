@@ -4,12 +4,12 @@ import 'package:opentriviadb/features/quiz/presentation/theme/quiz_setup_palette
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
-import '../../constants/quiz_dimensions.dart';
 import 'difficulty_selector.dart';
 import 'question_count_selector.dart';
 import 'question_type_selector.dart';
 import 'quiz_category_selector.dart';
 import 'quiz_start_button.dart';
+import 'setup_field_section.dart';
 
 class SetupCard extends StatelessWidget {
   const SetupCard({super.key});
@@ -28,25 +28,25 @@ class SetupCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: const [
-            _SetupFieldSection(
+            SetupFieldSection(
               icon: Icons.category_rounded,
               title: AppStrings.category,
               child: CategorySelector(),
             ),
             SizedBox(height: AppSpacing.lg),
-            _SetupFieldSection(
+            SetupFieldSection(
               icon: Icons.speed_rounded,
               title: AppStrings.difficulty,
               child: DifficultySelector(),
             ),
             SizedBox(height: AppSpacing.lg),
-            _SetupFieldSection(
+            SetupFieldSection(
               icon: Icons.format_list_numbered_rounded,
               title: AppStrings.numberOfQuestions,
               child: QuestionCountSelector(),
             ),
             SizedBox(height: AppSpacing.lg),
-            _SetupFieldSection(
+            SetupFieldSection(
               icon: Icons.tune_rounded,
               title: AppStrings.questionType,
               child: QuestionTypeSelector(),
@@ -56,48 +56,6 @@ class SetupCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SetupFieldSection extends StatelessWidget {
-  const _SetupFieldSection({
-    required this.icon,
-    required this.title,
-    required this.child,
-  });
-
-  final IconData icon;
-  final String title;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              icon,
-              size: QuizDimensions.setupSectionIconSize,
-              color: QuizSetupPalette.accent(context),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: QuizSetupPalette.primaryText(
-                  context,
-                ).withValues(alpha: QuizDimensions.setupSectionTitleAlpha),
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        child,
-      ],
     );
   }
 }
