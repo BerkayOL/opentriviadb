@@ -9,7 +9,7 @@ abstract final class SplashPalette {
     final dark = isDark(context);
 
     return dark
-        ? const [Color(0xFF070A1F), Color(0xFF141044), Color(0xFF24105F)]
+        ? const [Color(0xFF070A1F), Color(0xFF0F172A), Color(0xFF172554)]
         : const [Color(0xFFF8FAFC), Color(0xFFEFF6FF), Color(0xFFEDE9FE)];
   }
 
@@ -31,13 +31,13 @@ abstract final class SplashPalette {
 
   static Color firstGlowColor(BuildContext context) {
     return isDark(context)
-        ? Colors.blue.withValues(alpha: 0.30)
+        ? const Color(0xFF14B8A6).withValues(alpha: 0.32)
         : const Color(0xFF60A5FA).withValues(alpha: 0.22);
   }
 
   static Color firstGlowFill(BuildContext context) {
     return isDark(context)
-        ? Colors.blue.withValues(alpha: 0.08)
+        ? const Color(0xFF14B8A6).withValues(alpha: 0.08)
         : const Color(0xFF60A5FA).withValues(alpha: 0.10);
   }
 
@@ -54,10 +54,14 @@ abstract final class SplashPalette {
   }
 
   static Color lowerGlowFill(BuildContext context) {
-    return Colors.blue.withValues(alpha: 0.08);
+    return isDark(context)
+        ? const Color(0xFF8B5CF6).withValues(alpha: 0.08)
+        : const Color(0xFF60A5FA).withValues(alpha: 0.08);
   }
 
   static Color lowerGlowColor(BuildContext context) {
-    return Colors.purple.withValues(alpha: 0.6);
+    return isDark(context)
+        ? const Color(0xFF8B5CF6).withValues(alpha: 0.50)
+        : const Color(0xFF8B5CF6).withValues(alpha: 0.28);
   }
 }

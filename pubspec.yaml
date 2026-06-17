@@ -47,4 +47,4 @@ flutter_launcher_icons:
   ios: true
   image_path: assets/images/logo/quizora_foreground.png
   adaptive_icon_foreground: assets/images/logo/quizora_foreground.png
-  adaptive_icon_background: "#120D3F"
+  adaptive_icon_background: "#EAF2FF"
