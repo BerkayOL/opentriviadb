@@ -85,14 +85,28 @@ class QuestionView extends StatelessWidget {
           ),
           const Spacer(),
           if (state.status == QuizStatus.answerRevealed)
-            QuizActionButton(
-              label: state.isLastQuestion
-                  ? AppStrings.seeResults
-                  : AppStrings.nextQuestion,
-              icon: Icons.arrow_forward_rounded,
-              onPressed: () {
-                context.read<QuizCubit>().nextQuestion();
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: 1),
+              duration: AppMotion.quick,
+              curve: Curves.easeOutCubic,
+              builder: (context, value, child) {
+                return Opacity(
+                  opacity: value,
+                  child: Transform.translate(
+                    offset: Offset(0, AppSpacing.md * (1 - value)),
+                    child: child,
+                  ),
+                );
               },
+              child: QuizActionButton(
+                label: state.isLastQuestion
+                    ? AppStrings.seeResults
+                    : AppStrings.nextQuestion,
+                icon: Icons.arrow_forward_rounded,
+                onPressed: () {
+                  context.read<QuizCubit>().nextQuestion();
+                },
+              ),
             ),
         ],
       ),

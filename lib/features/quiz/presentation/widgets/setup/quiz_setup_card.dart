@@ -23,11 +23,11 @@ class SetupCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.xl),
         side: BorderSide(color: QuizSetupPalette.cardBorder(context)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+      child: const Padding(
+        padding: EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
+          children: [
             SetupFieldSection(
               icon: Icons.category_rounded,
               title: AppStrings.category,

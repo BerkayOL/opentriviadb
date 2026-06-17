@@ -5,5 +5,5 @@ import 'app/app.dart';
 
 Future<void> main() async {
   await AppBootstrap.appStart();
-  runApp(TriviaQuizApp());
+  runApp(const TriviaQuizApp());
 }

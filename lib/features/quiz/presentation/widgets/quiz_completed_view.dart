@@ -4,6 +4,7 @@ import 'quiz_action_button.dart';
 import '../resolvers/quiz_result_resolver.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../constants/quiz_dimensions.dart';
@@ -27,68 +28,91 @@ class QuizCompletedView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: QuizDimensions.completedCardMaxWidth,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween<double>(
+            begin: QuizDimensions.viewEntranceBeginScale,
+            end: 1,
           ),
-          child: AppCard(
-            color: QuizPalette.cardColor(context),
-            borderColor: QuizPalette.cardBorder(context),
-            borderRadius: QuizDimensions.completedCardRadius,
-            padding: const EdgeInsets.all(AppSpacing.xl),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: QuizPalette.accent(
-                      context,
-                    ).withValues(alpha: QuizDimensions.completedIconFillAlpha),
-                    borderRadius: BorderRadius.circular(
-                      QuizDimensions.completedIconRadius,
-                    ),
-                    border: Border.all(
+          duration: AppMotion.slow,
+          curve: Curves.easeOutCubic,
+          builder: (context, scale, child) {
+            final opacity =
+                ((scale - QuizDimensions.viewEntranceBeginScale) /
+                        (1 - QuizDimensions.viewEntranceBeginScale))
+                    .clamp(0.0, 1.0)
+                    .toDouble();
+
+            return Opacity(
+              opacity: opacity,
+              child: Transform.scale(scale: scale, child: child),
+            );
+          },
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: QuizDimensions.completedCardMaxWidth,
+            ),
+            child: AppCard(
+              color: QuizPalette.cardColor(context),
+              borderColor: QuizPalette.cardBorder(context),
+              borderRadius: QuizDimensions.completedCardRadius,
+              padding: const EdgeInsets.all(AppSpacing.xl),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DecoratedBox(
+                    decoration: BoxDecoration(
                       color: QuizPalette.accent(context).withValues(
-                        alpha: QuizDimensions.completedIconBorderAlpha,
+                        alpha: QuizDimensions.completedIconFillAlpha,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        QuizDimensions.completedIconRadius,
+                      ),
+                      border: Border.all(
+                        color: QuizPalette.accent(context).withValues(
+                          alpha: QuizDimensions.completedIconBorderAlpha,
+                        ),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      child: Icon(
+                        resultIcon,
+                        color: QuizPalette.accent(context),
+                        size: QuizDimensions.completedIconSize,
                       ),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Icon(
-                      resultIcon,
-                      color: QuizPalette.accent(context),
-                      size: QuizDimensions.completedIconSize,
+                  const SizedBox(height: AppSpacing.lg),
+                  Text(
+                    resultTitle,
+                    textAlign: TextAlign.center,
+                    style: textTheme.headlineSmall?.copyWith(
+                      color: QuizPalette.primaryText(context),
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: QuizDimensions.completedTitleLetterSpacing,
                     ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  resultTitle,
-                  textAlign: TextAlign.center,
-                  style: textTheme.headlineSmall?.copyWith(
-                    color: QuizPalette.primaryText(context),
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: QuizDimensions.completedTitleLetterSpacing,
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    AppStrings.quizScoreResult(
+                      state.score,
+                      state.totalQuestions,
+                    ),
+                    textAlign: TextAlign.center,
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: QuizPalette.secondaryText(context),
+                      fontWeight: FontWeight.w600,
+                      height: QuizDimensions.completedScoreHeight,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  AppStrings.quizScoreResult(state.score, state.totalQuestions),
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: QuizPalette.secondaryText(context),
-                    fontWeight: FontWeight.w600,
-                    height: QuizDimensions.completedScoreHeight,
+                  const SizedBox(height: AppSpacing.xl),
+                  QuizActionButton(
+                    label: AppStrings.playAgain,
+                    icon: Icons.restart_alt_rounded,
+                    onPressed: () => context.go(AppRoutes.setup),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                QuizActionButton(
-                  label: AppStrings.playAgain,
-                  icon: Icons.restart_alt_rounded,
-                  onPressed: () => context.go(AppRoutes.setup),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

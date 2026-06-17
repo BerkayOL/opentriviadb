@@ -1,6 +1,9 @@
 abstract final class QuizDimensions {
   static const double progressBarHeight = 8;
-  static const double progressAnimationSlideX = 0.03;
+  static const double progressAnimationSlideX = 0.05;
+  static const double pageTransitionSlideY = 0.03;
+  static const double pageTransitionBeginScale = 0.98;
+  static const double viewEntranceBeginScale = 0.96;
   static const double backButtonSize = 44;
   static const double backButtonFillAlpha = 0.06;
   static const double backButtonBorderAlpha = 0.14;

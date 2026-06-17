@@ -30,9 +30,9 @@ class _SplashPageState extends State<SplashPage> {
             colors: SplashPalette.backgroundGradient(context),
           ),
         ),
-        child: Stack(
+        child: const Stack(
           alignment: Alignment.center,
-          children: const [SplashBackgroundGlows(), SplashBrandContent()],
+          children: [SplashBackgroundGlows(), SplashBrandContent()],
         ),
       ),
     );
