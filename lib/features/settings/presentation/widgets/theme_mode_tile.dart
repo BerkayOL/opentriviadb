@@ -4,6 +4,8 @@ import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/settings_dimensions.dart';
 import '../theme/settings_palette.dart';
+import 'theme_mode_check_indicator.dart';
+import 'theme_mode_icon_box.dart';
 
 class ThemeModeTile extends StatelessWidget {
   const ThemeModeTile({
@@ -32,10 +34,6 @@ class ThemeModeTile extends StatelessWidget {
     final backgroundColor = selected
         ? SettingsPalette.selectedFill(context)
         : SettingsPalette.tileFill(context);
-
-    final iconColor = selected
-        ? SettingsPalette.accent(context)
-        : SettingsPalette.secondaryText(context);
 
     return AnimatedContainer(
       duration: AppMotion.quick,
@@ -72,26 +70,7 @@ class ThemeModeTile extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Row(
               children: [
-                AnimatedContainer(
-                  duration: AppMotion.quick,
-                  curve: Curves.easeOutCubic,
-                  width: SettingsDimensions.tileIconBoxSize,
-                  height: SettingsDimensions.tileIconBoxSize,
-                  decoration: BoxDecoration(
-                    color: SettingsPalette.iconBoxFill(
-                      context,
-                      selected: selected,
-                    ),
-                    borderRadius: BorderRadius.circular(
-                      SettingsDimensions.tileIconBoxRadius,
-                    ),
-                  ),
-                  child: Icon(
-                    icon,
-                    color: iconColor,
-                    size: SettingsDimensions.tileIconSize,
-                  ),
-                ),
+                ThemeModeIconBox(icon: icon, selected: selected),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
@@ -120,19 +99,7 @@ class ThemeModeTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                SizedBox(
-                  width: SettingsDimensions.tileCheckWidth,
-                  child: AnimatedOpacity(
-                    opacity: selected ? 1 : 0,
-                    duration: AppMotion.fast,
-                    curve: Curves.easeOutCubic,
-                    child: Icon(
-                      Icons.check_circle_rounded,
-                      color: SettingsPalette.accent(context),
-                      size: SettingsDimensions.tileIconSize,
-                    ),
-                  ),
-                ),
+                ThemeModeCheckIndicator(selected: selected),
               ],
             ),
           ),

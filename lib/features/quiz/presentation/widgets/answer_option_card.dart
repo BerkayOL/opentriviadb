@@ -5,7 +5,9 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/quiz_dimensions.dart';
 import '../models/answer_option_status.dart';
+import '../resolvers/answer_option_card_style_resolver.dart';
 import '../theme/quiz_palette.dart';
+import 'answer_option_badge.dart';
 
 class AnswerOptionCard extends StatelessWidget {
   const AnswerOptionCard({
@@ -23,57 +25,13 @@ class AnswerOptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final borderRadius = BorderRadius.circular(AppRadius.md);
-    final shouldLift = status == AnswerOptionStatus.selected;
-    final backgroundColor = switch (status) {
-      AnswerOptionStatus.idle => QuizPalette.optionFill(context),
-      AnswerOptionStatus.selected => QuizPalette.selectedFill(context),
-      AnswerOptionStatus.correct => QuizPalette.correctFill(context),
-      AnswerOptionStatus.wrong => QuizPalette.wrongFill(context),
-    };
+    final cardStyle = resolveAnswerOptionCardStyle(
+      context: context,
+      status: status,
+    );
 
-    final borderColor = switch (status) {
-      AnswerOptionStatus.idle => QuizPalette.optionBorder(context),
-      AnswerOptionStatus.selected => QuizPalette.selectedBorder(context),
-      AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
-      AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
-    };
-    final badgeBackgroundColor = switch (status) {
-      AnswerOptionStatus.idle => QuizPalette.secondaryText(
-        context,
-      ).withValues(alpha: QuizDimensions.optionBadgeIdleFillAlpha),
-      AnswerOptionStatus.selected => QuizPalette.selectedFill(context),
-      AnswerOptionStatus.correct => QuizPalette.correctFill(context),
-      AnswerOptionStatus.wrong => QuizPalette.wrongFill(context),
-    };
-    final answerTextColor = switch (status) {
-      AnswerOptionStatus.idle => QuizPalette.primaryText(context),
-      AnswerOptionStatus.selected => QuizPalette.primaryText(context),
-      AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
-      AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
-    };
-    final badgeBorderColor = switch (status) {
-      AnswerOptionStatus.idle => QuizPalette.secondaryText(
-        context,
-      ).withValues(alpha: QuizDimensions.optionBadgeIdleBorderAlpha),
-      AnswerOptionStatus.selected => QuizPalette.selectedBorder(context),
-      AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
-      AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
-    };
-    final trailingIcon = switch (status) {
-      AnswerOptionStatus.correct => Icons.check_circle_rounded,
-      AnswerOptionStatus.wrong => Icons.cancel_rounded,
-      _ => null,
-    };
-
-    final trailingIconColor = switch (status) {
-      AnswerOptionStatus.correct => QuizPalette.correctBorder(context),
-      AnswerOptionStatus.wrong => QuizPalette.wrongBorder(context),
-      _ => null,
-    };
-    final labels = ['A', 'B', 'C', 'D'];
-    final optionLabel = optionIndex < labels.length ? labels[optionIndex] : '?';
     return AnimatedScale(
-      scale: shouldLift
+      scale: cardStyle.shouldLift
           ? QuizDimensions.optionSelectedScale
           : QuizDimensions.optionIdleScale,
       duration: AppMotion.fast,
@@ -83,9 +41,9 @@ class AnswerOptionCard extends StatelessWidget {
         duration: AppMotion.medium,
         curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: cardStyle.backgroundColor,
           borderRadius: borderRadius,
-          border: Border.all(color: borderColor),
+          border: Border.all(color: cardStyle.borderColor),
         ),
         child: Material(
           color: QuizPalette.transparent,
@@ -97,28 +55,10 @@ class AnswerOptionCard extends StatelessWidget {
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Row(
                 children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppRadius.md),
-                      color: badgeBackgroundColor,
-                      border: Border.all(color: badgeBorderColor),
-                    ),
-
-                    child: SizedBox(
-                      width: QuizDimensions.optionBadgeSize,
-                      height: QuizDimensions.optionBadgeSize,
-                      child: Center(
-                        child: Text(
-                          optionLabel,
-                          style: textTheme.labelLarge?.copyWith(
-                            color: badgeBorderColor,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing:
-                                QuizDimensions.answerLabelLetterSpacing,
-                          ),
-                        ),
-                      ),
-                    ),
+                  AnswerOptionBadge(
+                    optionIndex: optionIndex,
+                    backgroundColor: cardStyle.badgeBackgroundColor,
+                    borderColor: cardStyle.badgeBorderColor,
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
@@ -127,17 +67,17 @@ class AnswerOptionCard extends StatelessWidget {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: textTheme.bodyLarge?.copyWith(
-                        color: answerTextColor,
+                        color: cardStyle.answerTextColor,
                         fontWeight: FontWeight.w700,
                         height: QuizDimensions.answerTextHeight,
                       ),
                     ),
                   ),
-                  if (trailingIcon != null) ...[
+                  if (cardStyle.trailingIcon != null) ...[
                     const SizedBox(width: AppSpacing.sm),
                     Icon(
-                      trailingIcon,
-                      color: trailingIconColor,
+                      cardStyle.trailingIcon,
+                      color: cardStyle.trailingIconColor,
                       size: QuizDimensions.answerTrailingIconSize,
                     ),
                   ],
