@@ -20,7 +20,9 @@ class StartQuizButton extends StatelessWidget {
       builder: (context, state) {
         final isReady = state.status == QuizSetupStatus.ready;
         return Opacity(
-          opacity: isReady ? 1 : QuizDimensions.quizStartDisabledOpacity,
+          opacity: isReady
+              ? QuizDimensions.maximumProgress
+              : QuizDimensions.quizStartDisabledOpacity,
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: const LinearGradient(

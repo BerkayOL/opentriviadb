@@ -1,4 +1,6 @@
 abstract final class QuizConfig {
+  static const Duration timerTickInterval = Duration(seconds: 1);
+
   static const int defaultQuestionAmount = 10;
   static const List<int> questionCountOptions = [5, 10, 15, 20];
 

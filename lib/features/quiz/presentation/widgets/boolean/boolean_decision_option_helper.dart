@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/app_typography.dart';
 import '../../constants/quiz_dimensions.dart';
 
 class BooleanDecisionOptionHelper extends StatelessWidget {
@@ -43,7 +44,7 @@ class BooleanDecisionOptionHelper extends StatelessWidget {
                 alpha: QuizDimensions.booleanHelperAlpha,
               ),
               fontWeight: FontWeight.w800,
-              letterSpacing: 0,
+              letterSpacing: AppTypography.neutralLetterSpacing,
             ),
           ),
         ),

@@ -51,7 +51,9 @@ class FloatingNavItemBody extends StatelessWidget {
                 highlightColor: AppShellPalette.selectedGradient.last
                     .withValues(alpha: AppShellDimensions.itemHighlightAlpha),
                 child: AnimatedScale(
-                  scale: pressed ? AppShellDimensions.pressedScale : 1.0,
+                  scale: pressed
+                      ? AppShellDimensions.pressedScale
+                      : AppShellDimensions.inactiveScale,
                   duration: AppMotion.medium,
                   curve: Curves.easeOutCubic,
                   child: SizedBox(

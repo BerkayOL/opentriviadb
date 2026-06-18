@@ -31,15 +31,19 @@ class QuizCompletedView extends StatelessWidget {
         child: TweenAnimationBuilder<double>(
           tween: Tween<double>(
             begin: QuizDimensions.viewEntranceBeginScale,
-            end: 1,
+            end: QuizDimensions.maximumProgress,
           ),
           duration: AppMotion.slow,
           curve: Curves.easeOutCubic,
           builder: (context, scale, child) {
             final opacity =
                 ((scale - QuizDimensions.viewEntranceBeginScale) /
-                        (1 - QuizDimensions.viewEntranceBeginScale))
-                    .clamp(0.0, 1.0)
+                        (QuizDimensions.maximumProgress -
+                            QuizDimensions.viewEntranceBeginScale))
+                    .clamp(
+                      QuizDimensions.minimumProgress,
+                      QuizDimensions.maximumProgress,
+                    )
                     .toDouble();
 
             return Opacity(

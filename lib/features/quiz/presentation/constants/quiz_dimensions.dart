@@ -1,4 +1,7 @@
 abstract final class QuizDimensions {
+  static const double minimumProgress = 0;
+  static const double maximumProgress = 1;
+
   static const double progressBarHeight = 8;
   static const double progressAnimationSlideX = 0.05;
   static const double pageTransitionSlideY = 0.03;
@@ -94,6 +97,7 @@ abstract final class QuizDimensions {
   static const double setupSectionIconSize = 18;
   static const double setupSectionTitleAlpha = 0.86;
   static const double setupStartButtonLetterSpacing = 0.2;
+  static const double setupCardElevation = 0;
 
   static const double answerLabelLetterSpacing = -0.1;
   static const double answerTextHeight = 1.3;
@@ -102,6 +106,7 @@ abstract final class QuizDimensions {
   static const double completedScoreHeight = 1.35;
   static const double loadingTextHeight = 1.35;
   static const double timerLetterSpacing = -0.1;
+  static const double progressHeaderLetterSpacing = -0.2;
   static const double questionCardBorderDarkAlpha = 0.45;
   static const double questionCardBorderLightAlpha = 0.62;
   static const double questionCardTextHeight = 1.18;

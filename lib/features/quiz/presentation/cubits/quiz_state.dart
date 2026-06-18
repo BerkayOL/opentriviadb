@@ -22,6 +22,7 @@ class QuizState extends Equatable {
     this.score = 0,
     this.secondsLeft = QuizConfig.questionDurationSeconds,
     this.errorMessage,
+    this.warningMessage,
     this.isAnswerCorrect,
     this.selectedAnswer,
   });
@@ -34,6 +35,7 @@ class QuizState extends Equatable {
   final bool? isAnswerCorrect;
   final String? selectedAnswer;
   final String? errorMessage;
+  final String? warningMessage;
 
   QuizState copyWith({
     QuizStatus? status,
@@ -41,6 +43,7 @@ class QuizState extends Equatable {
     int? currentIndex,
     int? score,
     Object? errorMessage = _unset,
+    Object? warningMessage = _unset,
     Object? isAnswerCorrect = _unset,
     Object? selectedAnswer = _unset,
     int? secondsLeft,
@@ -54,6 +57,9 @@ class QuizState extends Equatable {
       errorMessage: identical(errorMessage, _unset)
           ? this.errorMessage
           : errorMessage as String?,
+      warningMessage: identical(warningMessage, _unset)
+          ? this.warningMessage
+          : warningMessage as String?,
       isAnswerCorrect: identical(isAnswerCorrect, _unset)
           ? this.isAnswerCorrect
           : isAnswerCorrect as bool?,
@@ -73,6 +79,7 @@ class QuizState extends Equatable {
     secondsLeft,
     score,
     errorMessage,
+    warningMessage,
   ];
   QuizQuestion? get currentQuestion {
     if (questions.isEmpty) return null;

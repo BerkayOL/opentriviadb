@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:hive_ce/hive.dart';
 
 import '../../domain/entities/quiz_history_entry.dart';
@@ -15,6 +17,11 @@ abstract interface class HistoryLocalDataSource {
 class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   const HistoryLocalDataSourceImpl();
 
+  static const String _invalidValueMessage = 'Stored value is not a map.';
+  static const String _parseFailureMessage =
+      'Stored value could not be parsed.';
+  static const String _logName = 'HistoryLocalDataSource';
+
   @override
   Future<void> saveResult(QuizHistoryEntry entry) async {
     final box = await Hive.openBox<dynamic>(HistoryStorageKeys.boxName);
@@ -30,9 +37,13 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
     final entries = <QuizHistoryEntry>[];
 
-    for (final value in box.values) {
+    for (final storedEntry in box.toMap().entries) {
+      final key = storedEntry.key;
+      final value = storedEntry.value;
+
       try {
         if (value is! Map) {
+          _logInvalidHistoryEntry(key, _invalidValueMessage);
           continue;
         }
 
@@ -40,7 +51,13 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
         final entry = QuizHistoryModel.fromMap(map).toEntity();
 
         entries.add(entry);
-      } catch (_) {
+      } catch (error, stackTrace) {
+        _logInvalidHistoryEntry(
+          key,
+          _parseFailureMessage,
+          error: error,
+          stackTrace: stackTrace,
+        );
         continue;
       }
     }
@@ -54,5 +71,22 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   Future<void> clearHistory() async {
     final box = await Hive.openBox<dynamic>(HistoryStorageKeys.boxName);
     await box.clear();
+  }
+
+  void _logInvalidHistoryEntry(
+    Object? key,
+    String message, {
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    assert(() {
+      developer.log(
+        '$message Key: $key',
+        name: _logName,
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return true;
+    }());
   }
 }

@@ -14,7 +14,9 @@ class ThemeModeCheckIndicator extends StatelessWidget {
     return SizedBox(
       width: SettingsDimensions.tileCheckWidth,
       child: AnimatedOpacity(
-        opacity: selected ? 1 : 0,
+        opacity: selected
+            ? SettingsDimensions.selectedCheckOpacity
+            : SettingsDimensions.unselectedCheckOpacity,
         duration: AppMotion.fast,
         curve: Curves.easeOutCubic,
         child: Icon(

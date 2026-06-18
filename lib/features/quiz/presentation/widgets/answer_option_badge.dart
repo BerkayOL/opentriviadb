@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../constants/quiz_dimensions.dart';
 
@@ -11,17 +12,16 @@ class AnswerOptionBadge extends StatelessWidget {
     super.key,
   });
 
-  static const List<String> _labels = ['A', 'B', 'C', 'D'];
-
   final int optionIndex;
   final Color backgroundColor;
   final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
-    final optionLabel = optionIndex < _labels.length
-        ? _labels[optionIndex]
-        : '?';
+    final optionLabel =
+        optionIndex >= 0 && optionIndex < AppStrings.answerOptionLabels.length
+        ? AppStrings.answerOptionLabels[optionIndex]
+        : AppStrings.unknownAnswerOptionLabel;
 
     return DecoratedBox(
       decoration: BoxDecoration(

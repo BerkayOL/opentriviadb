@@ -30,4 +30,6 @@ abstract final class SettingsDimensions {
   static const double tileTitleSubtitleGap = 3;
   static const double tileSubtitleHeight = 1.35;
   static const double tileCheckWidth = 24;
+  static const double selectedCheckOpacity = 1;
+  static const double unselectedCheckOpacity = 0;
 }

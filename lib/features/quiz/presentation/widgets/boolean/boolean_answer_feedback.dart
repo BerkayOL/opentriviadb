@@ -4,6 +4,7 @@ import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_motion.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/app_typography.dart';
 import '../../constants/quiz_dimensions.dart';
 import '../../cubits/quiz_state.dart';
 import '../../theme/quiz_palette.dart';
@@ -77,7 +78,8 @@ class BooleanAnswerFeedback extends StatelessWidget {
                               ?.copyWith(
                                 color: color,
                                 fontWeight: FontWeight.w900,
-                                letterSpacing: 0,
+                                letterSpacing:
+                                    AppTypography.neutralLetterSpacing,
                               ),
                         ),
                         const SizedBox(height: AppSpacing.xs),

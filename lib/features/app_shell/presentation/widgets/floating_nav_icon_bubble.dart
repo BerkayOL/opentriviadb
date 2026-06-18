@@ -61,7 +61,7 @@ class FloatingNavIconBubble extends StatelessWidget {
               ),
               AnimatedOpacity(
                 opacity: isSelected
-                    ? 1
+                    ? AppShellDimensions.activeIconOpacity
                     : AppShellDimensions.inactiveIconOpacity,
                 duration: AppMotion.normal,
                 curve: Curves.easeOutCubic,

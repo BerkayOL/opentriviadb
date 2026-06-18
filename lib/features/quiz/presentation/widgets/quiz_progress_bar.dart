@@ -17,8 +17,11 @@ class QuizProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = totalQuestions == 0
-        ? 0.0
-        : (currentQuestion / totalQuestions).clamp(0.0, 1.0);
+        ? QuizDimensions.minimumProgress
+        : (currentQuestion / totalQuestions).clamp(
+            QuizDimensions.minimumProgress,
+            QuizDimensions.maximumProgress,
+          );
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.pill),

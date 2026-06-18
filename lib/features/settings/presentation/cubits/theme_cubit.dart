@@ -16,13 +16,19 @@ class ThemeCubit extends Cubit<ThemeState> {
   final GetThemeModeUseCase _getThemeModeUseCase;
   final SaveThemeModeUseCase _saveThemeModeUseCase;
   Future<void> loadThemeMode() async {
-    emit(state.copyWith(status: ThemeStatus.loading));
+    emit(state.copyWith(status: ThemeStatus.loading, errorMessage: null));
 
     try {
       final appThemeMode = await _getThemeModeUseCase();
       final themeMode = _toFlutterThemeMode(appThemeMode);
 
-      emit(state.copyWith(status: ThemeStatus.ready, themeMode: themeMode));
+      emit(
+        state.copyWith(
+          status: ThemeStatus.ready,
+          themeMode: themeMode,
+          errorMessage: null,
+        ),
+      );
     } catch (_) {
       emit(
         state.copyWith(
@@ -35,7 +41,13 @@ class ThemeCubit extends Cubit<ThemeState> {
   }
 
   Future<void> changeThemeMode(ThemeMode mode) async {
-    emit(state.copyWith(status: ThemeStatus.ready, themeMode: mode));
+    emit(
+      state.copyWith(
+        status: ThemeStatus.ready,
+        themeMode: mode,
+        errorMessage: null,
+      ),
+    );
 
     try {
       final appThemeMode = _toAppThemeMode(mode);
@@ -48,6 +60,14 @@ class ThemeCubit extends Cubit<ThemeState> {
         ),
       );
     }
+  }
+
+  void clearErrorMessage() {
+    if (state.errorMessage == null) {
+      return;
+    }
+
+    emit(state.copyWith(errorMessage: null));
   }
 
   ThemeMode _toFlutterThemeMode(AppThemeMode mode) {

@@ -91,14 +91,20 @@ class QuestionView extends StatelessWidget {
             const SizedBox(height: AppSpacing.md),
           if (state.status == QuizStatus.answerRevealed)
             TweenAnimationBuilder<double>(
-              tween: Tween<double>(begin: 0, end: 1),
+              tween: Tween<double>(
+                begin: QuizDimensions.minimumProgress,
+                end: QuizDimensions.maximumProgress,
+              ),
               duration: AppMotion.quick,
               curve: Curves.easeOutCubic,
               builder: (context, value, child) {
                 return Opacity(
                   opacity: value,
                   child: Transform.translate(
-                    offset: Offset(0, AppSpacing.md * (1 - value)),
+                    offset: Offset(
+                      0,
+                      AppSpacing.md * (QuizDimensions.maximumProgress - value),
+                    ),
                     child: child,
                   ),
                 );

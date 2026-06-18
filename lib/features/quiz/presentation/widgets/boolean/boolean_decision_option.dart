@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_motion.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/app_typography.dart';
 import '../../constants/quiz_dimensions.dart';
 import '../../models/answer_option_status.dart';
 import '../../resolvers/boolean_decision_option_style_resolver.dart';
@@ -105,7 +106,7 @@ class BooleanDecisionOption extends StatelessWidget {
                           style: textTheme.titleLarge?.copyWith(
                             color: optionStyle.labelColor,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 0,
+                            letterSpacing: AppTypography.neutralLetterSpacing,
                           ),
                         ),
                       ),

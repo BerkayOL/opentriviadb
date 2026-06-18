@@ -26,6 +26,7 @@ abstract final class AppShellDimensions {
   static const double inactiveBubbleSize = 36;
   static const double bubbleBorderWidth = 0.8;
   static const double bubbleGlowBlur = 6;
+  static const double activeIconOpacity = 1;
   static const double inactiveIconOpacity = 0.92;
   static const double selectedIconSize = 31;
   static const double inactiveIconSize = 29;

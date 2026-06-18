@@ -119,16 +119,30 @@ class QuizCubit extends Cubit<QuizState> {
 
   Future<void> _completeQuiz() async {
     _stopTimer();
-    await _saveCurrentResult();
-    emit(state.copyWith(status: QuizStatus.completed));
+    final warningMessage = await _saveCurrentResult();
+    emit(
+      state.copyWith(
+        status: QuizStatus.completed,
+        warningMessage: warningMessage,
+      ),
+    );
   }
 
-  Future<void> _saveCurrentResult() async {
+  Future<String?> _saveCurrentResult() async {
     try {
       await _saveQuizHistoryUseCase(_buildHistoryEntry());
+      return null;
     } catch (_) {
-      // History save is non-critical; the result screen should still appear.
+      return AppStrings.historySaveError;
     }
+  }
+
+  void clearWarningMessage() {
+    if (state.warningMessage == null) {
+      return;
+    }
+
+    emit(state.copyWith(warningMessage: null));
   }
 
   QuizHistoryEntry _buildHistoryEntry() {
@@ -156,7 +170,7 @@ class QuizCubit extends Cubit<QuizState> {
 
   void _startTimer() {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+    _timer = Timer.periodic(QuizConfig.timerTickInterval, (_) {
       _tickTimer();
     });
   }

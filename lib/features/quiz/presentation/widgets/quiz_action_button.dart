@@ -31,7 +31,9 @@ class QuizActionButton extends StatelessWidget {
         ? QuizDimensions.quizActionDarkBorderAlpha
         : QuizDimensions.quizActionLightBorderAlpha;
     return AnimatedOpacity(
-      opacity: isEnabled ? 1 : QuizDimensions.quizActionDisabledOpacity,
+      opacity: isEnabled
+          ? QuizDimensions.maximumProgress
+          : QuizDimensions.quizActionDisabledOpacity,
       duration: AppMotion.fast,
       child: DecoratedBox(
         decoration: BoxDecoration(

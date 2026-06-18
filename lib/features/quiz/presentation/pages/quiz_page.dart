@@ -16,36 +16,52 @@ class QuizPage extends StatelessWidget {
   const QuizPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomRight,
-              colors: QuizPalette.backgroundGradient(context),
+    return BlocListener<QuizCubit, QuizState>(
+      listenWhen: (previous, current) =>
+          previous.warningMessage != current.warningMessage &&
+          current.warningMessage != null,
+      listener: (context, state) {
+        final message = state.warningMessage;
+        if (message == null) {
+          return;
+        }
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(message)));
+        context.read<QuizCubit>().clearWarningMessage();
+      },
+      child: Scaffold(
+        body: SizedBox.expand(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomRight,
+                colors: QuizPalette.backgroundGradient(context),
+              ),
             ),
-          ),
-          child: SafeArea(
-            child: BlocBuilder<QuizCubit, QuizState>(
-              builder: (context, state) {
-                return AnimatedSwitcher(
-                  duration: AppMotion.slow,
-                  switchInCurve: Curves.easeOutCubic,
-                  switchOutCurve: Curves.easeInCubic,
-                  layoutBuilder: (currentChild, previousChildren) {
-                    return Stack(
-                      alignment: Alignment.center,
-                      children: [...previousChildren, ?currentChild],
-                    );
-                  },
-                  transitionBuilder: _buildPageTransition,
-                  child: KeyedSubtree(
-                    key: ValueKey(_pageTransitionKey(state.status)),
-                    child: _buildQuizContent(context, state),
-                  ),
-                );
-              },
+            child: SafeArea(
+              child: BlocBuilder<QuizCubit, QuizState>(
+                builder: (context, state) {
+                  return AnimatedSwitcher(
+                    duration: AppMotion.slow,
+                    switchInCurve: Curves.easeOutCubic,
+                    switchOutCurve: Curves.easeInCubic,
+                    layoutBuilder: (currentChild, previousChildren) {
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [...previousChildren, ?currentChild],
+                      );
+                    },
+                    transitionBuilder: _buildPageTransition,
+                    child: KeyedSubtree(
+                      key: ValueKey(_pageTransitionKey(state.status)),
+                      child: _buildQuizContent(context, state),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -68,7 +84,7 @@ class QuizPage extends StatelessWidget {
     ).animate(curvedAnimation);
     final scaleAnimation = Tween<double>(
       begin: QuizDimensions.pageTransitionBeginScale,
-      end: 1,
+      end: QuizDimensions.maximumProgress,
     ).animate(curvedAnimation);
 
     return FadeTransition(
@@ -105,13 +121,16 @@ class QuizPage extends StatelessWidget {
     }
   }
 
-  static String _pageTransitionKey(QuizStatus status) {
+  static _QuizPageContentKey _pageTransitionKey(QuizStatus status) {
     return switch (status) {
-      QuizStatus.initial || QuizStatus.loading => 'loading',
-      QuizStatus.inProgress || QuizStatus.answerRevealed => 'question',
-      QuizStatus.completed => 'completed',
-      QuizStatus.empty => 'empty',
-      QuizStatus.failure => 'failure',
+      QuizStatus.initial || QuizStatus.loading => _QuizPageContentKey.loading,
+      QuizStatus.inProgress ||
+      QuizStatus.answerRevealed => _QuizPageContentKey.question,
+      QuizStatus.completed => _QuizPageContentKey.completed,
+      QuizStatus.empty => _QuizPageContentKey.empty,
+      QuizStatus.failure => _QuizPageContentKey.failure,
     };
   }
 }
+
+enum _QuizPageContentKey { loading, question, completed, empty, failure }

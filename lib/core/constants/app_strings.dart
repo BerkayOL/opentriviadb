@@ -1,4 +1,7 @@
 abstract final class AppStrings {
+  static const List<String> answerOptionLabels = ['A', 'B', 'C', 'D'];
+  static const String unknownAnswerOptionLabel = '?';
+
   static const String appName = 'Trivia Quiz';
   static const String brandName = 'Quizora';
   static const String splashSubTitle = 'Test your knowledge.';
@@ -44,6 +47,8 @@ abstract final class AppStrings {
   static const String invalidQuizRequest = 'Invalid quiz request.';
   static const String questionsLoadError = 'Failed to load questions.';
   static const String quizSettingsMissing = 'Quiz settings are missing.';
+  static const String historySaveError =
+      'Your score is shown, but it could not be saved to history.';
 
   static const String seeResults = 'See Results';
   static const String nextQuestion = 'Next Question';
@@ -66,6 +71,18 @@ abstract final class AppStrings {
 
   static String quizScoreResult(int score, int totalQuestions) {
     return 'You answered $score of $totalQuestions correctly.';
+  }
+
+  static String scoreFraction(int score, int totalQuestions) {
+    return '$score/$totalQuestions';
+  }
+
+  static String historyScore(int score, int totalQuestions) {
+    return '${scoreFraction(score, totalQuestions)} $correct';
+  }
+
+  static String completedAtDate(String formattedDate) {
+    return '$completedAt: $formattedDate';
   }
 
   static const noHistoryMessage = 'Complete a quiz to see your results here.';

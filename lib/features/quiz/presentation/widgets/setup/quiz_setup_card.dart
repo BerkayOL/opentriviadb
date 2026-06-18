@@ -4,6 +4,7 @@ import 'package:opentriviadb/features/quiz/presentation/theme/quiz_setup_palette
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../constants/quiz_dimensions.dart';
 import 'difficulty_selector.dart';
 import 'question_count_selector.dart';
 import 'question_type_selector.dart';
@@ -18,7 +19,7 @@ class SetupCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: QuizSetupPalette.cardColor(context),
-      elevation: 0,
+      elevation: QuizDimensions.setupCardElevation,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.xl),
         side: BorderSide(color: QuizSetupPalette.cardBorder(context)),

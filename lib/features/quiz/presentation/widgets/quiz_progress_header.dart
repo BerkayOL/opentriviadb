@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../theme/quiz_palette.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../constants/quiz_dimensions.dart';
+import '../theme/quiz_palette.dart';
 
 class QuizProgressHeader extends StatelessWidget {
   const QuizProgressHeader({
@@ -22,7 +23,7 @@ class QuizProgressHeader extends StatelessWidget {
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
         color: QuizPalette.primaryText(context),
         fontWeight: FontWeight.w800,
-        letterSpacing: -0.2,
+        letterSpacing: QuizDimensions.progressHeaderLetterSpacing,
       ),
     );
   }

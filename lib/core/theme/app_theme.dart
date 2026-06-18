@@ -66,20 +66,65 @@ abstract final class AppTheme {
   }
 
   static const TextTheme _textTheme = TextTheme(
-    displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.w700),
-    displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w700),
-    displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
-    headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
-    headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-    headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-    titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-    titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-    titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-    bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-    bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-    bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-    labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-    labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-    labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+    displayLarge: TextStyle(
+      fontSize: AppTypography.displayLargeSize,
+      fontWeight: FontWeight.w700,
+    ),
+    displayMedium: TextStyle(
+      fontSize: AppTypography.displayMediumSize,
+      fontWeight: FontWeight.w700,
+    ),
+    displaySmall: TextStyle(
+      fontSize: AppTypography.displaySmallSize,
+      fontWeight: FontWeight.w700,
+    ),
+    headlineLarge: TextStyle(
+      fontSize: AppTypography.headlineLargeSize,
+      fontWeight: FontWeight.w700,
+    ),
+    headlineMedium: TextStyle(
+      fontSize: AppTypography.headlineMediumSize,
+      fontWeight: FontWeight.w700,
+    ),
+    headlineSmall: TextStyle(
+      fontSize: AppTypography.headlineSmallSize,
+      fontWeight: FontWeight.w700,
+    ),
+    titleLarge: TextStyle(
+      fontSize: AppTypography.titleLargeSize,
+      fontWeight: FontWeight.w700,
+    ),
+    titleMedium: TextStyle(
+      fontSize: AppTypography.titleMediumSize,
+      fontWeight: FontWeight.w600,
+    ),
+    titleSmall: TextStyle(
+      fontSize: AppTypography.titleSmallSize,
+      fontWeight: FontWeight.w600,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: AppTypography.bodyLargeSize,
+      fontWeight: FontWeight.w400,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: AppTypography.bodyMediumSize,
+      fontWeight: FontWeight.w400,
+    ),
+    bodySmall: TextStyle(
+      fontSize: AppTypography.bodySmallSize,
+      fontWeight: FontWeight.w400,
+    ),
+    labelLarge: TextStyle(
+      fontSize: AppTypography.labelLargeSize,
+      fontWeight: FontWeight.w600,
+    ),
+    labelMedium: TextStyle(
+      fontSize: AppTypography.labelMediumSize,
+      fontWeight: FontWeight.w600,
+    ),
+    labelSmall: TextStyle(
+      fontSize: AppTypography.labelSmallSize,
+      fontWeight: FontWeight.w600,
+    ),
   );
 }

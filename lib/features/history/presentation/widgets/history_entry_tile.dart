@@ -16,7 +16,10 @@ class HistoryEntryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final scoreText = '${entry.score}/${entry.totalQuestions}';
+    final scoreText = AppStrings.scoreFraction(
+      entry.score,
+      entry.totalQuestions,
+    );
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(HistoryDimensions.entryTileRadius),
@@ -54,7 +57,7 @@ class HistoryEntryTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$scoreText ${AppStrings.correct}',
+                    AppStrings.historyScore(entry.score, entry.totalQuestions),
                     style: textTheme.titleMedium?.copyWith(
                       color: HistoryPalette.primaryText(context),
                       fontWeight: FontWeight.w800,
@@ -65,7 +68,7 @@ class HistoryEntryTile extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    '${AppStrings.completedAt}: $formattedDate',
+                    AppStrings.completedAtDate(formattedDate),
                     style: textTheme.bodySmall?.copyWith(
                       color: HistoryPalette.secondaryText(context),
                       height: HistoryDimensions.entryDateHeight,

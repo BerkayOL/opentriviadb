@@ -91,6 +91,50 @@ void main() {
       },
     );
 
+    testWidgets(
+      'timer timeout reveals an unanswered wrong result without changing score',
+      (tester) async {
+        final cubit = _buildCubit(questions: const [firstQuestion]);
+
+        await cubit.startQuiz(request);
+        await tester.pump(const Duration(seconds: 30));
+
+        expect(cubit.state.status, QuizStatus.answerRevealed);
+        expect(cubit.state.secondsLeft, 0);
+        expect(cubit.state.selectedAnswer, isNull);
+        expect(cubit.state.isAnswerCorrect, isFalse);
+        expect(cubit.state.score, 0);
+
+        await cubit.close();
+      },
+    );
+
+    test(
+      'history save failure completes quiz with a consumable warning',
+      () async {
+        final historyRepository = _FakeHistoryRepository(shouldFailSave: true);
+        final cubit = _buildCubit(
+          questions: const [firstQuestion],
+          historyRepository: historyRepository,
+        );
+
+        await cubit.startQuiz(request);
+        cubit.selectAnswer(firstQuestion.correctAnswer);
+        await cubit.nextQuestion();
+
+        expect(cubit.state.status, QuizStatus.completed);
+        expect(cubit.state.score, 1);
+        expect(cubit.state.warningMessage, AppStrings.historySaveError);
+
+        cubit.clearWarningMessage();
+
+        expect(cubit.state.status, QuizStatus.completed);
+        expect(cubit.state.warningMessage, isNull);
+
+        await cubit.close();
+      },
+    );
+
     test('retryQuiz without previous request emits failure', () async {
       final cubit = _buildCubit(questions: const [firstQuestion]);
 
@@ -178,10 +222,16 @@ class _EmptyThenQuestionsQuizRepository implements QuizRepository {
 }
 
 class _FakeHistoryRepository implements HistoryRepository {
+  _FakeHistoryRepository({this.shouldFailSave = false});
+
+  final bool shouldFailSave;
   final List<QuizHistoryEntry> savedEntries = [];
 
   @override
   Future<void> saveResult(QuizHistoryEntry entry) async {
+    if (shouldFailSave) {
+      throw StateError('History save failed.');
+    }
     savedEntries.add(entry);
   }
 
