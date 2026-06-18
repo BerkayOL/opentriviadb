@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'quiz_action_button.dart';
-import 'quiz_question_card.dart';
+
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/quiz_dimensions.dart';
 import '../cubits/quiz_cubit.dart';
 import '../cubits/quiz_state.dart';
+import 'quiz_action_button.dart';
 import 'quiz_answer_section.dart';
+import 'quiz_question_card.dart';
 import 'quiz_question_header.dart';
 
 class QuestionView extends StatelessWidget {

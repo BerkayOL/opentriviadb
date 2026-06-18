@@ -1,25 +1,28 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/error/failure.dart';
-import '../../../history/domain/entities/quiz_history_entry.dart';
 import '../../../history/domain/usecases/save_quiz_history_usecase.dart';
-import '../../domain/constants/quiz_config.dart';
-import '../../domain/entities/quiz_question.dart';
 import '../../domain/entities/quiz_request.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
+import '../factories/quiz_state_factory.dart';
+import '../services/quiz_countdown_timer.dart';
+import '../services/quiz_history_recorder.dart';
 import 'quiz_state.dart';
 
 class QuizCubit extends Cubit<QuizState> {
-  QuizCubit(this._getQuestionsUseCase, this._saveQuizHistoryUseCase)
-    : super(const QuizState());
+  QuizCubit(
+    this._getQuestionsUseCase,
+    SaveQuizHistoryUseCase saveQuizHistoryUseCase, {
+    QuizCountdownTimer? countdownTimer,
+  }) : _countdownTimer = countdownTimer ?? QuizCountdownTimer(),
+       _historyRecorder = QuizHistoryRecorder(saveQuizHistoryUseCase),
+       super(const QuizState());
 
   final GetQuestionsUseCase _getQuestionsUseCase;
-  final SaveQuizHistoryUseCase _saveQuizHistoryUseCase;
+  final QuizCountdownTimer _countdownTimer;
+  final QuizHistoryRecorder _historyRecorder;
 
-  Timer? _timer;
   QuizRequest? _lastRequest;
 
   Future<void> startQuiz(QuizRequest request) async {
@@ -35,14 +38,14 @@ class QuizCubit extends Cubit<QuizState> {
         return;
       }
 
-      _emitStartedQuiz(questions);
+      emit(QuizStateFactory.started(questions));
       _startTimer();
     } on EmptyResultFailure {
       emit(const QuizState(status: QuizStatus.empty));
     } on Failure catch (failure) {
-      _emitFailure(failure.message);
+      emit(QuizStateFactory.failure(failure.message));
     } catch (_) {
-      _emitFailure(AppStrings.questionsLoadError);
+      emit(QuizStateFactory.failure(AppStrings.questionsLoadError));
     }
   }
 
@@ -50,7 +53,7 @@ class QuizCubit extends Cubit<QuizState> {
     final request = _lastRequest;
 
     if (request == null) {
-      _emitFailure(AppStrings.quizSettingsMissing);
+      emit(QuizStateFactory.failure(AppStrings.quizSettingsMissing));
       return;
     }
 
@@ -68,9 +71,12 @@ class QuizCubit extends Cubit<QuizState> {
     }
 
     _stopTimer();
-    _revealAnswer(
-      answer: answer,
-      isCorrect: answer == currentQuestion.correctAnswer,
+    emit(
+      QuizStateFactory.answerRevealed(
+        state,
+        answer: answer,
+        isCorrect: answer == currentQuestion.correctAnswer,
+      ),
     );
   }
 
@@ -84,57 +90,22 @@ class QuizCubit extends Cubit<QuizState> {
       return;
     }
 
-    _advanceToNextQuestion();
+    emit(QuizStateFactory.nextQuestion(state));
     _startTimer();
-  }
-
-  void _emitStartedQuiz(List<QuizQuestion> questions) {
-    emit(
-      QuizState(
-        status: QuizStatus.inProgress,
-        questions: questions,
-        currentIndex: 0,
-        score: 0,
-        selectedAnswer: null,
-        isAnswerCorrect: null,
-        secondsLeft: QuizConfig.questionDurationSeconds,
-      ),
-    );
-  }
-
-  void _emitFailure(String message) {
-    emit(QuizState(status: QuizStatus.failure, errorMessage: message));
-  }
-
-  void _revealAnswer({required String? answer, required bool isCorrect}) {
-    emit(
-      state.copyWith(
-        status: QuizStatus.answerRevealed,
-        selectedAnswer: answer,
-        isAnswerCorrect: isCorrect,
-        score: isCorrect ? state.score + 1 : state.score,
-      ),
-    );
   }
 
   Future<void> _completeQuiz() async {
     _stopTimer();
-    final warningMessage = await _saveCurrentResult();
+    final wasSaved = await _historyRecorder.save(
+      score: state.score,
+      totalQuestions: state.totalQuestions,
+    );
     emit(
-      state.copyWith(
-        status: QuizStatus.completed,
-        warningMessage: warningMessage,
+      QuizStateFactory.completed(
+        state,
+        warningMessage: wasSaved ? null : AppStrings.historySaveError,
       ),
     );
-  }
-
-  Future<String?> _saveCurrentResult() async {
-    try {
-      await _saveQuizHistoryUseCase(_buildHistoryEntry());
-      return null;
-    } catch (_) {
-      return AppStrings.historySaveError;
-    }
   }
 
   void clearWarningMessage() {
@@ -145,34 +116,8 @@ class QuizCubit extends Cubit<QuizState> {
     emit(state.copyWith(warningMessage: null));
   }
 
-  QuizHistoryEntry _buildHistoryEntry() {
-    final now = DateTime.now();
-
-    return QuizHistoryEntry(
-      id: now.microsecondsSinceEpoch.toString(),
-      score: state.score,
-      totalQuestions: state.totalQuestions,
-      createdAt: now,
-    );
-  }
-
-  void _advanceToNextQuestion() {
-    emit(
-      state.copyWith(
-        status: QuizStatus.inProgress,
-        currentIndex: state.currentIndex + 1,
-        selectedAnswer: null,
-        isAnswerCorrect: null,
-        secondsLeft: QuizConfig.questionDurationSeconds,
-      ),
-    );
-  }
-
   void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(QuizConfig.timerTickInterval, (_) {
-      _tickTimer();
-    });
+    _countdownTimer.start(_tickTimer);
   }
 
   void _tickTimer() {
@@ -188,8 +133,7 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   void _stopTimer() {
-    _timer?.cancel();
-    _timer = null;
+    _countdownTimer.stop();
   }
 
   void _handleTimeExpired() {
@@ -198,12 +142,14 @@ class QuizCubit extends Cubit<QuizState> {
     }
 
     _stopTimer();
-    _revealAnswer(answer: null, isCorrect: false);
+    emit(
+      QuizStateFactory.answerRevealed(state, answer: null, isCorrect: false),
+    );
   }
 
   @override
   Future<void> close() {
-    _stopTimer();
+    _countdownTimer.dispose();
     return super.close();
   }
 }

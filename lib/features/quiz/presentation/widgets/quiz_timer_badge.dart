@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_strings.dart';
 
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -16,19 +16,18 @@ class QuizTimerBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCritical = secondsLeft <= QuizConfig.timerCriticalThresholdSeconds;
-    final foregroundColor = isCritical
-        ? QuizPalette.wrongBorder(context)
-        : QuizPalette.accent(context);
+    final accentColor = QuizPalette.accent(context);
+    final wrongBorderColor = QuizPalette.wrongBorder(context);
+
+    final foregroundColor = isCritical ? wrongBorderColor : accentColor;
     final backgroundColor = isCritical
         ? QuizPalette.wrongFill(context)
-        : QuizPalette.accent(
-            context,
-          ).withValues(alpha: QuizDimensions.timerNormalBackgroundAlpha);
+        : accentColor.withValues(
+            alpha: QuizDimensions.timerNormalBackgroundAlpha,
+          );
     final borderColor = isCritical
-        ? QuizPalette.wrongBorder(context)
-        : QuizPalette.accent(
-            context,
-          ).withValues(alpha: QuizDimensions.timerNormalBorderAlpha);
+        ? wrongBorderColor
+        : accentColor.withValues(alpha: QuizDimensions.timerNormalBorderAlpha);
     return AnimatedContainer(
       duration: AppMotion.quick,
       curve: Curves.easeOutCubic,
