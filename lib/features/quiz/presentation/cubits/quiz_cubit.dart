@@ -37,6 +37,8 @@ class QuizCubit extends Cubit<QuizState> {
 
       _emitStartedQuiz(questions);
       _startTimer();
+    } on EmptyResultFailure {
+      emit(const QuizState(status: QuizStatus.empty));
     } on Failure catch (failure) {
       _emitFailure(failure.message);
     } catch (_) {

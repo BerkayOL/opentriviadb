@@ -64,8 +64,6 @@ class AnswerOptionCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       answer,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
                       style: textTheme.bodyLarge?.copyWith(
                         color: cardStyle.answerTextColor,
                         fontWeight: FontWeight.w700,

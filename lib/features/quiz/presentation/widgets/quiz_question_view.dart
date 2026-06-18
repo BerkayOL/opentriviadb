@@ -35,55 +35,60 @@ class QuestionView extends StatelessWidget {
             secondsLeft: state.secondsLeft,
           ),
           const SizedBox(height: AppSpacing.lg),
-          AnimatedSize(
-            duration: AppMotion.medium,
-            curve: Curves.easeOutCubic,
-            alignment: Alignment.topCenter,
-            child: AnimatedSwitcher(
-              duration: AppMotion.medium,
-              switchInCurve: Curves.easeOutCubic,
-              switchOutCurve: Curves.easeInCubic,
-              layoutBuilder: (currentChild, previousChildren) {
-                return Stack(
-                  alignment: Alignment.topCenter,
-                  children: [...previousChildren, ?currentChild],
-                );
-              },
-              transitionBuilder: (child, animation) {
-                final slideAnimation =
-                    Tween<Offset>(
-                      begin: const Offset(
-                        QuizDimensions.progressAnimationSlideX,
-                        0,
-                      ),
-                      end: Offset.zero,
-                    ).animate(
-                      CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOutCubic,
+          Expanded(
+            child: SingleChildScrollView(
+              child: AnimatedSize(
+                duration: AppMotion.medium,
+                curve: Curves.easeOutCubic,
+                alignment: Alignment.topCenter,
+                child: AnimatedSwitcher(
+                  duration: AppMotion.medium,
+                  switchInCurve: Curves.easeOutCubic,
+                  switchOutCurve: Curves.easeInCubic,
+                  layoutBuilder: (currentChild, previousChildren) {
+                    return Stack(
+                      alignment: Alignment.topCenter,
+                      children: [...previousChildren, ?currentChild],
+                    );
+                  },
+                  transitionBuilder: (child, animation) {
+                    final slideAnimation =
+                        Tween<Offset>(
+                          begin: const Offset(
+                            QuizDimensions.progressAnimationSlideX,
+                            0,
+                          ),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: Curves.easeOutCubic,
+                          ),
+                        );
+
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: slideAnimation,
+                        child: child,
                       ),
                     );
-
-                return FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: slideAnimation,
-                    child: child,
+                  },
+                  child: Column(
+                    key: ValueKey(state.currentIndex),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      QuizQuestionCard(question: question.question),
+                      const SizedBox(height: AppSpacing.md),
+                      QuizAnswerSection(question: question, state: state),
+                    ],
                   ),
-                );
-              },
-              child: Column(
-                key: ValueKey(state.currentIndex),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  QuizQuestionCard(question: question.question),
-                  const SizedBox(height: AppSpacing.md),
-                  QuizAnswerSection(question: question, state: state),
-                ],
+                ),
               ),
             ),
           ),
-          const Spacer(),
+          if (state.status == QuizStatus.answerRevealed)
+            const SizedBox(height: AppSpacing.md),
           if (state.status == QuizStatus.answerRevealed)
             TweenAnimationBuilder<double>(
               tween: Tween<double>(begin: 0, end: 1),

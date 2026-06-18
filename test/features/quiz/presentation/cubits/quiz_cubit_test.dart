@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:opentriviadb/core/constants/app_strings.dart';
+import 'package:opentriviadb/core/error/failure.dart';
 import 'package:opentriviadb/features/history/domain/entities/quiz_history_entry.dart';
 import 'package:opentriviadb/features/history/domain/repositories/history_repository.dart';
 import 'package:opentriviadb/features/history/domain/usecases/save_quiz_history_usecase.dart';
@@ -100,6 +101,28 @@ void main() {
 
       await cubit.close();
     });
+
+    test('empty result failure emits empty state and retry recovers', () async {
+      final repository = _EmptyThenQuestionsQuizRepository(const [
+        firstQuestion,
+      ]);
+      final cubit = QuizCubit(
+        GetQuestionsUseCase(repository),
+        SaveQuizHistoryUseCase(_FakeHistoryRepository()),
+      );
+
+      await cubit.startQuiz(request);
+
+      expect(cubit.state.status, QuizStatus.empty);
+      expect(cubit.state.errorMessage, isNull);
+
+      await cubit.retryQuiz();
+
+      expect(cubit.state.status, QuizStatus.inProgress);
+      expect(cubit.state.questions, hasLength(1));
+
+      await cubit.close();
+    });
   });
 }
 
@@ -128,6 +151,28 @@ class _FakeQuizRepository implements QuizRepository {
 
   @override
   Future<List<QuizQuestion>> getQuestions(QuizRequest request) async {
+    return _questions;
+  }
+}
+
+class _EmptyThenQuestionsQuizRepository implements QuizRepository {
+  _EmptyThenQuestionsQuizRepository(this._questions);
+
+  final List<QuizQuestion> _questions;
+  bool _hasReturnedEmptyResult = false;
+
+  @override
+  Future<List<QuizCategory>> getCategories() async {
+    return const [];
+  }
+
+  @override
+  Future<List<QuizQuestion>> getQuestions(QuizRequest request) async {
+    if (!_hasReturnedEmptyResult) {
+      _hasReturnedEmptyResult = true;
+      throw const EmptyResultFailure('No questions found.');
+    }
+
     return _questions;
   }
 }
