@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../constants/splash_dimensions.dart';
 import '../theme/splash_palette.dart';
+import 'splash_logo.dart';
 
 class SplashBrandContent extends StatelessWidget {
   const SplashBrandContent({super.key});
@@ -33,7 +33,7 @@ class SplashBrandContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _SplashLogo(isDark: SplashPalette.isDark(context)),
+          SplashLogo(isDark: SplashPalette.isDark(context)),
           const SizedBox(height: AppSpacing.md),
           Text(
             AppStrings.appName,
@@ -65,44 +65,6 @@ class SplashBrandContent extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _SplashLogo extends StatelessWidget {
-  const _SplashLogo({required this.isDark});
-
-  final bool isDark;
-
-  @override
-  Widget build(BuildContext context) {
-    if (isDark) {
-      return Image.asset(
-        AppAssets.logoForeground,
-        width: SplashDimensions.logoDarkWidth,
-        fit: BoxFit.contain,
-      );
-    }
-
-    return Container(
-      width: SplashDimensions.logoLightSurfaceSize,
-      height: SplashDimensions.logoLightSurfaceSize,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: SplashPalette.logoSurfaceGradient,
-        ),
-        borderRadius: BorderRadius.circular(
-          SplashDimensions.logoLightSurfaceRadius,
-        ),
-      ),
-      child: Image.asset(
-        AppAssets.logoForeground,
-        width: SplashDimensions.logoLightWidth,
-        fit: BoxFit.contain,
       ),
     );
   }
