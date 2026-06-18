@@ -1,7 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:hive_ce/hive.dart';
-
+import '../../../../core/constants/app_strings.dart';
 import '../../domain/entities/quiz_history_entry.dart';
 import '../constants/history_storage_keys.dart';
 import '../models/quiz_history_model.dart';
@@ -16,11 +16,6 @@ abstract interface class HistoryLocalDataSource {
 
 class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   const HistoryLocalDataSourceImpl();
-
-  static const String _invalidValueMessage = 'Stored value is not a map.';
-  static const String _parseFailureMessage =
-      'Stored value could not be parsed.';
-  static const String _logName = 'HistoryLocalDataSource';
 
   @override
   Future<void> saveResult(QuizHistoryEntry entry) async {
@@ -43,7 +38,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
       try {
         if (value is! Map) {
-          _logInvalidHistoryEntry(key, _invalidValueMessage);
+          _logInvalidHistoryEntry(key, AppStrings.invalidValueMessage);
           continue;
         }
 
@@ -54,7 +49,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
       } catch (error, stackTrace) {
         _logInvalidHistoryEntry(
           key,
-          _parseFailureMessage,
+          AppStrings.parseFailureMessage,
           error: error,
           stackTrace: stackTrace,
         );
@@ -82,7 +77,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
     assert(() {
       developer.log(
         '$message Key: $key',
-        name: _logName,
+        name: AppStrings.logName,
         error: error,
         stackTrace: stackTrace,
       );

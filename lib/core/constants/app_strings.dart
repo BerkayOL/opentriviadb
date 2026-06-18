@@ -9,6 +9,10 @@ abstract final class AppStrings {
   static const String history = 'History';
   static const String home = 'Quiz';
   static const String settings = 'Settings';
+
+  static const String invalidValueMessage = 'Stored value is not a map.';
+  static const String parseFailureMessage = 'Stored value could not be parsed.';
+  static const String logName = 'HistoryLocalDataSource';
   static const String category = 'Category';
   static const String difficulty = 'Difficulty';
   static const String numberOfQuestions = 'Number of Questions';
