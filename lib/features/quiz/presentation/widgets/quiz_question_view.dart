@@ -13,9 +13,14 @@ import 'quiz_question_card.dart';
 import 'quiz_question_header.dart';
 
 class QuestionView extends StatelessWidget {
-  const QuestionView({required this.state, super.key});
+  const QuestionView({
+    required this.state,
+    required this.onExitRequested,
+    super.key,
+  });
 
   final QuizState state;
+  final VoidCallback onExitRequested;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,7 @@ class QuestionView extends StatelessWidget {
             currentQuestion: state.currentIndex + 1,
             totalQuestions: state.totalQuestions,
             secondsLeft: state.secondsLeft,
+            onExitRequested: onExitRequested,
           ),
           const SizedBox(height: AppSpacing.lg),
           Expanded(

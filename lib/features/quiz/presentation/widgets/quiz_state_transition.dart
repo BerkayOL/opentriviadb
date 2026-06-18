@@ -6,9 +6,16 @@ import '../cubits/quiz_state.dart';
 import 'quiz_state_view.dart';
 
 class QuizStateTransition extends StatelessWidget {
-  const QuizStateTransition({required this.state, super.key});
+  const QuizStateTransition({
+    required this.state,
+    required this.onExitRequested,
+    required this.onPlayAgain,
+    super.key,
+  });
 
   final QuizState state;
+  final VoidCallback onExitRequested;
+  final VoidCallback onPlayAgain;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,11 @@ class QuizStateTransition extends StatelessWidget {
       transitionBuilder: _buildTransition,
       child: KeyedSubtree(
         key: ValueKey(_contentKey(state.status)),
-        child: QuizStateView(state: state),
+        child: QuizStateView(
+          state: state,
+          onExitRequested: onExitRequested,
+          onPlayAgain: onPlayAgain,
+        ),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../constants/quiz_dimensions.dart';
-import '../dialogs/show_exit_quiz_dialog.dart';
 import '../theme/quiz_palette.dart';
 import 'quiz_progress_bar.dart';
 import 'quiz_progress_header.dart';
@@ -14,12 +13,14 @@ class QuizQuestionHeader extends StatelessWidget {
     required this.currentQuestion,
     required this.totalQuestions,
     required this.secondsLeft,
+    required this.onExitRequested,
     super.key,
   });
 
   final int currentQuestion;
   final int totalQuestions;
   final int secondsLeft;
+  final VoidCallback onExitRequested;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class QuizQuestionHeader extends StatelessWidget {
                 ).withValues(alpha: QuizDimensions.backButtonFillAlpha),
                 borderRadius: BorderRadius.circular(AppRadius.md),
                 child: InkWell(
-                  onTap: () => showExitQuizDialog(context),
+                  onTap: onExitRequested,
                   borderRadius: BorderRadius.circular(AppRadius.md),
                   child: DecoratedBox(
                     decoration: BoxDecoration(

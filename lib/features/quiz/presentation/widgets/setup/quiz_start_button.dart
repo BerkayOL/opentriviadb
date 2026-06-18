@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../../app/router/app_routes.dart';
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../domain/entities/quiz_request.dart';
@@ -12,7 +10,9 @@ import '../../cubits/quiz_setup_state.dart';
 import '../../theme/quiz_setup_palette.dart';
 
 class StartQuizButton extends StatelessWidget {
-  const StartQuizButton({super.key});
+  const StartQuizButton({required this.onStart, super.key});
+
+  final ValueChanged<QuizRequest> onStart;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class StartQuizButton extends StatelessWidget {
                         difficulty: state.selectedDifficulty,
                         type: state.questionType,
                       );
-                      context.push(AppRoutes.quiz, extra: request);
+                      onStart(request);
                     }
                   : null,
               icon: const Icon(Icons.play_arrow_rounded),

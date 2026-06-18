@@ -7,7 +7,14 @@ import '../theme/quiz_palette.dart';
 import 'quiz_state_transition.dart';
 
 class QuizPageBody extends StatelessWidget {
-  const QuizPageBody({super.key});
+  const QuizPageBody({
+    required this.onExitRequested,
+    required this.onPlayAgain,
+    super.key,
+  });
+
+  final VoidCallback onExitRequested;
+  final VoidCallback onPlayAgain;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,11 @@ class QuizPageBody extends StatelessWidget {
           child: SafeArea(
             child: BlocBuilder<QuizCubit, QuizState>(
               builder: (context, state) {
-                return QuizStateTransition(state: state);
+                return QuizStateTransition(
+                  state: state,
+                  onExitRequested: onExitRequested,
+                  onPlayAgain: onPlayAgain,
+                );
               },
             ),
           ),

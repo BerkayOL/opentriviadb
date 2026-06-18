@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'quiz_action_button.dart';
-import '../resolvers/quiz_result_resolver.dart';
-import '../../../../app/router/app_routes.dart';
+
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../constants/quiz_dimensions.dart';
 import '../cubits/quiz_state.dart';
+import '../resolvers/quiz_result_resolver.dart';
 import '../theme/quiz_palette.dart';
+import 'quiz_action_button.dart';
 
 class QuizCompletedView extends StatelessWidget {
-  const QuizCompletedView({required this.state, super.key});
+  const QuizCompletedView({
+    required this.state,
+    required this.onPlayAgain,
+    super.key,
+  });
 
   final QuizState state;
+  final VoidCallback onPlayAgain;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -113,7 +118,7 @@ class QuizCompletedView extends StatelessWidget {
                   QuizActionButton(
                     label: AppStrings.playAgain,
                     icon: Icons.restart_alt_rounded,
-                    onPressed: () => context.go(AppRoutes.setup),
+                    onPressed: onPlayAgain,
                   ),
                 ],
               ),

@@ -1,8 +1,8 @@
 import '../../../history/domain/entities/quiz_history_entry.dart';
 import '../../../history/domain/usecases/save_quiz_history_usecase.dart';
 
-class QuizHistoryRecorder {
-  const QuizHistoryRecorder(this._saveQuizHistoryUseCase);
+class QuizResultRecorder {
+  const QuizResultRecorder(this._saveQuizHistoryUseCase);
 
   final SaveQuizHistoryUseCase _saveQuizHistoryUseCase;
 

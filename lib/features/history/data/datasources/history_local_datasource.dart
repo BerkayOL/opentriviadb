@@ -1,8 +1,9 @@
 import 'dart:developer' as developer;
 
 import 'package:hive_ce/hive.dart';
-import '../../../../core/constants/app_strings.dart';
+
 import '../../domain/entities/quiz_history_entry.dart';
+import '../constants/history_data_messages.dart';
 import '../constants/history_storage_keys.dart';
 import '../models/quiz_history_model.dart';
 
@@ -38,7 +39,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
       try {
         if (value is! Map) {
-          _logInvalidHistoryEntry(key, AppStrings.invalidValueMessage);
+          _logInvalidHistoryEntry(key, HistoryDataMessages.invalidStoredValue);
           continue;
         }
 
@@ -49,7 +50,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
       } catch (error, stackTrace) {
         _logInvalidHistoryEntry(
           key,
-          AppStrings.parseFailureMessage,
+          HistoryDataMessages.parseFailure,
           error: error,
           stackTrace: stackTrace,
         );
@@ -77,7 +78,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
     assert(() {
       developer.log(
         '$message Key: $key',
-        name: AppStrings.logName,
+        name: HistoryDataMessages.logName,
         error: error,
         stackTrace: stackTrace,
       );

@@ -11,9 +11,16 @@ import 'quiz_loading_view.dart';
 import 'quiz_question_view.dart';
 
 class QuizStateView extends StatelessWidget {
-  const QuizStateView({required this.state, super.key});
+  const QuizStateView({
+    required this.state,
+    required this.onExitRequested,
+    required this.onPlayAgain,
+    super.key,
+  });
 
   final QuizState state;
+  final VoidCallback onExitRequested;
+  final VoidCallback onPlayAgain;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +34,14 @@ class QuizStateView extends StatelessWidget {
         title: AppStrings.noQuestionsTitle,
         message: AppStrings.noQuestionsMessage,
       ),
-      QuizStatus.inProgress ||
-      QuizStatus.answerRevealed => QuestionView(state: state),
-      QuizStatus.completed => QuizCompletedView(state: state),
+      QuizStatus.inProgress || QuizStatus.answerRevealed => QuestionView(
+        state: state,
+        onExitRequested: onExitRequested,
+      ),
+      QuizStatus.completed => QuizCompletedView(
+        state: state,
+        onPlayAgain: onPlayAgain,
+      ),
     };
   }
 }

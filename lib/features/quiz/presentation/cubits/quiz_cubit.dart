@@ -5,9 +5,9 @@ import '../../../../core/error/failure.dart';
 import '../../../history/domain/usecases/save_quiz_history_usecase.dart';
 import '../../domain/entities/quiz_request.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
+import '../coordinators/quiz_countdown_timer.dart';
+import '../coordinators/quiz_result_recorder.dart';
 import '../factories/quiz_state_factory.dart';
-import '../services/quiz_countdown_timer.dart';
-import '../services/quiz_history_recorder.dart';
 import 'quiz_state.dart';
 
 class QuizCubit extends Cubit<QuizState> {
@@ -16,12 +16,12 @@ class QuizCubit extends Cubit<QuizState> {
     SaveQuizHistoryUseCase saveQuizHistoryUseCase, {
     QuizCountdownTimer? countdownTimer,
   }) : _countdownTimer = countdownTimer ?? QuizCountdownTimer(),
-       _historyRecorder = QuizHistoryRecorder(saveQuizHistoryUseCase),
+       _resultRecorder = QuizResultRecorder(saveQuizHistoryUseCase),
        super(const QuizState());
 
   final GetQuestionsUseCase _getQuestionsUseCase;
   final QuizCountdownTimer _countdownTimer;
-  final QuizHistoryRecorder _historyRecorder;
+  final QuizResultRecorder _resultRecorder;
 
   QuizRequest? _lastRequest;
 
@@ -96,7 +96,7 @@ class QuizCubit extends Cubit<QuizState> {
 
   Future<void> _completeQuiz() async {
     _stopTimer();
-    final wasSaved = await _historyRecorder.save(
+    final wasSaved = await _resultRecorder.save(
       score: state.score,
       totalQuestions: state.totalQuestions,
     );

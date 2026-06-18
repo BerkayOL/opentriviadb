@@ -170,6 +170,102 @@ lib/
             └── presentation/
 ```
 
+### Current Source Layout
+
+The current `lib` source contains 157 Dart files. The architecture-specific
+layout is:
+
+```txt
+lib/
+|-- main.dart
+|-- app/
+|   |-- app.dart
+|   |-- bootstrap/
+|   |   +-- app_bootstrap.dart
+|   |-- dependency_injection/
+|   |   |-- app_di.dart
+|   |   |-- history_di.dart
+|   |   |-- quiz_di.dart
+|   |   +-- settings_di.dart
+|   +-- router/
+|       |-- app_route_page_factory.dart
+|       |-- app_router.dart
+|       +-- app_routes.dart
+|-- core/
+|   |-- constants/
+|   |-- error/
+|   |-- network/
+|   |-- theme/
+|   |-- utils/
+|   +-- widgets/
+|-- features/
+|   |-- app_shell/
+|   |   +-- presentation/
+|   |       |-- constants/
+|   |       |-- cubits/
+|   |       |-- pages/
+|   |       |-- theme/
+|   |       +-- widgets/
+|   |-- history/
+|   |   |-- data/
+|   |   |   |-- constants/
+|   |   |   |   |-- history_data_messages.dart
+|   |   |   |   +-- history_storage_keys.dart
+|   |   |   |-- datasources/
+|   |   |   |-- models/
+|   |   |   +-- repositories/
+|   |   |-- domain/
+|   |   |   |-- entities/
+|   |   |   |-- repositories/
+|   |   |   +-- usecases/
+|   |   +-- presentation/
+|   |       |-- constants/
+|   |       |-- cubits/
+|   |       |-- dialogs/
+|   |       |-- pages/
+|   |       |-- theme/
+|   |       +-- widgets/
+|   |-- quiz/
+|   |   |-- data/
+|   |   |   |-- constants/
+|   |   |   |-- datasources/
+|   |   |   |-- mappers/
+|   |   |   |-- models/
+|   |   |   |-- parsers/
+|   |   |   +-- repositories/
+|   |   |-- domain/
+|   |   |   |-- constants/
+|   |   |   |-- entities/
+|   |   |   |-- repositories/
+|   |   |   |-- usecases/
+|   |   |   +-- utils/
+|   |   +-- presentation/
+|   |       |-- constants/
+|   |       |-- coordinators/
+|   |       |   |-- quiz_countdown_timer.dart
+|   |       |   +-- quiz_result_recorder.dart
+|   |       |-- cubits/
+|   |       |-- dialogs/
+|   |       |-- factories/
+|   |       |-- models/
+|   |       |-- pages/
+|   |       |-- resolvers/
+|   |       |-- theme/
+|   |       +-- widgets/
+|   |           |-- boolean/
+|   |           +-- setup/
+|   |-- settings/
+|   |   |-- data/
+|   |   |-- domain/
+|   |   +-- presentation/
+|   +-- splash/
+|       +-- presentation/
+```
+
+Quiz presentation coordinators keep timer lifecycle and result persistence
+orchestration outside `QuizCubit`. History data-layer log messages live with
+the history data feature rather than in the app-wide user-facing strings.
+
 ### Layer Responsibilities
 
 #### `app`
