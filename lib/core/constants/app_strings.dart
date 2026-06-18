@@ -5,7 +5,7 @@ abstract final class AppStrings {
   static const String appName = 'Trivia Quiz';
   static const String brandName = 'Quizora';
   static const String splashSubTitle = 'Test your knowledge.';
-  static const String setupSubtitle = 'Set up your quiz and start when ready.';
+  static const String setupSubtitle = 'Choose your quiz settings.';
   static const String history = 'History';
   static const String home = 'Quiz';
   static const String settings = 'Settings';
@@ -56,7 +56,8 @@ abstract final class AppStrings {
   static const String answerCorrectTitle = 'Correct';
   static const String answerCorrectMessage = 'Your choice was right.';
   static const String answerWrongTitle = 'Incorrect';
-  static const String answerWrongMessage = 'Green shows the correct answer.';
+  static const String answerWrongMessage =
+      'The correct answer is highlighted in green.';
   static const String answerTimeoutTitle = 'Time is up';
   static const String answerTimeoutMessage =
       'No answer was selected. The correct option is highlighted.';
@@ -95,7 +96,7 @@ abstract final class AppStrings {
   static const clear = 'Clear';
   static const completedAt = 'Completed at';
   static const recentQuizzes = 'Recent Quizzes';
-  static const String settingsSubtitle = 'Adjust how Quizora works for you.';
+  static const String settingsSubtitle = 'Customize your Quizora experience.';
   static const String appearance = 'Appearance';
   static const String defaultSystemSubTitle = 'Follow your device appearance.';
   static const String lightSystemSubTitle = 'Bright and clean interface.';

@@ -85,9 +85,7 @@ abstract final class QuizPalette {
   }
 
   static Color correctBorder(BuildContext context) {
-    return const Color(
-      0xFF22C55E,
-    ).withValues(alpha: isDark(context) ? 0.65 : 1);
+    return isDark(context) ? const Color(0xFF4ADE80) : const Color(0xFF15803D);
   }
 
   static Color wrongFill(BuildContext context) {
@@ -97,8 +95,6 @@ abstract final class QuizPalette {
   }
 
   static Color wrongBorder(BuildContext context) {
-    return const Color(
-      0xFFEF4444,
-    ).withValues(alpha: isDark(context) ? 0.65 : 1);
+    return isDark(context) ? const Color(0xFFF87171) : const Color(0xFFB91C1C);
   }
 }

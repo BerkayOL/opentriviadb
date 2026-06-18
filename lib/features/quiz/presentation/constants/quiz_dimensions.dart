@@ -41,7 +41,7 @@ abstract final class QuizDimensions {
   static const double quizActionButtonHeight = 54;
   static const double quizActionDisabledOpacity = 0.55;
   static const double quizActionDarkBackgroundAlpha = 0.22;
-  static const double quizActionLightBackgroundAlpha = 0.40;
+  static const double quizActionLightBackgroundAlpha = 1;
   static const double quizActionDarkBorderAlpha = 0.48;
   static const double quizActionLightBorderAlpha = 0.64;
   static const double quizActionDarkShadowAlpha = 0.10;
@@ -51,8 +51,8 @@ abstract final class QuizDimensions {
   static const double quizActionIconSize = 20;
   static const double quizStartButtonHeight = 58;
   static const double quizStartDisabledOpacity = 0.55;
-  static const double quizStartShadowBlur = 20;
-  static const double quizStartShadowOffsetY = 10;
+  static const double quizStartShadowBlur = 14;
+  static const double quizStartShadowOffsetY = 6;
 
   static const double dropdownMenuMaxHeight = 220;
   static const double categoryDropdownMenuMaxHeight = 280;
@@ -107,7 +107,7 @@ abstract final class QuizDimensions {
   static const double loadingTextHeight = 1.35;
   static const double timerLetterSpacing = -0.1;
   static const double progressHeaderLetterSpacing = -0.2;
-  static const double questionCardBorderDarkAlpha = 0.45;
-  static const double questionCardBorderLightAlpha = 0.62;
+  static const double questionCardBorderDarkAlpha = 0.14;
+  static const double questionCardBorderLightAlpha = 0.42;
   static const double questionCardTextHeight = 1.18;
 }

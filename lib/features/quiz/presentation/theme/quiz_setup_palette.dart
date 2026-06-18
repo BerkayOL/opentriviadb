@@ -4,9 +4,8 @@ class QuizSetupPalette {
   const QuizSetupPalette._();
 
   static const List<Color> startButtonGradient = [
-    Color(0xFF3B82F6),
-    Color(0xFF6366F1),
-    Color(0xFF8B5CF6),
+    Color(0xFF2563EB),
+    Color(0xFF4338CA),
   ];
 
   static const Color transparent = Colors.transparent;
@@ -80,6 +79,6 @@ class QuizSetupPalette {
   }
 
   static Color startButtonShadow() {
-    return const Color(0xFF6366F1).withValues(alpha: 0.24);
+    return const Color(0xFF4338CA).withValues(alpha: 0.16);
   }
 }
