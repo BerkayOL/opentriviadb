@@ -28,6 +28,7 @@ class _SplashPageState extends State<SplashPage> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: SplashPalette.backgroundGradient(context),
+            stops: SplashPalette.backgroundGradientStops(context),
           ),
         ),
         child: const Stack(

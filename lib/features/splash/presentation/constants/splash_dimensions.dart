@@ -17,7 +17,10 @@ abstract final class SplashDimensions {
   static const double initialScale = 0.94;
   static const double scaleDelta = 0.06;
 
-  static const double logoWidth = 160;
+  static const double logoDarkWidth = 150;
+  static const double logoLightWidth = 136;
+  static const double logoLightSurfaceSize = 156;
+  static const double logoLightSurfaceRadius = 36;
   static const double titleFontSize = 42;
   static const double titleLetterSpacing = 0.8;
   static const double subtitleFontSize = 15;

@@ -27,6 +27,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo/quizora_foreground.png
+    - assets/images/logo/quizora_adaptive_foreground.png
+    - assets/images/logo/quizora_icon_background.png
+    - assets/images/logo/quizora_app_icon_1024.png
   fonts:
     - family: PlusJakartaSans
       fonts:
@@ -45,6 +48,9 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/images/logo/quizora_foreground.png
-  adaptive_icon_foreground: assets/images/logo/quizora_foreground.png
-  adaptive_icon_background: "#EAF2FF"
+  image_path: assets/images/logo/quizora_app_icon_1024.png
+  image_path_ios: assets/images/logo/quizora_app_icon_1024.png
+  adaptive_icon_foreground: assets/images/logo/quizora_adaptive_foreground.png
+  adaptive_icon_background: assets/images/logo/quizora_icon_background.png
+  adaptive_icon_foreground_inset: 0
+  remove_alpha_ios: true

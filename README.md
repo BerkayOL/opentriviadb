@@ -8,6 +8,30 @@ This project was developed as an internship graduation project with a focus on c
 
 ---
 
+## Screenshots
+
+### Dark Mode
+
+| Splash | Quiz Setup | Quiz |
+| --- | --- | --- |
+| <img src="assets/images/screenshots/dark_mode_splash.png" width="240" alt="Quizora dark mode splash screen"> | <img src="assets/images/screenshots/dark_mode_quiz_setup.png" width="240" alt="Quizora dark mode quiz setup screen"> | <img src="assets/images/screenshots/dark_mode_quiz.png" width="240" alt="Quizora dark mode quiz screen"> |
+
+| History | Settings |
+| --- | --- |
+| <img src="assets/images/screenshots/dark_mode_history.png" width="240" alt="Quizora dark mode history screen"> | <img src="assets/images/screenshots/dark_mode_settings.png" width="240" alt="Quizora dark mode settings screen"> |
+
+### Light Mode
+
+| Splash | Quiz Setup | Quiz |
+| --- | --- | --- |
+| <img src="assets/images/screenshots/light_mode_splash.png" width="240" alt="Quizora light mode splash screen"> | <img src="assets/images/screenshots/light_mode_quiz_setup.png" width="240" alt="Quizora light mode quiz setup screen"> | <img src="assets/images/screenshots/light_mode_quiz.png" width="240" alt="Quizora light mode quiz screen"> |
+
+| History | Settings |
+| --- | --- |
+| <img src="assets/images/screenshots/light_mode_history.png" width="240" alt="Quizora light mode history screen"> | <img src="assets/images/screenshots/light_mode_settings.png" width="240" alt="Quizora light mode settings screen"> |
+
+---
+
 ## Features
 
 - Dynamic category loading from Open Trivia DB
@@ -543,6 +567,29 @@ Run the app:
 
 ```bash
 flutter run
+```
+
+## Brand Icon and Splash Assets
+
+Quizora uses separate foreground and background assets for Android adaptive
+icons:
+
+- `quizora_adaptive_foreground.png` is a transparent foreground-only asset.
+- `quizora_icon_background.png` contains the Midnight Knowledge background.
+- `quizora_app_icon_1024.png` is the opaque 1024x1024 master used for iOS and
+  legacy launcher icon exports.
+
+For the current owl artwork, the visible foreground should remain inside
+roughly 44-46% of the icon canvas so Android launcher masks keep comfortable
+optical padding.
+Do not flatten checkerboard previews, masks, rounded corners, or platform icon
+shapes into the foreground PNG. iOS icon sizes must always be regenerated from
+the opaque 1024 master rather than resized from a smaller exported icon.
+
+Regenerate platform launcher assets after changing a source asset:
+
+```bash
+dart run flutter_launcher_icons
 ```
 
 Run static analysis:

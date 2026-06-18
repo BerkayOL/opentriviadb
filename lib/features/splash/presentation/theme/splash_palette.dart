@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/brand_colors.dart';
+
 abstract final class SplashPalette {
   static bool isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
@@ -9,9 +11,27 @@ abstract final class SplashPalette {
     final dark = isDark(context);
 
     return dark
-        ? const [Color(0xFF070A1F), Color(0xFF0F172A), Color(0xFF172554)]
-        : const [Color(0xFFF8FAFC), Color(0xFFEFF6FF), Color(0xFFEDE9FE)];
+        ? const [
+            BrandColors.splashDarkStart,
+            BrandColors.splashDarkCenter,
+            BrandColors.splashDarkEnd,
+          ]
+        : const [
+            BrandColors.splashLightStart,
+            BrandColors.splashLightCenter,
+            BrandColors.splashLightEnd,
+          ];
   }
+
+  static List<double> backgroundGradientStops(BuildContext context) {
+    return isDark(context) ? const [0, 0.52, 1] : const [0, 0.55, 1];
+  }
+
+  static const List<Color> logoSurfaceGradient = [
+    BrandColors.iconBackgroundDarkHighlight,
+    BrandColors.iconBackgroundDarkBase,
+    BrandColors.iconBackgroundDarkDepth,
+  ];
 
   static Color primaryText(BuildContext context) {
     return isDark(context) ? Colors.white : const Color(0xFF0F172A);
@@ -22,7 +42,7 @@ abstract final class SplashPalette {
   }
 
   static Color progressColor(BuildContext context) {
-    return isDark(context) ? Colors.white : const Color(0xFF3B82F6);
+    return isDark(context) ? Colors.white : BrandColors.royalBlue;
   }
 
   static Color progressBackground(BuildContext context) {
@@ -31,37 +51,37 @@ abstract final class SplashPalette {
 
   static Color firstGlowColor(BuildContext context) {
     return isDark(context)
-        ? const Color(0xFF14B8A6).withValues(alpha: 0.32)
-        : const Color(0xFF60A5FA).withValues(alpha: 0.22);
+        ? BrandColors.royalBlue.withValues(alpha: 0.10)
+        : BrandColors.lightAmbientBlue.withValues(alpha: 0.30);
   }
 
   static Color firstGlowFill(BuildContext context) {
     return isDark(context)
-        ? const Color(0xFF14B8A6).withValues(alpha: 0.08)
-        : const Color(0xFF60A5FA).withValues(alpha: 0.10);
+        ? BrandColors.royalBlue.withValues(alpha: 0.04)
+        : BrandColors.lightAmbientBlue.withValues(alpha: 0.12);
   }
 
   static Color secondGlowColor(BuildContext context) {
     return isDark(context)
-        ? Colors.purple.withValues(alpha: 0.55)
-        : const Color(0xFF8B5CF6).withValues(alpha: 0.20);
+        ? BrandColors.deepIndigo.withValues(alpha: 0.08)
+        : BrandColors.lightAmbientIndigo.withValues(alpha: 0.20);
   }
 
   static Color secondGlowFill(BuildContext context) {
     return isDark(context)
-        ? Colors.purple.withValues(alpha: 0.08)
-        : const Color(0xFF8B5CF6).withValues(alpha: 0.08);
+        ? BrandColors.deepIndigo.withValues(alpha: 0.03)
+        : BrandColors.lightAmbientIndigo.withValues(alpha: 0.08);
   }
 
   static Color lowerGlowFill(BuildContext context) {
     return isDark(context)
-        ? const Color(0xFF8B5CF6).withValues(alpha: 0.08)
-        : const Color(0xFF60A5FA).withValues(alpha: 0.08);
+        ? BrandColors.deepIndigo.withValues(alpha: 0.03)
+        : BrandColors.lightAmbientIndigo.withValues(alpha: 0.08);
   }
 
   static Color lowerGlowColor(BuildContext context) {
     return isDark(context)
-        ? const Color(0xFF8B5CF6).withValues(alpha: 0.50)
-        : const Color(0xFF8B5CF6).withValues(alpha: 0.28);
+        ? BrandColors.deepIndigo.withValues(alpha: 0.06)
+        : BrandColors.lightAmbientIndigo.withValues(alpha: 0.22);
   }
 }
