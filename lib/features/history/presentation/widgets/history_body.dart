@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/widgets/empty_view.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/loading_view.dart';
-import '../cubits/history_cubit.dart';
 import '../cubits/history_state.dart';
 import 'history_list_view.dart';
 
 class HistoryBody extends StatelessWidget {
-  const HistoryBody({super.key, required this.state});
+  const HistoryBody({super.key, required this.state, required this.onRetry});
 
   final HistoryState state;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,7 @@ class HistoryBody extends StatelessWidget {
       case HistoryStatus.failure:
         return ErrorView(
           message: state.errorMessage ?? AppStrings.genericError,
-          onRetry: () {
-            context.read<HistoryCubit>().loadHistory();
-          },
+          onRetry: onRetry,
         );
 
       case HistoryStatus.empty:

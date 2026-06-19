@@ -36,7 +36,10 @@ class HistoryPage extends StatelessWidget {
                   children: [
                     const HistoryHeader(),
                     const SizedBox(height: AppSpacing.xl),
-                    HistoryBody(state: state),
+                    HistoryBody(
+                      state: state,
+                      onRetry: () => context.read<HistoryCubit>().loadHistory(),
+                    ),
                   ],
                 );
               },

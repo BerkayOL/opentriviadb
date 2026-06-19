@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:opentriviadb/features/app_shell/presentation/cubits/nav_item_press_cubit.dart';
+import '../cubits/nav_item_press_cubit.dart';
 
 import 'floating_nav_item_body.dart';
 
